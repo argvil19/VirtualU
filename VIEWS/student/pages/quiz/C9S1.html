@@ -1,0 +1,27 @@
+<div ng-controller="C9QuizCtrl" ng-init="Shuffle()">
+<div>
+    <div ng-repeat="q in questions track by $index">
+        <h4 ng-bind-html="q.question">{{q.question}}</h4>
+        <form name="myForm" ng-controller="C9QuizCtrl">
+            <div ng-repeat="n in q.options track by $index">
+                <label ng-if="n.type == 'mc'">
+                    <input type="radio" ng-model="q.options[0].selected" ng-value="q.options[$index]">
+                    <!-- currently saving the selected options to the first option selected attribute -->
+                    {{n.text}}
+                </label>
+                
+
+            
+        </form>
+
+    </div>
+
+
+    <br> 
+    
+    </div>
+         <button type="button" ng-click="CheckAll()">Submit</button>
+         {{score}}%
+   
+</div>
+
