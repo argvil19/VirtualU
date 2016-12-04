@@ -1,4 +1,5 @@
 image: node:4.2.2
+image: ruby:latest
 
 cache:
   paths:
@@ -12,5 +13,6 @@ services:
 
 all_tests:
   script:
-   - DPL --provider = Heroku --app = hvu --api-key = $ HEROKU_STAGING_API_KEY
+   - gem install dpl
+   - dpl --provider=heroku --app=hvu-imt --api-key=$HEROKU_STAGING_API_KEY
    - node SERVER/server.js
