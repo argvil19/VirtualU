@@ -1,0 +1,9 @@
+image: node:4.2.2
+
+services:
+  - mongo:latest
+
+
+all_tests:
+  script:
+   - node SERVER/server.js
