@@ -28,8 +28,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node SERVER/server.js"
   },
-  "author": "Team Greyjoy",
+  "author": "Q",
   "license": "ISC"
 }
