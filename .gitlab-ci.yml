@@ -12,5 +12,5 @@ services:
 
 all_tests:
   script:
-   - node SERVER/server.js
    - DPL --provider = Heroku --app = hvu --api-key = $ HEROKU_STAGING_API_KEY
+   - node SERVER/server.js
