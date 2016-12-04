@@ -1,10 +1,11 @@
 image: node:4.2.2
 
 services:
-  - mongo:4.2.5
+  - mongo:latest
 
 
 
 all_tests:
   script:
+   - apt-get install -y mongodb-org
    - node SERVER/server.js
