@@ -287,6 +287,16 @@
     }
     
     .btnSidebar {}
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+    }
     </style>
 </header>
 
@@ -353,17 +363,19 @@
 
                         <li><a href="#/chapter2" ng-click="go('chapter2')">Chapter 2</a></li>
                         <li><a href="#/chapter3" ng-click="go('chapter3')">Chapter 3</a></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" tabindex="-1" href="#">Chapter 5 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a tabindex="-1" href="#/chapter5s1" ng-click="go('chapter5')">Chapter 5.1</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s2" ng-click="go('chapter5')">Chapter 5.2</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s3" ng-click="go('chapter5')">Chapter 5.3</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s4" ng-click="go('chapter5')">Chapter 5.4</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s5" ng-click="go('chapter5')">Chapter 5.5</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s6" ng-click="go('chapter5')">Chapter 5.6</a></li>
+                                <li><a tabindex="-1" href="#/chapter5s7" ng-click="go('chapter5')">Chapter 5.7</a></li>
+                            </ul>
+                        </li>
 
-                        
-                            <li><a href="#/chapter5s1" ng-click="go('chapter5')">Chapter 5.1</a></li>
-      
-                            <li><a href="#/chapter5s2" ng-click="go('chapter5')">5.2</a></li>
-                            <li><a href="#/chapter5s3" ng-click="go('chapter5')"> 5.3</a></li>
-                            <li><a href="#/chapter5s4" ng-click="go('chapter5')"> 5.4</a></li>
-                            <li><a href="#/chapter5s5" ng-click="go('chapter5')"> 5.5</a></li>
-                            <li><a href="#/chapter5s6" ng-click="go('chapter5')"> 5.6</a></li>
-                            <li><a href="#/chapter5s7" ng-click="go('chapter5')"> 5.7</a></li>
-                       
                   
                         <!-- chapter8s1 -->
                         <li><a href="#/chapter8s1" ng-click="go('chapter8')">Chapter 8</a></li>
@@ -448,6 +460,15 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
 <script src="../config.js"></script>
 <script src="../../controllers/controllers.js"></script>
 <script src="../../controllers/C5S1.js"></script>
