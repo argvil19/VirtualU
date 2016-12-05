@@ -15,4 +15,4 @@ all_tests:
   script:
    - gem install dpl
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
-   - node SERVER/server.js
+
