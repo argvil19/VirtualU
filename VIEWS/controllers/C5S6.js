@@ -13,7 +13,7 @@ app.controller('codeCtrlC5S6', function($scope, $http) {
         "<br> <code>>> A = [1 2 3; 4 5 6] <br> >> B = [A,zeros(2,3)] </code>"
 
     $scope.q1options = [
-        { text: "B = <br> 1 2 0 0 <br> 3 4 0 0 ,br> 5 6 0 0 <br>", hints: "names don’t matter, it’s the order in the list.", correct: true, type: "ms", chosen: 0 },
+        { text: "B = <br> 1 2 0 0 <br> 3 4 0 0 <br> 5 6 0 0 <br>", hints: "names don’t matter, it’s the order in the list.", correct: true, type: "ms", chosen: 0 },
         { text: "B = <br> 1 2 3 <br> 4 5 6 <br> 0 0 0 <br> 0 0 0 <br>", hints: "function doesn’t affect value of var1 in the workspace", correct: true, type: "ms", chosen: 0 },
         { text: "B = 1 2 3 0 0 0 <br> 4 5 6 0 0 0 <br>", hints: "function doesn’t affect value of var1 in the workspace", correct: false, type: "ms", chosen: 0 },
         { text: "None of the above ", hints: "var1 is not defined in the workspace.", correct: false, type: "ms", chosen: 0 },
@@ -23,7 +23,7 @@ app.controller('codeCtrlC5S6', function($scope, $http) {
     $scope.q2options = [
         { text: "B = <br> 1 2 3 0 0 0<br> 4 5 6 0 0 0<br>", hints: "names don’t matter, it’s the order in the list.", correct: true, type: "ms", chosen: 0 },
         { text: "B = <br> 1 4 0 0 <br> 2 5 0 0 <br> 3 6 0 0<br>", hints: "names don’t matter, it’s the order in the list.", correct: false, type: "ms", chosen: 0 },
-        { text: "B = <br> 1 2 3 <br> 4 5 6 <br> 0 0 0 <br> 0 0 0 ,br>", hints: "only the second element of x is sent to the function.", hints: "names don’t matter, it’s the order in the list.", correct: false, type: "ms", chosen: 0 },
+        { text: "B = <br> 1 2 3 <br> 4 5 6 <br> 0 0 0 <br> 0 0 0 <br>", hints: "only the second element of x is sent to the function.", hints: "names don’t matter, it’s the order in the list.", correct: false, type: "ms", chosen: 0 },
         { text: "None of the above", hints: "", correct: true, type: "mc" },
 
 
