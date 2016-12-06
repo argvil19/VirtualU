@@ -3,15 +3,14 @@
 <div  ng-repeat="q in questions track by $index">
 <h4 ng-bind-html="q.question">{{q.question}}</h4>
    <form name="myForm" ng-controller="codeCtrlC5S3">
-   <div ng-repeat="n in q.options track by $index">
-     <label>
-       <input type="checkbox" ng-model="q.options[$index].chosen" >
-       <!-- ng-bind-html="n.text" -->
+     <div ng-repeat="n in q.options track by $index">
+        <label>
+            <input type="checkbox" ng-model="q.options[$index].chosen" style="float: left; margin-right: 3px">
 
-       {{n.text}}
+            <label ng-bind-html=n.text style="float: left"></label>
 
-      <!--  <option ng-bind-html="n.text">{{n.text}} </option>
-     </label><br/> -->
+
+        </label>
 
 
      </div>
