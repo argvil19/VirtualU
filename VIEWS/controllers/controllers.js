@@ -1224,7 +1224,7 @@ app.controller('formCtrl', ['$scope', 'State', function($scope, State) {
 
 app.controller('sideController', ['$scope', '$location', 'State', function($scope, $location, State) {
 
-
+    console.log('sideController loaded!!');
 
     $scope.enablelecture = State.statelecture;
     $scope.enableExample = State.stateexample;
@@ -2214,7 +2214,7 @@ app.controller('ChapterTwoController', ['$scope', '$location', 'State', function
     $scope.init = function() {
         var i = 0;
         //console.log(stat1[0],stat1[1],stat1[2],stat1[3],stat1[4]);
-        //populate options for question1 
+        //populate options for question1
         while (i < 3) {
             var num = Math.floor(Math.random() * (5)); //Math.random()<.5;//Math.floor((Math.random()*2)+0);
             //console.log(num);
@@ -2435,16 +2435,16 @@ app.controller('ChapterTwoController', ['$scope', '$location', 'State', function
             }
             /*            console.log("printing out")
                         console.log($scope.answerBoxa)
-                        console.log(document.getElementById("answerBoxa").value) 
+                        console.log(document.getElementById("answerBoxa").value)
                         if(document.getElementById("answerBoxa").value==3&&!document.getElementById("answerBoxb").value&&document.getElementById("answerBoxc").value==2&&document.getElementById("answerBoxd").value==6&&!document.getElementById("answerBoxe").value&&document.getElementById("answerBoxf").value==6&&$scope.question.d)
-                    
+
                             $scope.question.w = "Correct Answer!"
-                        else      
+                        else
                             $scope.question.w = "Wrong Answer! "*/
         }
 
         if ($scope.buttonID == 'e') {
-            if ($scope.answerBoxg == 'b' && $scope.answerBoxh == 'c' && $scope.answerBoxi == 'e' && $scope.answerBoxj == 'a' && $scope.answerBoxk == 'd') //&&$scope.question.e)        
+            if ($scope.answerBoxg == 'b' && $scope.answerBoxh == 'c' && $scope.answerBoxi == 'e' && $scope.answerBoxj == 'a' && $scope.answerBoxk == 'd') //&&$scope.question.e)
                 $scope.question.l = "Correct Answer!"
             else
                 $scope.question.l = "Wrong Answer! "

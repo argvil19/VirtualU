@@ -5,6 +5,10 @@ app.config(['$routeProvider', function ($routeProvider) {
     'use strict';
    $routeProvider
    .when('/', {
+     templateUrl: 'Admin/pages/login.htm',
+     controller: 'loginController'
+   })
+   .when('/home', {
        templateUrl: 'Admin/pages/instruction.htm'
    })
    .when('/instructions', {
