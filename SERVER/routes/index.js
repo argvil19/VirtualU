@@ -66,8 +66,6 @@ router.get('/table', function(req, res) {
 	//res.sendFile(__parentdirname + '/client/views/PDF.html');
 });
 
-
-
 //***********************************
 
 
