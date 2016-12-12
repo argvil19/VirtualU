@@ -1,8 +1,23 @@
 <div class="">
-  <p>
-    <label>Username: </label><input type="text" ng-model="user.username"><br>
-    <label>Password: </label><input type="text" ng-model="user.password"><br>
-    <input type="button" value="Log In" ng-click="login(user)">
-    <a href="#/register">Register</a>
-  </p>
+  <form name="loginForm">
+    <table>
+      <tr>
+        <td><label>Username: </label></td>
+        <td><input type="text" ng-model="user.username" ng-required="true" ></td>
+      </tr>
+      <tr>
+        <td><label>Password: </label></td>
+        <td><input type="password" ng-model="user.password" ng-required="true" ></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="button" value="Log In"
+          ng-click="login(user)" ng-disabled="loginForm.$invalid">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <a href="#/register">Register</a>
+  <br>
+  <p>{{ message }}</p>
 </div>

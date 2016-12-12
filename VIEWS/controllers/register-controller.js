@@ -12,10 +12,10 @@ app.controller('registerController', ['$scope', '$http', '$location', function($
     $http(req)
     .then(function(res){
       $location.path('/login');
+      $scope.message = res.data;
     })
     .catch(function(err){
-      console.log(err);
-      $scope.message = 'username already exists!';
+      $scope.message = err.data;
     });
   }
 

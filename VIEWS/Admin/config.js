@@ -4,7 +4,7 @@ var app = angular.module('adminApp', ['ngRoute', 'ngSanitize'] );
 app.config(['$routeProvider', function ($routeProvider) {
     'use strict';
    $routeProvider
-   .when('/', {
+   .when('/login', {
      templateUrl: 'Admin/pages/login.htm',
      controller: 'loginController'
    })
