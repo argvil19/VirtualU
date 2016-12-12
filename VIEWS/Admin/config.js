@@ -8,6 +8,10 @@ app.config(['$routeProvider', function ($routeProvider) {
      templateUrl: 'Admin/pages/login.htm',
      controller: 'loginController'
    })
+   .when('/register', {
+     templateUrl: 'Admin/pages/register.htm',
+     controller: 'registerController'
+   })
    .when('/home', {
        templateUrl: 'Admin/pages/instruction.htm'
    })

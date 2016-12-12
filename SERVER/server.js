@@ -27,7 +27,6 @@
 	//Added this line for admin
 	app.use(express.static(__dirname + '../../VIEWS'));
 
-
 	app.use('/', routes); //Handle all requests though our router.
 
 	//Start our server listening on port 3000

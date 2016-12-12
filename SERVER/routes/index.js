@@ -15,6 +15,8 @@ var Answer = require('../models/answer.js');
 
 //************HTML SECTION***********
 
+router.use('/', require('./auth-routes'));
+
 //Initial route to our views
 router.get('/', function(req, res) {
 	//res.sendFile(path.join(__dirname, '../public', 'index1.html'));
@@ -71,6 +73,8 @@ router.get('/table', function(req, res) {
 
 
 //************API SECTION************
+
+
 
 //Returns the if structure html skeleton
 router.get('/api/skeletons/if-skeleton', function(req, res) {
