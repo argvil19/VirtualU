@@ -1,4 +1,4 @@
-// Zach Render Controller
+
 app.controller('renderController', [
 	'$scope', 
 	'serverService',  

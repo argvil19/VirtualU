@@ -14,7 +14,7 @@ app.controller('codeCtrlC10S1', function($scope, $http) {
     $scope.q7 = "7. What is num resulting from the code below? <br> <code>A = [4  -2  5; 3  7  -6]<br><br>num = A(1,1);<br>for m = 1:2<br>&ensp;for n = 1:3<br>&ensp;&ensp;if A(m,n) > num<br>&ensp;&ensp;&ensp;num = A(m,n)<br>&ensp;&ensp;end<br>&ensp;end<br>end<br> </code>"
     $scope.q8 = "8. What is z after the code below executes? <br> <code>var = [-3  4  -4  5  0  -2  6  1  4  8];<br>x = 5;<br>index = 1;<br>while x>2<br>&ensp;z(index) = var(2*x);<br>&ensp;index = index + 2;<br>&ensp;x = x - 1;<br>end<br>z(2+index) = 1;<br> </code>"
     $scope.q9 = "9. What is count after the code below executes? <br> <code>n = [0  2  1  -2  -1  3  -3];<br>count = 0;<br>index = 1;<br>while n(index) < 3<br>&ensp;count = 2*n(index);<br>ensp;index = index +1;<br>end<br> </code>"
-    /*<br> <code> </code>*/
+
     $scope.q1options = [
         { text: "[0 6 5]", hints: "junk is not defined as an array", correct: 0, type: "mc" },
         { text: "[6 -1 0]", hints: "junk not defined as array; there is a cumulative sum", correct: 0, type: "mc" },
@@ -22,9 +22,6 @@ app.controller('codeCtrlC10S1', function($scope, $http) {
         { text: "5", hints: "", correct: 1, type: "mc" },
     ]
 
-    /*    { text: "", hints: "", correct: 0, type: "mc" },
-        { text: "", hints: "", correct: 0, type: "mc"},
-        { text: "", hints: "", correct: 1, type: "mc" },*/
 
     $scope.q2options = [
         { text: "10", hints: "Check out chapter 10 tutorials", correct: 1, type: "sa" }, //sa == short answer
@@ -56,11 +53,11 @@ app.controller('codeCtrlC10S1', function($scope, $http) {
     ]
 
     $scope.q7options = [
-    { text: "[5 7]", hints: "num isn’t defined as an array", correct: 0, type: "mc" },
-    { text: "[0 0 5 0 7 0]", hints: "num is not defined as an array", correct: 0, type: "mc" },
-    { text: "[5 7]", hints: "num not defined as array", correct: 0, type: "mc" },
-    { text: "[7]", hints: "", correct: 1, type: "mc" },
-     ]
+        { text: "[5 7]", hints: "num isn’t defined as an array", correct: 0, type: "mc" },
+        { text: "[0 0 5 0 7 0]", hints: "num is not defined as an array", correct: 0, type: "mc" },
+        { text: "[5 7]", hints: "num not defined as array", correct: 0, type: "mc" },
+        { text: "[7]", hints: "", correct: 1, type: "mc" },
+    ]
 
     $scope.q8options = [
         { text: "10", hints: "Check out chapter 10 tutorials", correct: 1, type: "sa" }
