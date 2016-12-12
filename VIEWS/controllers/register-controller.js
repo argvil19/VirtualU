@@ -1,5 +1,5 @@
 
-app.controller('registerController', ['$scope', '$http', function($scope, $http){
+app.controller('registerController', ['$scope', '$http', '$location', function($scope, $http, $location){
 
   $scope.register = function(user){
     console.log('Regsitering User:', user);
@@ -11,10 +11,11 @@ app.controller('registerController', ['$scope', '$http', function($scope, $http)
 
     $http(req)
     .then(function(res){
-      
+      $location.path('/login');
     })
     .catch(function(err){
       console.log(err);
+      $scope.message = 'username already exists!';
     });
   }
 

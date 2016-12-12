@@ -15,6 +15,10 @@ var Answer = require('../models/answer.js');
 
 //************HTML SECTION***********
 
+/**
+* Authentication and Registration CRUD functionality
+* router.
+*/
 router.use('/', require('./auth-routes'));
 
 //Initial route to our views

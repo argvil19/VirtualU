@@ -2,7 +2,7 @@
 	var express = require('express'),
 		app = express(), //Creates express http server at 127.0.0.1
 		bodyParser = require('body-parser'), //Parse response body for json data
-/*		mongoose = require('mongoose'),*/
+		mongoose = require('mongoose'),
 		logger = require('morgan'), //morgan server activity logger
 		routes = require('./routes/index'), //route to our routes javascript file
 		http = require('http');
@@ -38,10 +38,10 @@
 			console.log("Init listening ...\nConnected.\nListening at http://127.0.0.1:3000\n"); //Print out dev url.
 	});
 
-/*	mongoose.Promise = require('q').Promise;
-	console.log("\nConfig Mongoose ...\nq.js set as default mongoose promise library\n");*/
+	mongoose.Promise = require('q').Promise;
+	console.log("\nConfig Mongoose ...\nq.js set as default mongoose promise library\n");
 
-/*	mongoose.connect('mongodb://localhost:27017/Test', function(err) {
+	mongoose.connect('mongodb://localhost:27017/Test', function(err) {
 
 		if (err)
 			return handleError(err);
@@ -50,7 +50,7 @@
 
 		console.log("Connecting to MongoDB ...\nConnnected.\nDatabase: Test");
 	});
-*/
+
 	// app is a callback function or an express application
 	module.exports = app;
 
