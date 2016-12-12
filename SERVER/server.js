@@ -25,7 +25,7 @@
 	app.use(express.static(__dirname + '../../client'));
 
 	//Added this line for admin
-	app.use(express.static(__dirname + '../../VIEWS'));
+	app.use(express.static(__dirname + '/../VIEWS'));
 
 
 	app.use('/', routes); //Handle all requests though our router.
@@ -55,8 +55,8 @@
 	// app is a callback function or an express application
 	module.exports = app;
 
-	if (!module.parent) {
-		http.createServer(app).listen(process.env.PORT, function() {
-			console.log("Server listening on port 3000");
-		});
-	}
+	// if (!module.parent) {
+	// 	http.createServer(app).listen(process.env.PORT, function() {
+	// 		console.log("Server listening on port 3000");
+	// 	});
+	// }
