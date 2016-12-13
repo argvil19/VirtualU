@@ -18,6 +18,6 @@ module.exports = (question, options, answer, chapter, cb) => {
       return cb({ status: 500 });
     }
 
-    return cb(null, quiz);
+    return cb(null, { data:quiz });
   });
 };
