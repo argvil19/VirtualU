@@ -1,24 +1,34 @@
-	//Creates express http server at 127.0.0.1
-	var express = require('express'),
-	    app = express(), //Creates express http server at 127.0.0.1
-	    bodyParser = require('body-parser'), //Parse response body for json data
-	    logger = require('morgan'), //morgan server activity logger
-	    routes = require('./routes/index'), //route to our routes javascript file
-	    http = require('http');
-	var port = process.env.PORT || 3000;
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
+const routes = require('./routes/index');
+const http = require('http');
+const path = require('path');
 
-	app.use(logger('dev')); //Dev logger
-	app.use(bodyParser.json({ limit: '50mb' })); //mongodb upload size limit
-	app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-	app.use('/routes', express.static(__dirname + '/routes'));
-	app.use(express.static(__dirname + '/../VIEWS')); //View for students/admins
-	app.use('/', routes); //Handle all requests though our router.
+const app = express();
 
+app.use(logger('dev'));
 
-	if (!module.parent) {
-	    http.createServer(app).listen(port, function() {
-	        console.log("Server listening on port 3000");
-	    });
-	}
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-	module.exports = app;
+// Serves static files
+app.use(express.static(path.join(__dirname, '../VIEWS')));
+
+// Server middlewares
+routes(app);
+
+app.listen(3000, (err) => {
+  if (err) {
+    throw new Error(err.message);
+  }
+
+  return console.log('Listening at port 3000');
+});
+
+module.exports = app;
+
+if (!module.parent) {
+  // Fires if server.js isn't being required from outside. Starts the server.
+  http.createServer(app);
+}
