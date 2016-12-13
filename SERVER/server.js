@@ -6,6 +6,7 @@ const http = require('http');
 const path = require('path');
 const db = require('./models/db'); // eslint-disable-line no-unused-vars
 
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use(logger('dev'));
@@ -28,12 +29,12 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   return res.status(err.status).send({ message: err.message });
 });
 
-app.listen(3000, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     throw new Error(err.message);
   }
 
-  return console.log('Listening at port 3000'); // eslint-disable-line no-console
+  return console.log(`Listening at port ${PORT}`); // eslint-disable-line no-console
 });
 
 module.exports = app;
