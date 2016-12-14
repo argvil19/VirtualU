@@ -1,5 +1,5 @@
 image: node:4.2.2
-image: octave:latest
+
 
 cache:
   paths:
@@ -11,6 +11,7 @@ services:
 
 staging:
   image: ruby:latest
+  image: octave:latest
   script:
    - gem install dpl
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
