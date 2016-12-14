@@ -1,23 +1,19 @@
 const Quiz = require('../../models/quizzes');
 
-module.exports = (question, options, answer, chapter, cb) => {
-  const chapterInt = parseInt(chapter, 10);
-  const answerInt = parseInt(answer, 10);
-
-  if (!(question && chapterInt && options.length && answerInt)) {
+module.exports = (quiz, course, chapter, cb) => {
+  if (!(quiz.length && chapter && course)) {
     return cb({ message: 'Invalid parameters', status: 400 });
   }
 
   return Quiz.create({
-    question,
-    options,
-    chapter: chapterInt,
-    answer: answerInt,
-  }, (err, quiz) => {
+    quiz,
+    chapter,
+    course,
+  }, (err, newQuiz) => {
     if (err) {
       return cb({ status: 500 });
     }
 
-    return cb(null, { data:quiz });
+    return cb(null, { data: newQuiz });
   });
 };

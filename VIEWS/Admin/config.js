@@ -11,14 +11,6 @@ app.config(['$routeProvider', function ($routeProvider) {
        templateUrl: 'Admin/pages/instruction.htm',
        controller: 'instructionController'
    })
-   .when('/builder', {
-       templateUrl: 'Admin/pages/builder.htm',
-       controller: 'builderController'
-   })
-   .when('/example', {
-       templateUrl: 'Admin/pages/example.htm',
-       controller: 'exampleController'
-   })
    .when('/overview', {
        templateUrl: 'Admin/pages/overview.htm',
        controller: 'overviewController'
@@ -27,9 +19,8 @@ app.config(['$routeProvider', function ($routeProvider) {
        templateUrl: 'Admin/pages/analytics.htm',
        controller: 'analyticsController'
    })
-   .when('/export', {
-       templateUrl: 'Admin/pages/export.htm',
-       controller: 'overviewController'
+   .when('/tim', {
+       templateUrl: 'Admin/pages/timindex.html'
    })
   .when('/reports', {
        templateUrl: 'Admin/pages/reports.htm',
