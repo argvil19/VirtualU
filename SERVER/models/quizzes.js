@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const quizSchema = mongoose.Schema({
-  question: String,
+  quiz: Array,
   chapter: Number,
-  options: Array,
-  answer: Number,
+  course: String,
 });
 
 const Quiz = mongoose.model('Quizzes', quizSchema);

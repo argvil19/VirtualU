@@ -6,6 +6,7 @@ module.exports = (app) => {
     /* GET Quiz questions
         Params:
         - chapter: INTEGER. Quiz chapter
+        - course: STRING. Quiz course.
     */
     if (!req.query.chapter) {
       return next({ message: 'Invalid parameters', status: 400 });
@@ -23,12 +24,14 @@ module.exports = (app) => {
   app.post('/quiz/', (req, res, next) => {
     /* Creates a new Quiz question
       Params:
-      - question: STRING. Question name.
-      - options: ARRAY. Quizz options.
-      - answer: INTEGER. Index in options of the answer.
-      - chapter: INTEGER. Chapter where this quiz belongs.
+      - quiz: ARRAY. Every quiz item is an object that contains:
+        - questionBody: ARRAY. Every questionBody item is an object. Might have a {title} OR {code}.
+        - options: ARRAY. Every options item if an object. Contains {optionBody} [hints].
+        - answer: INTEGER. Index in options of the answer.
+      - chapter: INTEGER. Chapter where it belongs.
+      - course: STRING. Course where it belongs.
     */
-    newQuiz(req.body.question, req.body.options, req.body.answer, req.body.chapter, (err, quiz) => {
+    newQuiz(req.body.quiz, req.body.course, req.body.chapter, (err, quiz) => {
       if (err) {
         return next(err);
       }
