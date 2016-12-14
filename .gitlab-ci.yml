@@ -12,7 +12,6 @@ services:
 staging:
   image: ruby:latest
   script:
-   - gem install octave-ruby
    - gem install dpl
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
 
