@@ -12,7 +12,7 @@ services:
 staging:
   image: ruby:latest
   script:
-   - add-apt-repository ppa:octave/stable
+   - apt-add-repository ppa:octave/stable
    - apt-get update
    - apt-get install octave
    - gem install dpl
