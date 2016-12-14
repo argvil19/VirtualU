@@ -6,6 +6,7 @@ cache:
 
 services:
   - mongo
+  - octave
 
 staging:
   image: ruby:latest
