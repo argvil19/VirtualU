@@ -1,4 +1,5 @@
 image: node:4.2.2
+image: octave:latest
 
 cache:
   paths:
@@ -6,7 +7,7 @@ cache:
 
 services:
   - mongo
-  - octave
+  
 
 staging:
   image: ruby:latest
