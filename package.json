@@ -35,7 +35,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "nodejs SERVER/server.js"
+    "start": "node SERVER/server.js"
   },
   "author": "Q",
   "license": "ISC"
