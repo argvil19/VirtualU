@@ -16,9 +16,9 @@ This is a learning management platform that teaches MATLAB
   * https://github.com/airbnb/javascript 
 
 #### modular programming:
-*  write modular code - seperate logic and interfaces 
-*  this will reduce future headache and improve your experience as a team
+*  write modular code - separate logic and interfaces 
+*  this will reduce future headache and improve our experience as a team
 
 #### linter:
 * linter has been configured. If using sublime ide : install eslint and sublimelinter
-* other ide : please check google
+* other ide : check https://www.google.com/
