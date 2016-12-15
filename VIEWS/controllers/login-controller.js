@@ -11,10 +11,11 @@ app.controller('loginController', ['$scope', 'httpService', function($scope, htt
       method: 'POST',
       data: JSON.stringify(user),
       successCallback: function(res){
-        $scope.message = res.data;
+        $scope.message = res.data.message;
+        localStorage.setItem('jwtToken', res.data.token);  // localStorage to save jwtToken for secure api calls.
       },
       errorCallack: function(err){
-        $scope.message = err.data;
+        $scope.message = err.data.message;
       }
     });
 
