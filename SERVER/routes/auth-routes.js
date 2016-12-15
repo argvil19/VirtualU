@@ -1,23 +1,9 @@
 'use strict';
 
-let router = require('express').Router();
-let userModel = require('../models/user');
+const router = require('express').Router();
+const userModel = require('../models/user');
 
-let JwtStrategy = require('passport-jwt').Strategy,
-    ExtractJwt = require('passport-jwt').ExtractJwt,
-    passport = require('passport'),
-    jwt = require('jsonwebtoken');
-
-const JWT_STATEGY_OPTIONS = {jwtFromRequest: ExtractJwt.fromAuthHeader(), secretOrKey: 'secret'};
-
-passport.use(new JwtStrategy(JWT_STATEGY_OPTIONS,
-            (jwt_payload, done) => {
-              userModel.findOne({id: jwt_payload.sub}, (err, user) => {
-                if(err) return done(err, false);
-                if(user) return done(null, user);
-                else return done(null, false);
-              });
-            }));
+const jwtStrategy = require('../middlewares/passport-jwt-strategy');
 
 router.post('/register', (req, res, next) => {
   userModel.create(req.body, (err, user) => {
@@ -38,7 +24,7 @@ console.log(req.body);
     }else {
       if(req.body.password === user.password){
         let payload = {id: user.id};
-        let token = jwt.sign(payload, JWT_STATEGY_OPTIONS.secretOrKey);
+        let token = jwtStrategy.createJwtToken(payload);
         res.status(200).send({message: "Login Successfull", token: token});
       }
       else res.status(401).send({message: 'Username/Password did\'nt match'});

@@ -5,10 +5,11 @@
 		mongoose = require('mongoose'),
 		logger = require('morgan'), //morgan server activity logger
 		routes = require('./routes/index'), //route to our routes javascript file
-		http = require('http');
+		http = require('http'),
+		passport = require('passport');
 
 	app.use(logger('dev')); //Dev logger
-
+	app.use(passport.initialize());
 
 	//app.use(bodyParser.json()); //Parse response body into JSON
 	/*app.use(bodyParser.urlencoded({
