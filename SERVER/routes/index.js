@@ -13,6 +13,8 @@ var Panel = require('../models/panel.js');
 //Ref to answer model
 var Answer = require('../models/answer.js');
 
+const passport = require('passport');
+
 //************HTML SECTION***********
 
 /**

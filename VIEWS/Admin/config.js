@@ -42,5 +42,28 @@ app.config(['$routeProvider', function ($routeProvider) {
   .when('/reports', {
        templateUrl: 'Admin/pages/reports.htm',
        controller: 'overviewController'
-   });
+   })
+   .otherwise({ redirectTo: '/login'});
+}]);
+
+/**
+* Interceptor for adding the jwt token to all the http
+* request by $http service. Jwt token is needed to authorize
+* the user at the backend, token is saved in localStorage at
+* the time of log in.
+**/
+app.factory('httpRequestInterceptor', function(){
+  return {
+    request: function(config){
+      console.log('interceptor loaded!', localStorage.getItem('jwtToken'));
+        config.headers['Authorization'] = "JWT " + localStorage.getItem('jwtToken');
+
+        return config;
+    }
+  };
+});
+
+// registering the interceptor.
+app.config(['$httpProvider', function($httpProvider){
+  $httpProvider.interceptors.push('httpRequestInterceptor');
 }]);

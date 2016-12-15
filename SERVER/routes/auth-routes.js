@@ -1,3 +1,10 @@
+
+/**
+  * router for all the auth related requests
+  *
+  * @author Arpit Goyal
+**/
+
 'use strict';
 
 const router = require('express').Router();
@@ -15,10 +22,8 @@ router.post('/register', (req, res, next) => {
   });
 });
 
+userModel.findOne({username: req.body.username}, (err, user) => {
 router.post('/login', (req, res) => {
-console.log(req.body);
-  userModel.findOne({username: req.body.username}, (err, user) => {
-    console.log('user', user);
     if(err || !user){
       res.status(401).send({message:"Username does\'nt exists!"});
     }else {
