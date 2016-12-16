@@ -2,7 +2,7 @@
   "name": "hvu-backend",
   "version": "1.0.0",
   "description": "Server and API for Hanshaw Virtual University",
-  "main": "./SERVER/server.js",
+  "main": "server.js",
   "engines": {
     "node": "4.2.2"
   },
@@ -16,23 +16,16 @@
     "fs": "^0.0.2",
     "graceful-fs": "^4.1.11",
     "http": "^0.0.0",
-    "jsonwebtoken": "^7.2.1",
     "mongoose": "^4.2.5",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
     "node-simple-router": "^0.9.4-2",
-    "passport": "^0.3.2",
-    "passport-jwt": "^2.2.1",
     "q": "^1.4.1",
     "should": "^7.1.1",
     "supertest": "^1.1.0",
     "zombie": "^3.1.1"
   },
   "devDependencies": {
-    "browser-sync": "^2.18.2",
-    "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1",
-    "gulp-watch": "^4.3.11",
     "mocha": "^2.3.3"
   },
   "scripts": {
