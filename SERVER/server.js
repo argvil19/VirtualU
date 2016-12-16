@@ -1,62 +1,48 @@
-	//Creates express http server at 127.0.0.1
-	var express = require('express'),
-		app = express(), //Creates express http server at 127.0.0.1
-		bodyParser = require('body-parser'), //Parse response body for json data
-		mongoose = require('mongoose'),
-		logger = require('morgan'), //morgan server activity logger
-		routes = require('./routes/index'), //route to our routes javascript file
-		http = require('http'),
-		passport = require('passport');
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
+const routes = require('./routes/index');
+const http = require('http');
+const path = require('path');
+const db = require('./models/db'); // eslint-disable-line no-unused-vars
+const mongoose = require('mongoose');
+const PORT = process.env.PORT || 8080;
+const app = express();
+const passport = require('passport');
 
-	app.use(logger('dev')); //Dev logger
-	app.use(passport.initialize());
+app.use(logger('dev'));
+app.use(passport.initialize());
 
-	//app.use(bodyParser.json()); //Parse response body into JSON
-	/*app.use(bodyParser.urlencoded({
-		extended: true
-	})); //Not sure really.*/
-	app.use(bodyParser.json({limit: '50mb'}));
-	app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-	//app.use(bodyParser({uploadDir:'./uploads'}));
+// Serves static files
+app.use(express.static(path.join(__dirname, '../VIEWS')));
 
-	app.use('/routes', express.static(__dirname + '/routes'));
+// Server middlewares
+routes(app);
 
-	//Send static files from client
-	app.use(express.static(__dirname + '../../client'));
+// Error middleware
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  if (err.status === 500) {
+    return res.sendStatus(500);
+  }
 
-	//Added this line for admin
-	app.use(express.static(__dirname + '../../VIEWS'));
+  return res.status(err.status).send({ message: err.message });
+});
 
-	app.use('/', routes); //Handle all requests though our router.
+//app.use('/', routes); //Handle all requests though our router.
+app.listen(PORT, (err) => {
+  if (err) {
+    throw new Error(err.message);
+  }
 
-	//Start our server listening on port 3000
-	app.listen(3000, function(err) {
-		//Handle error
-		if (err)
-			return handleError(err);
-		else
-			console.log("Init listening ...\nConnected.\nListening at http://127.0.0.1:3000\n"); //Print out dev url.
-	});
+  return console.log(`Listening at port ${PORT}`); // eslint-disable-line no-console
+});
 
-	mongoose.Promise = require('q').Promise;
-	console.log("\nConfig Mongoose ...\nq.js set as default mongoose promise library\n");
+module.exports = app;
 
-	mongoose.connect('mongodb://localhost:27017/Test', function(err) {
-
-		if (err)
-			return handleError(err);
-		else
-			var db = mongoose.connection;
-
-		console.log("Connecting to MongoDB ...\nConnnected.\nDatabase: Test");
-	});
-
-	// app is a callback function or an express application
-	module.exports = app;
-
-	if (!module.parent) {
-		http.createServer(app).listen(process.env.PORT, function() {
-			console.log("Server listening on port 3000");
-		});
-	}
+if (!module.parent) {
+  // Fires if server.js isn't being required from outside. Starts the server.
+  http.createServer(app);
+}
