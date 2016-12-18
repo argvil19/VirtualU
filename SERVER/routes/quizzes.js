@@ -8,11 +8,11 @@ module.exports = (app) => {
         - chapter: INTEGER. Quiz chapter
         - course: STRING. Quiz course.
     */
-    if (!req.query.chapter) {
+    if (!(req.query.chapter && req.query.course)) {
       return next({ message: 'Invalid parameters', status: 400 });
     }
 
-    return getQuiz(parseInt(req.query.chapter, 10), (err, quiz) => {
+    return getQuiz(req.query.course, req.query.chapter, (err, quiz) => {
       if (err) {
         return next(err);
       }
