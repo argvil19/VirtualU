@@ -22,7 +22,6 @@ app.controller('codeCtrlC10S1', function($scope, $http) {
         { text: "5", hints: "", correct: 1, type: "mc" },
     ]
 
-
     $scope.q2options = [
         { text: "10", hints: "Check out chapter 10 tutorials", correct: 1, type: "sa" }, //sa == short answer
 

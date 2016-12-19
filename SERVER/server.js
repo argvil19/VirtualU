@@ -16,7 +16,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Serves static files
-app.use(express.static(path.join(__dirname, '../VIEWS')));
+app.use(express.static(path.join(__dirname, './public')));
 
 // Authentication middleware
 app.use(auth);

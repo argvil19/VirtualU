@@ -4,8 +4,6 @@ app.controller('codeCtrlC3S1', function($scope, $http) {
 
     $scope.q1 = "1. Select all options below which calculate tan(45 degree) and assigns the result to a variable x. Note: 180 degree=pi radians = 3.1415 radians." +
     ""
-        /*<br> <code> </code>*/
-
 
     $scope.q2 = "2. Select all options below which calculate . Assume that values for x and z exist in the workspace."
     +""
