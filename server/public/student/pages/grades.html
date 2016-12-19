@@ -1,0 +1,17 @@
+
+<div ng-controller="GradesCtrl" >
+<h1> Hello {{user.name}}!</h1>
+
+<h3>Here is your report:</h3> 
+<br>
+
+
+<div ng-repeat="c in user.report">
+<h4>{{c.title}} : </h4>
+Score: {{c.score}}% <br>
+Completion Status: {{c.status}} <br>
+Number of attempt: {{c.attempt}}<br>
+Last attempt: {{c.attemptDate}}<br><br>
+<br>
+</div>
+</div>

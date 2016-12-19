@@ -1,0 +1,15 @@
+<div ng-controller="codeCtrlC5S5" ng-init="Shuffle()">
+    <div ng-repeat="q in questions track by $index">
+        <h4 ng-bind-html="q.question">{{q.question}}</h4>
+        <form name="myForm" ng-controller="codeCtrlC5S5">
+            <div ng-repeat="n in q.options track by $index">
+                <label>
+                    <input type="checkbox" ng-model="q.options[$index].chosen" style="float: left; margin-right: 3px">
+                    <label ng-bind-html=n.text style="float: left"></label>
+                </label>
+            </div>
+            <button type="button" ng-click="CheckAnswer(q.options)">Submit</button>
+            <br> {{q1hints}}
+        </form>
+    </div>
+</div>
