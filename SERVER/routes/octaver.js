@@ -5,7 +5,7 @@ const exec = require('child-process-promise').exec;
 
 // Returns a promise when writing to our temp file
 const writeToFile = input => Q.Promise((resolve, reject) => {
-  fs.writeFile(path.join(__dirname, '../../OCTAVE/user-code.m'), input, (err) => {
+  fs.writeFile(path.join(__dirname, '../OCTAVE/user-code.m'), input, (err) => {
     if (err) {
       return reject(err);
     }
@@ -22,11 +22,11 @@ module.exports = (app) => {
 
     writeToFile(code).then((result) => {
       if (result === 'Success') {
-        exec(`octave -q ${path.join(__dirname, '../../OCTAVE/pizza.m')}`).then((results) => {
+        exec(`octave -q ${path.join(__dirname, '../OCTAVE/pizza.m')}`).then((results) => {
           console.log('success!');
           const stdout = results.stdout;
           const stderr = results.stderr;
-          const workspace = fs.readFileSync(path.join(__dirname, '../../OCTAVE/jsondata'), 'utf-8');
+          const workspace = fs.readFileSync(path.join(__dirname, '../OCTAVE/jsondata'), 'utf-8');
 
           console.log(stdout);
           console.log(stderr);

@@ -41,8 +41,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node SERVER/server.js",
-    "build": "webpack ./CLIENT/index.js"
+    "start": "node server/server.js",
+    "build": "webpack ./client/index.js"
   },
   "author": "Q",
   "license": "ISC"
