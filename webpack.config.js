@@ -4,18 +4,17 @@ module.exports = {
         path: './client/',
         filename: "bundle.js"
     },
-    module: {
-        loaders: [{
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                  presets: [["es2015","react"]],
-                  plugins: ['transform-runtime']
-                },
-            },
-            { test: /\.css$/, loader: "style!css" }
-        ],
-    },
-};
-
+      module: {
+        loaders: [
+          {
+            test: /.jsx?$/,
+            loader: 'babel-loader',
+            exclude: /(node_modules|bower_components)/,
+            query: {
+              presets: ['es2015', 'react'],
+              plugins: ['transform-runtime']
+            }
+          }
+        ]
+      },
+    };
