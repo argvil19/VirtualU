@@ -1,3 +1,8 @@
+'use strict'; // eslint-disable-line strict
+
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
     entry: './client/index.js',
     output: {
@@ -6,8 +11,9 @@ module.exports = {
     },
       module: {
         loaders: [
+        { test: /\.css$/, loader: "style!css" },
           {
-            test: /.jsx?$/,
+            test: /\.jsx?$/,
             loader: 'babel-loader',
             exclude: /(node_modules|bower_components)/,
             query: {
@@ -15,6 +21,7 @@ module.exports = {
               plugins: ['transform-runtime']
             }
           }
+
         ]
       },
     };
