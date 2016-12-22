@@ -8,15 +8,17 @@ import {
 import { ReduxAsyncConnect }        from 'redux-connect';
 import App                          from './components/App';
 import Homepage                     from './components/Homepage';
+import {
+  LoginPage,
+  RegisterPage
+}                                   from './components/User';
 
 export default (
   <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={browserHistory}>
     <Route path='/' component={App}>
       <IndexRoute component={Homepage} />
-      <Route path='/user'>
-        <Route path='/logout' />
-        <Route path='/profile' />
-      </Route>
+      <Route path='/login' component={LoginPage} />
+      <Route path='/register' component={RegisterPage} />
       <Route path='/quizes' />
       <Route path='/quize/:id' />
     </Route>

@@ -2,7 +2,7 @@ const newQuiz = require('../controllers/quizzes/new_quiz');
 const getQuiz = require('../controllers/quizzes/get_quizzes');
 
 module.exports = (app) => {
-  app.get('/quiz/get?', (req, res, next) => {
+  app.get('/API/quiz/get?', (req, res, next) => {
     /* GET Quiz questions
         Params:
         - chapter: INTEGER. Quiz chapter
@@ -21,7 +21,7 @@ module.exports = (app) => {
     });
   });
 
-  app.post('/quiz/', (req, res, next) => {
+  app.post('/API/quiz/', (req, res, next) => {
     /* Creates a new Quiz question
       Params:
       - quiz: ARRAY. Every quiz item is an object that contains:

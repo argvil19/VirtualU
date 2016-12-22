@@ -60,8 +60,6 @@ class App extends Component {
       userAgent: this.props.userAgent
     });
 
-    console.log(this.props.user);
-
     const rightButton = this.props.user.logged ?
       (
         <IconMenu
@@ -81,9 +79,17 @@ class App extends Component {
         </Link>
       );
 
+    const styles = {
+      root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around'
+      }
+    };
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
+        <div style={styles.root}>
           <AppBar
             title={<Link className='logo' to='/'>HVU</Link>}
             onLeftIconButtonTouchTap={this.handleToggleDrawer}
@@ -92,6 +98,7 @@ class App extends Component {
 
           <Drawer
             docked={false}
+            width={250}
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >

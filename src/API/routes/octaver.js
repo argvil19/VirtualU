@@ -15,7 +15,7 @@ const writeToFile = input => Q.Promise((resolve, reject) => {
 
 
 module.exports = (app) => {
-  app.post('/api/POST/octave', (req, res) => {
+  app.post('/API/POST/octave', (req, res) => {
     const code = req.body.code;
 
     console.log(`Body: ${JSON.stringify(req.body)}`);

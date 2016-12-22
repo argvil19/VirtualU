@@ -31,6 +31,7 @@ function errorRegister(errors) {
 }
 
 function shouldFetchRegister(state) {
+  console.log('shouldFetch');
   const user = state.user;
 
   if (user.loading) {
@@ -40,10 +41,11 @@ function shouldFetchRegister(state) {
   }
 }
 
-function fetchRegisterDo(login, password) {
+function fetchRegisterDo(username, email, password) {
+  console.log('fetchDo');
   return dispatch => {
     dispatch(requestRegister());
-    return fetch('/API/user/register', {
+    return fetch('/API/user', {
       method: 'post',
       credentials: 'same-origin',
       headers: {
@@ -51,7 +53,8 @@ function fetchRegisterDo(login, password) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...login,
+        ...username,
+        ...email,
         ...password
       })
     })
@@ -60,15 +63,13 @@ function fetchRegisterDo(login, password) {
   };
 }
 
-export function fetchRegister(login, password, confirm) {
+export function fetchRegister(username, email, password) {
+  console.log('fetch');
   return (dispatch, getState) => {
-    if (password !== confirm) {
-      dispatch(errorRegister({
-        registerConfirm: 'Confirm password is incorrect!'
-      }));
-    } else if (shouldFetchRegister(getState())) {
+    console.log(getState());
+    if (shouldFetchRegister(getState())) {
       dispatch(requestRegister());
-      return dispatch(fetchRegisterDo(login, password));
+      return dispatch(fetchRegisterDo(username, email, password));
     }
   };
 }
@@ -84,6 +85,8 @@ function requestLogin() {
 }
 
 function recieveLogin(json) {
+  console.log(json);
+
   if (json.errors) {
     return errorLogin(json.errors);
   }
@@ -113,10 +116,10 @@ function shouldFetchLogin(state) {
   }
 }
 
-function fetchLoginDo(login, password) {
+function fetchLoginDo(username, password) {
   return dispatch => {
     dispatch(requestRegister());
-    return fetch('/API/user/login', {
+    return fetch('/API/login', {
       method: 'post',
       credentials: 'same-origin',
       headers: {
@@ -124,7 +127,7 @@ function fetchLoginDo(login, password) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...login,
+        ...username,
         ...password
       })
     })
@@ -133,11 +136,11 @@ function fetchLoginDo(login, password) {
   };
 }
 
-export function fetchLogin(login, password) {
+export function fetchLogin(username, password) {
   return (dispatch, getState) => {
     if (shouldFetchLogin(getState())) {
       dispatch(requestLogin());
-      return dispatch(fetchLoginDo(login, password));
+      return dispatch(fetchLoginDo(username, password));
     }
   };
 }

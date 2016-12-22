@@ -1,7 +1,7 @@
 const userController = require('../controllers/user');
 
 module.exports = (app) => {
-  app.post('/user/', (req, res, next) => {
+  app.post('/API/user/', (req, res, next) => {
     /* Register a new user
         Params:
         - username: STRING.
@@ -23,7 +23,7 @@ module.exports = (app) => {
     });
   });
 
-  app.post('/login/', (req, res, next) => {
+  app.post('/API/login/', (req, res, next) => {
     /* Authenticate user. Returns JWT
         Params:
         - username: STRING.
