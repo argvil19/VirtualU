@@ -14,8 +14,10 @@ import {
 const initialState = {
   _id: '',
   login: '',
+  logged: false,
   isAdmin: false,
   loading: false,
+  jwt: '',
   loaded: false,
   errors: {}
 };

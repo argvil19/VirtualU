@@ -78,7 +78,8 @@ function renderHTML(componentHTML, initialState) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>HVU</title>
           <link rel="icon" href="/favicon.ico">
-          <link rel="stylesheet" href="${assetUrl}/assets/styles.css">
+          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+          <link rel="stylesheet" href="${assetUrl}/public/assets/styles.css">
       </head>
       <body>
         <div id="react-view">${componentHTML}</div>

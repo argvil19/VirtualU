@@ -1,9 +1,23 @@
 import React, { Component, PropTypes }      from 'react';
 import { connect }                          from 'react-redux';
+import { Link }                             from 'react-router';
 import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider                     from 'material-ui/styles/MuiThemeProvider';
-import { green100, green500, green700 }     from 'material-ui/styles/colors';
-import { AppBar, Drawer }                   from 'material-ui';
+import MoreVertIcon                         from 'material-ui/svg-icons/navigation/more-vert';
+import {
+  deepPurple100,
+  deepPurple500,
+  deepPurple700
+}                                           from 'material-ui/styles/colors';
+import {
+  AppBar,
+  Drawer,
+  MenuItem,
+  IconMenu,
+  IconButton,
+  FontIcon,
+  FlatButton
+}                                           from 'material-ui';
 import injectTapEventPlugin                 from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -13,6 +27,7 @@ import './App.css';
 const propTypes = {
   user: PropTypes.object,
   children: PropTypes.node,
+  menu: PropTypes.array,
   userAgent: PropTypes.string,
   dispatch: PropTypes.func
 };
@@ -26,7 +41,7 @@ class App extends Component {
       showDrawer: false
     };
   }
-  handleToggleDrawer(e) {
+  handleToggleDrawer() {
     this.setState({
       showDrawer: !this.state.showDrawer
     });
@@ -34,9 +49,9 @@ class App extends Component {
   render() {
     const muiTheme = getMuiTheme({
       palette: {
-        primary1Color: green500,
-        primary2Color: green700,
-        primary3Color: green100
+        primary1Color: deepPurple500,
+        primary2Color: deepPurple700,
+        primary3Color: deepPurple100
       }
     }, {
       avatar: {
@@ -45,11 +60,55 @@ class App extends Component {
       userAgent: this.props.userAgent
     });
 
+    console.log(this.props.user);
+
+    const rightButton = this.props.user.logged ?
+      (
+        <IconMenu
+          iconButtonElement={
+            <IconButton><MoreVertIcon /></IconButton>
+          }
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        >
+          <MenuItem primaryText='Help' />
+          <MenuItem primaryText='Sign out' />
+        </IconMenu>
+      ) :
+      (
+        <Link to='/login' className='login-button'>
+          <FlatButton style={{ color: '#fff', margin: '6px' }} label='Login' />
+        </Link>
+      );
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <AppBar title='HVU' onLeftIconButtonTouchTap={this.handleToggleDrawer} />
-          <Drawer docked={false} open={this.state.showDrawer} />
+          <AppBar
+            title={<Link className='logo' to='/'>HVU</Link>}
+            onLeftIconButtonTouchTap={this.handleToggleDrawer}
+            iconElementRight={rightButton}
+          />
+
+          <Drawer
+            docked={false}
+            open={this.state.showDrawer}
+            onRequestChange={(showDrawer) => this.setState({ showDrawer })}
+          >
+            {this.props.menu.map((item, i) => {
+              return (
+                <Link key={i} className='menu-link' to={item.url}>
+                  <MenuItem
+                    primaryText={item.label}
+                    rightIcon={<FontIcon className='material-icons'>{item.icon}</FontIcon>}
+                    onTouchTap={this.handleToggleDrawer}
+                    value={item.url}
+                  />
+                </Link>
+              );
+            })}
+          </Drawer>
+
           <div>
             {this.props.children}
           </div>
@@ -64,10 +123,12 @@ App.propTypes = propTypes;
 function mapStateToProps(state) {
   const user = state.user;
   const userAgent = state.theme.userAgent;
+  const menu = state.menu.items;
 
   return {
     user,
-    userAgent
+    userAgent,
+    menu
   };
 }
 
