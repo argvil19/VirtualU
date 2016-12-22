@@ -1,4 +1,4 @@
-const Quiz = require('../../models/quizzes');
+const Quiz = require('../../../models/Quiz');
 
 module.exports = (quiz, course, chapter, cb) => {
   if (!(quiz.length && chapter && course)) {

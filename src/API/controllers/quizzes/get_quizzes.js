@@ -1,4 +1,4 @@
-const Quiz = require('../../models/quizzes');
+const Quiz = require('../../../models/Quiz');
 
 module.exports = (course, chapter, cb) => {
   Quiz.find({ course, chapter: parseInt(chapter, 10) }, { __v: 0 }, (err, quiz) => {
