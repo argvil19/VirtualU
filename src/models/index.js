@@ -1,5 +1,5 @@
 import Quiz from './Quiz';
-import User from './user';
+import User from './User';
 
 export default {
   Quiz,

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-const userModel = require('../../models/user');
+const userModel = require('../../models/User');
 const jwt = require('../helpers/auth/jwt');
 const bcrypt = require('bcrypt-nodejs'); // bcrypt for password encryptation
 
