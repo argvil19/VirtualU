@@ -64,7 +64,7 @@ export function fetchRegister(login, password, confirm) {
   return (dispatch, getState) => {
     if (password !== confirm) {
       dispatch(errorRegister({
-        registerConfirm: 'Введенные пароли не совпадают!'
+        registerConfirm: 'Confirm password is incorrect!'
       }));
     } else if (shouldFetchRegister(getState())) {
       dispatch(requestRegister());
