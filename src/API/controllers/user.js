@@ -12,7 +12,10 @@ module.exports.register = (newUser, cb) => {
   const email = newUser.email;
 
   if (!(username && password && name && email)) {
-    return cb({ message: 'Missing required parameters', status: 400 });
+    return cb({
+      message: 'Missing required parameters',
+      status: 400
+    });
   }
 
   return userModel.create({
@@ -22,12 +25,17 @@ module.exports.register = (newUser, cb) => {
     password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // Encrypt password with bcrypt
   }, (err, user) => {
     if (err) {
-      return cb({ message: 'User already exists', status: 409 });
+      return cb({
+        message: 'User already exists',
+        status: 409
+      });
     }
 
     // Creates JWT.
 
-    const payload = { id: user._id };
+    const payload = {
+      id: user._id
+    };
     const token = jwt.createJwtToken(payload);
 
     return cb(null, {
@@ -43,17 +51,27 @@ module.exports.login = (userLogin, cb) => {
   const password = userLogin.password;
 
   if (!(username && password)) {
-    return cb({ message: 'Missing required parameters', status: 400 });
+    return cb({
+      message: 'Missing required parameters',
+      status: 400
+    });
   }
 
-  return userModel.findOne({ username }, (err, user) => {
+  return userModel.findOne({
+    username
+  }, (err, user) => {
     if (err || !user) {
-      return cb({ message: 'Username doesn\'t exist', status: 404 });
+      return cb({
+        message: 'Username doesn\'t exist',
+        status: 404
+      });
     }
 
     if (bcrypt.compareSync(password, user.password)) {
       // Creates and send JWT if password matches
-      const payload = { id: user._id };
+      const payload = {
+        id: user._id
+      };
       const token = jwt.createJwtToken(payload);
 
       return cb(null, {
@@ -62,6 +80,9 @@ module.exports.login = (userLogin, cb) => {
       });
     }
 
-    return cb({ message: 'Incorrect password', status: 401 });
+    return cb({
+      message: 'Incorrect password',
+      status: 401
+    });
   });
 };
