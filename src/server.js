@@ -27,7 +27,7 @@ import renderHTML from './helpers/render_html';
 
 require('./models/db'); // Setup db connection
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(logger('dev'));
@@ -52,7 +52,6 @@ app.use(auth);
 routesAPI(app);
 
 app.use((req, res, next) => {
-
   const store = configureStore({}, req);
 
   const state = store.getState();
@@ -72,7 +71,7 @@ app.use((req, res, next) => {
       return next({
         message: error.message,
         status: 500,
-        success: false,
+        success: false
       });
     }
 
@@ -80,11 +79,11 @@ app.use((req, res, next) => {
       return next({
         message: 'Not found',
         status: 404,
-        success: false,
+        success: false
       });
     }
 
-    loadOnServer({...renderProps,
+    loadOnServer({ ...renderProps,
       store
     }).then(() => {
       const componentHTML = ReactDom.renderToString(
@@ -102,7 +101,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   return res.status(err.status).send({
     error: err.message,
-    success: err.success,
+    success: err.success
   });
 });
 
