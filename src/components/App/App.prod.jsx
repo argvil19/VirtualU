@@ -5,9 +5,9 @@ import getMuiTheme                          from 'material-ui/styles/getMuiTheme
 import MuiThemeProvider                     from 'material-ui/styles/MuiThemeProvider';
 import MoreVertIcon                         from 'material-ui/svg-icons/navigation/more-vert';
 import {
-  deepPurple100,
-  deepPurple500,
-  deepPurple700
+  indigo100,
+  indigo500,
+  indigo700
 }                                           from 'material-ui/styles/colors';
 import {
   AppBar,
@@ -49,9 +49,9 @@ class App extends Component {
   render() {
     const muiTheme = getMuiTheme({
       palette: {
-        primary1Color: deepPurple500,
-        primary2Color: deepPurple700,
-        primary3Color: deepPurple100
+        primary1Color: indigo500,
+        primary2Color: indigo700,
+        primary3Color: indigo100
       }
     }, {
       avatar: {

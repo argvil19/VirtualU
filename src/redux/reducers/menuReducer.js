@@ -6,19 +6,34 @@ const initialState = {
       icon: 'home'
     },
     {
-      label: 'Lessons',
+      label: 'Assignments',
       url: '/lessons',
       icon: 'library_books'
     },
     {
-      label: 'Quizes',
-      url: '/quizes',
-      icon: 'assignment_turned_in'
+      label: 'Course Materials',
+      url: '/materials',
+      icon: 'picture_as_pdf'
     },
     {
-      label: 'About',
-      url: '/about',
-      icon: 'description'
+      label: 'Tutorials',
+      url: '/tutorials',
+      icon: 'assignment_ind'
+    },
+    {
+      label: 'Videos',
+      url: '/videos',
+      icon: 'video_library'
+    },
+    {
+      label: 'Grades',
+      url: '/grades',
+      icon: 'stars'
+    },
+    {
+      label: 'Quizzes',
+      url: '/quizes',
+      icon: 'help'
     }
   ]
 };

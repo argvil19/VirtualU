@@ -1,7 +1,7 @@
 const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : 'http://localhost';
 
 const renderHTML = (componentHTML, initialState) => {
-    return `
+  return `
     <!DOCTYPE html>
       <html lang="ru-RU">
       <head>
