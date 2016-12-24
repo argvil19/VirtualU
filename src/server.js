@@ -29,7 +29,7 @@ require('./models/db'); // Setup db connection
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : `http://localhost:${PORT}`;
+const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '';
 
 app.use(logger('dev'));
 
