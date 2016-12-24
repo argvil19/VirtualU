@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const DB_URI = 'mongodb://localhost:27017/HVU';
+const DB_URI = process.env.NODE_ENV !== 'production'
+  ? 'mongodb://localhost:27017/HVU'
+  : 'mongodb://hvu:hvuproject@ds139448.mlab.com:39448/hvu';
 
 mongoose.connect(DB_URI);
 
