@@ -58,7 +58,11 @@ module.exports.login = (userLogin, cb) => {
   }
 
   return userModel.findOne({
-    username
+    $or: [{
+      username,
+    }, {
+      email: username,
+    }],
   }, (err, user) => {
     if (err || !user) {
       return cb({
@@ -83,6 +87,27 @@ module.exports.login = (userLogin, cb) => {
     return cb({
       message: 'Incorrect password',
       status: 401
+    });
+  });
+};
+
+module.exports.refreshToken = (oldToken, cb) => {
+  jwt.jwt.verify(oldToken, jwt.tokenSecret, (err, decoded) => {
+    if (err) {
+      return cb({
+        message: 'Malformed token',
+        status: 400,
+        success: false
+      });
+    }
+
+    const newToken = jwt.createJwtToken(decoded);
+
+    return cb(null, {
+      message: 'Token refresh was succesful',
+      status: 201,
+      success: true,
+      token: newToken
     });
   });
 };

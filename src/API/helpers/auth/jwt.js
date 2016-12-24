@@ -10,4 +10,5 @@ const createJwtToken = payload => jwt.sign({ // Creates a new JWT
 module.exports = {
   createJwtToken,
   tokenSecret: JWT_SECRET,
+  jwt,
 };
