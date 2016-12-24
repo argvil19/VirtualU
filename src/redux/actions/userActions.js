@@ -19,6 +19,10 @@ function recieveRegister(json) {
     return errorRegister(json.error);
   }
 
+  if (typeof json.token === 'undefined') {
+    return errorRegister('Connection error.');
+  }
+
   if (isBrowser) {
     localStorage.setItem('token', json.token);
   }
@@ -94,6 +98,10 @@ function requestLogin() {
 function recieveLogin(json) {
   if (json.error) {
     return errorLogin(json.error);
+  }
+
+  if (typeof json.token === 'undefined') {
+    return errorRegister('Connection error.');
   }
 
   if (isBrowser) {
