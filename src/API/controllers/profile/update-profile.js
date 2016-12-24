@@ -11,7 +11,7 @@ module.exports = (newProfile, userId, cb) => {
     });
   }
 
-  Object.keys(newProfile).forEach(item => item && item.length ? toUpdate.push(item) : false);
+  Object.keys(newProfile).forEach(item => item && item.length ? toUpdate[item] = newProfile[item] : false);
 
   User.findByIdAndUpdate(userId, toUpdate, (err, profile) => {
     if (err) {
@@ -26,7 +26,6 @@ module.exports = (newProfile, userId, cb) => {
       message: 'Profile successfuly updated',
       status: 200,
       success: true,
-      data: profile
     });
   });
 };

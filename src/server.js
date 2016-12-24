@@ -84,7 +84,7 @@ app.use((req, res, next) => {
       });
     }
 
-    loadOnServer({ ...renderProps,
+    loadOnServer({...renderProps,
       store
     }).then(() => {
       const componentHTML = ReactDom.renderToString(
@@ -99,6 +99,7 @@ app.use((req, res, next) => {
 
 // Error middleware
 app.use((err, req, res, next) => {
+  console.log(err);
   return res.status(err.status).send({
     error: err.message,
     success: err.success
