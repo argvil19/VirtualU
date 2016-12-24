@@ -1,4 +1,4 @@
-const User = require('../../models/User');
+const User = require('../../../models/User');
 
 module.exports = (newProfile, userId, cb) => {
   const toUpdate = {};
