@@ -16,8 +16,19 @@ import {
   IconMenu,
   IconButton,
   FontIcon,
-  FlatButton
+  FlatButton,
+  Dialog,
+  RefreshIndicator
 }                                           from 'material-ui';
+import {
+  LoginForm,
+  RegisterForm
+}                                           from '../User';
+import {
+  refreshToken,
+  doLogout,
+  hideError
+}                                           from 'redux/actions/userActions';
 import injectTapEventPlugin                 from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -36,17 +47,63 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleToggleDrawer = this.handleToggleDrawer.bind(this);
+    this.handleLoginModal = this.handleLoginModal.bind(this);
+    this.handleRegisterModal = this.handleRegisterModal.bind(this);
+    this.handleCloseModals = this.handleCloseModals.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
 
     this.state = {
-      showDrawer: false
+      showDrawer: false,
+      showLoginModal: false,
+      showRegisterModal: false
     };
   }
+
+  componentDidMount() {
+    if (localStorage.getItem('token') && !this.props.user.logged) {
+      this.props.dispatch(refreshToken());
+    }
+  }
+
   handleToggleDrawer() {
     this.setState({
       showDrawer: !this.state.showDrawer
     });
   }
+
+  handleLoginModal() {
+    this.setState({
+      showLoginModal: true,
+      showRegisterModal: false
+    });
+    this.props.dispatch(hideError());
+  }
+
+  handleRegisterModal() {
+    this.setState({
+      showLoginModal: false,
+      showRegisterModal: true
+    });
+    this.props.dispatch(hideError());
+  }
+
+  handleCloseModals() {
+    this.setState({
+      showLoginModal: false,
+      showRegisterModal: false
+    });
+    this.props.dispatch(hideError());
+  }
+
+  handleLogout() {
+    this.props.dispatch(doLogout());
+  }
+
   render() {
+    let registerDialog = '';
+    let loginDialog = '';
+    let rightButton = '';
+
     const muiTheme = getMuiTheme({
       palette: {
         primary1Color: indigo500,
@@ -60,8 +117,8 @@ class App extends Component {
       userAgent: this.props.userAgent
     });
 
-    const rightButton = this.props.user.logged ?
-      (
+    if (this.props.user.logged) {
+      rightButton = (
         <IconMenu
           iconButtonElement={
             <IconButton><MoreVertIcon /></IconButton>
@@ -70,14 +127,82 @@ class App extends Component {
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <MenuItem primaryText='Help' />
-          <MenuItem primaryText='Sign out' />
+          <MenuItem primaryText='Sign out' onTouchTap={this.handleLogout} />
         </IconMenu>
-      ) :
-      (
-        <Link to='/login' className='login-button'>
-          <FlatButton style={{ color: '#fff', margin: '6px' }} label='Login' />
-        </Link>
       );
+    } else {
+      const indicator = this.props.user.loading
+      ? (
+        <RefreshIndicator
+          size={20}
+          left={10}
+          top={5}
+          status='loading'
+          style={{
+            display: 'inline-block',
+            position: 'relative',
+            float: 'left'
+          }}
+        />
+        )
+      : '';
+
+      const actionLoginOpen = (
+        <FlatButton
+          label='Login'
+          primary
+          onTouchTap={this.handleLoginModal}
+        />
+      );
+
+      const actionRegisterOpen = (
+        <FlatButton
+          label='Register'
+          primary
+          onTouchTap={this.handleRegisterModal}
+        />
+      );
+
+      const actionCloseModals = (
+        <FlatButton
+          label='Cancel'
+          primary
+          onTouchTap={this.handleCloseModals}
+        />
+      );
+
+      loginDialog = (
+        <Dialog
+          title='Login'
+          actions={[indicator, actionRegisterOpen, actionCloseModals]}
+          modal
+          contentStyle={{ width: '320px' }}
+          open={this.state.showLoginModal}
+          onRequestClose={this.handleCloseModals}
+          autoDetectWindowHeight
+          autoScrollBodyContent
+        >
+          <LoginForm />
+        </Dialog>
+      );
+
+      registerDialog = (
+        <Dialog
+          title='Register'
+          actions={[indicator, actionLoginOpen, actionCloseModals]}
+          modal
+          contentStyle={{ width: '320px' }}
+          open={this.state.showRegisterModal}
+          onRequestClose={this.handleCloseModals}
+          autoDetectWindowHeight
+          autoScrollBodyContent
+        >
+          <RegisterForm />
+        </Dialog>
+      );
+
+      rightButton = <FlatButton style={{ color: '#fff', margin: '6px' }} label='Login' onTouchTap={this.handleLoginModal} />;
+    }
 
     const styles = {
       root: {
@@ -119,6 +244,8 @@ class App extends Component {
           <div>
             {this.props.children}
           </div>
+          {loginDialog}
+          {registerDialog}
         </div>
       </MuiThemeProvider>
     );

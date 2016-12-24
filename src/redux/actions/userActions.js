@@ -1,5 +1,9 @@
 import fetch from 'isomorphic-fetch';
+import { isBrowser } from '../utils/helpers';
 
+/**
+ * Register actions
+ */
 export const REQUEST_REGISTER_USER = 'REQUEST_REGISTER_USER';
 export const RECIEVE_REGISTER_USER = 'RECIEVE_REGISTER_USER';
 export const ERROR_REGISTER_USER = 'ERROR_REGISTER_USER';
@@ -11,27 +15,28 @@ function requestRegister() {
 }
 
 function recieveRegister(json) {
-  if (json.errors) {
-    return errorRegister(json.errors);
+  if (json.error) {
+    return errorRegister(json.error);
+  }
+
+  if (isBrowser) {
+    localStorage.setItem('token', json.token);
   }
 
   return {
     type: RECIEVE_REGISTER_USER,
-    _id: json._id,
-    login: json.login,
-    isAdmin: false
+    token: json.token
   };
 }
 
-function errorRegister(errors) {
+function errorRegister(error) {
   return {
     type: ERROR_REGISTER_USER,
-    ...errors
+    error
   };
 }
 
 function shouldFetchRegister(state) {
-  console.log('shouldFetch');
   const user = state.user;
 
   if (user.loading) {
@@ -41,8 +46,7 @@ function shouldFetchRegister(state) {
   }
 }
 
-function fetchRegisterDo(username, email, password) {
-  console.log('fetchDo');
+function fetchRegisterDo(name, username, email, password) {
   return dispatch => {
     dispatch(requestRegister());
     return fetch('/API/user', {
@@ -53,9 +57,10 @@ function fetchRegisterDo(username, email, password) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...username,
-        ...email,
-        ...password
+        name,
+        username,
+        email,
+        password
       })
     })
       .then(response => response.json())
@@ -63,17 +68,19 @@ function fetchRegisterDo(username, email, password) {
   };
 }
 
-export function fetchRegister(username, email, password) {
-  console.log('fetch');
+export function fetchRegister(name, username, email, password) {
   return (dispatch, getState) => {
     console.log(getState());
     if (shouldFetchRegister(getState())) {
       dispatch(requestRegister());
-      return dispatch(fetchRegisterDo(username, email, password));
+      return dispatch(fetchRegisterDo(name, username, email, password));
     }
   };
 }
 
+/**
+ * Login actions
+ */
 export const REQUEST_LOGIN_USER = 'REQUEST_LOGIN_USER';
 export const RECIEVE_LOGIN_USER = 'RECIEVE_LOGIN_USER';
 export const ERROR_LOGIN_USER = 'ERROR_LOGIN_USER';
@@ -85,24 +92,24 @@ function requestLogin() {
 }
 
 function recieveLogin(json) {
-  console.log(json);
+  if (json.error) {
+    return errorLogin(json.error);
+  }
 
-  if (json.errors) {
-    return errorLogin(json.errors);
+  if (isBrowser) {
+    localStorage.setItem('token', json.token);
   }
 
   return {
     type: RECIEVE_LOGIN_USER,
-    _id: json._id,
-    login: json.login,
-    isAdmin: json.isAdmin
+    token: json.token
   };
 }
 
-function errorLogin(errors) {
+function errorLogin(error) {
   return {
     type: ERROR_LOGIN_USER,
-    ...errors
+    error
   };
 }
 
@@ -127,8 +134,8 @@ function fetchLoginDo(username, password) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...username,
-        ...password
+        username,
+        password
       })
     })
       .then(response => response.json())
@@ -145,52 +152,52 @@ export function fetchLogin(username, password) {
   };
 }
 
-export const REQUEST_LOGOUT = 'REQUEST_LOGOUT';
-export const RECIEVE_LOGOUT = 'RECIEVE_LOGOUT';
+/**
+ * Refresh token actions
+ */
+export const REQUEST_REFRESH_TOKEN = 'REQUEST_REFRESH_TOKEN';
+export const RECIEVE_REFRESH_TOKEN = 'RECIEVE_REFRESH_TOKEN';
+export const ERROR_REFRESH_TOKEN = 'ERROR_REFRESH_TOKEN';
+// TODO:  implement refresh request
 
-function requestLogout() {
-  return {
-    type: REQUEST_LOGOUT
+export function refreshToken() {
+  return (dispatch) => {
+    return dispatch({
+      type: RECIEVE_REFRESH_TOKEN,
+      token: localStorage.getItem('token') || ''
+    });
   };
 }
 
-function recieveLogout() {
-  return {
-    type: RECIEVE_LOGOUT
-  };
-}
+/**
+ * Logout actions
+ */
+export const DO_LOGOUT = 'DO_LOGOUT';
 
-function shouldFetchLogout(state) {
-  const user = state.user;
-
-  if (user.loading) {
-    return false;
-  } else  if (user.loaded || user.login) {
-    return true;
-  }
-}
-
-function fetchLogoutDo() {
-  return dispatch => {
-    dispatch(requestRegister());
-    return fetch('/API/user/logout', {
-      method: 'post',
-      credentials: 'same-origin',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(() => dispatch(recieveLogout()));
-  };
-}
-
-export function fetchLogout() {
-  return (dispatch, getState) => {
-    if (shouldFetchLogout(getState())) {
-      dispatch(requestLogout());
-      return dispatch(fetchLogoutDo());
+export function doLogout() {
+  return (dispatch) => {
+    if (isBrowser) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('name');
+      localStorage.removeItem('username');
     }
+
+    return dispatch({
+      type: DO_LOGOUT
+    });
   };
 }
+
+/**
+ * Simple actions
+ */
+export const HIDE_ERROR = 'HIDE_ERROR';
+
+export function hideError() {
+  return (dispatch) => {
+    return dispatch({
+      type: HIDE_ERROR
+    });
+  };
+}
+
