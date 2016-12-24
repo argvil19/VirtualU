@@ -29,6 +29,7 @@ require('./models/db'); // Setup db connection
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : `http://localhost:${PORT}`;
 
 app.use(logger('dev'));
 
@@ -42,7 +43,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Serves static files
-app.use('/public', express.static(path.join(__dirname, './public')));
+app.use('/public', express.static(path.join(__dirname, '../public')));
 // TODO: remove static content files after the React implementation will done
 
 // Authentication middleware
@@ -91,8 +92,7 @@ app.use((req, res, next) => {
           <ReduxAsyncConnect {...renderProps} />
         </Provider>
       );
-
-      res.send(renderHTML(componentHTML, store.getState()));
+      res.send(renderHTML(componentHTML, store.getState(), assetUrl));
     });
   });
 });
