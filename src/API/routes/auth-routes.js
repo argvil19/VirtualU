@@ -30,7 +30,7 @@ module.exports = (app) => {
         - password: STRING.
       If no params are provided, it tries to refresh auth token. Must provide old JWT.
     */
-    if (!req.body) {
+    if (!Object.keys(req.body).length) {
       return userController.refreshToken(req.headers.jwt, (err, data) => {
         if (err) {
           return next(err);
