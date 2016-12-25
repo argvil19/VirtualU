@@ -227,6 +227,7 @@ class App extends Component {
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >
+          <AppBar title="HVU Menu" />
             {this.props.menu.map((item, i) => {
               return (
                 <Link key={i} className='menu-link' to={item.url}>
