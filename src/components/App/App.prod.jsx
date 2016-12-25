@@ -223,7 +223,7 @@ class App extends Component {
 
           <Drawer
             docked={false}
-            width={250}
+            width={300}
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >
@@ -232,7 +232,7 @@ class App extends Component {
                 <Link key={i} className='menu-link' to={item.url}>
                   <MenuItem
                     primaryText={item.label}
-                    rightIcon={<FontIcon className='material-icons'>{item.icon}</FontIcon>}
+                    leftIcon={<FontIcon className='material-icons'  style={{color: '#364B9F'}} >{item.icon}</FontIcon>}
                     onTouchTap={this.handleToggleDrawer}
                     value={item.url}
                   />
