@@ -212,6 +212,8 @@ class App extends Component {
       }
     };
 
+    const imgUrl = 'https://goo.gl/KzEDSx';
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.root}>
@@ -223,16 +225,20 @@ class App extends Component {
 
           <Drawer
             docked={false}
-            width={250}
+            width={300}
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >
+          <AppBar
+            title="HVU Menu"
+            iconElementLeft={<img src={imgUrl}/>}
+          />
             {this.props.menu.map((item, i) => {
               return (
                 <Link key={i} className='menu-link' to={item.url}>
                   <MenuItem
                     primaryText={item.label}
-                    rightIcon={<FontIcon className='material-icons'>{item.icon}</FontIcon>}
+                    leftIcon={<FontIcon className='material-icons'  style={{color: '#364B9F'}} >{item.icon}</FontIcon>}
                     onTouchTap={this.handleToggleDrawer}
                     value={item.url}
                   />
