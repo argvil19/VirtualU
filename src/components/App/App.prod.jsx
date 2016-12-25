@@ -212,6 +212,8 @@ class App extends Component {
       }
     };
 
+    const imgUrl = 'https://goo.gl/KzEDSx';
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.root}>
@@ -227,7 +229,10 @@ class App extends Component {
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >
-          <AppBar title="HVU Menu" />
+          <AppBar
+            title="HVU Menu"
+            iconElementLeft={<img src={imgUrl}/>}
+          />
             {this.props.menu.map((item, i) => {
               return (
                 <Link key={i} className='menu-link' to={item.url}>
