@@ -9,7 +9,7 @@ import {
 import {
   fetchLogin,
   hideError
-}                                           from 'redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 
 const propTypes = {
   user: PropTypes.object,
@@ -42,6 +42,7 @@ class LoginForm extends Component {
     const errorMessage = this.props.user.error
     ? (
       <Paper
+        id='errorMessage'
         style={{
           color: '#ff0000',
           padding: '8px',
@@ -58,6 +59,7 @@ class LoginForm extends Component {
       <div>
         <div>
           <TextField
+            id='inputUsername'
             type='text'
             hintText='Username / Email'
             onChange={this.handleChange}
@@ -66,6 +68,7 @@ class LoginForm extends Component {
         </div>
         <div>
           <TextField
+            id='inputPassword'
             style={{ width: '100%' }}
             type='password'
             hintText='Password'
@@ -76,6 +79,7 @@ class LoginForm extends Component {
         <div style={{ textAlign: 'center' }}>
           {errorMessage}
           <FlatButton
+            id='loginButton'
             backgroundColor='#3f51b5'
             hoverColor='#a4c639'
             style={{ width: '100%', color: '#fff' }}

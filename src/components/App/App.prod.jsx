@@ -28,7 +28,7 @@ import {
   refreshToken,
   doLogout,
   hideError
-}                                           from 'redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 import injectTapEventPlugin                 from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -229,16 +229,16 @@ class App extends Component {
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
           >
-          <AppBar
-            title="HVU Menu"
-            iconElementLeft={<img src={imgUrl}/>}
-          />
+            <AppBar
+              title='HVU Menu'
+              iconElementLeft={<img src={imgUrl}/>}
+            />
             {this.props.menu.map((item, i) => {
               return (
                 <Link key={i} className='menu-link' to={item.url}>
                   <MenuItem
                     primaryText={item.label}
-                    leftIcon={<FontIcon className='material-icons'  style={{color: '#364B9F'}} >{item.icon}</FontIcon>}
+                    leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
                     onTouchTap={this.handleToggleDrawer}
                     value={item.url}
                   />

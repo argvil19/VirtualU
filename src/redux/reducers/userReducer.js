@@ -14,7 +14,7 @@ import {
   DO_LOGOUT,
 
   HIDE_ERROR
-}                                           from 'redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 
 const initialState = {
   logged: false,

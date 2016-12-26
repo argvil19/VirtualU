@@ -9,7 +9,7 @@ import {
 import {
   fetchRegister,
   hideError
-}                                           from 'redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 
 const propTypes = {
   user: PropTypes.object,
@@ -116,6 +116,7 @@ class RegisterForm extends Component {
     const errorMessage = this.props.user.error
     ? (
       <Paper
+        className='errorMessage'
         style={{
           color: '#ff0000',
           padding: '8px',
@@ -132,6 +133,7 @@ class RegisterForm extends Component {
       <div>
         <div>
           <TextField
+            className='inputName'
             type='text'
             hintText='Real name'
             errorText={this.state.nameError}
@@ -141,6 +143,7 @@ class RegisterForm extends Component {
         </div>
         <div>
           <TextField
+            className='inputUsername'
             type='text'
             hintText='Username'
             errorText={this.state.usernameError}
@@ -150,6 +153,7 @@ class RegisterForm extends Component {
         </div>
         <div>
           <TextField
+            className='inputEmail'
             type='text'
             hintText='Email'
             errorText={this.state.emailError}
@@ -159,6 +163,7 @@ class RegisterForm extends Component {
         </div>
         <div>
           <TextField
+            className='inputPassword'
             type='password'
             ref={input => this.inputPassword = input}
             hintText='Password'
@@ -168,6 +173,7 @@ class RegisterForm extends Component {
         </div>
         <div>
           <TextField
+            className='inputConfirm'
             type='password'
             ref={input => this.inputConfirm = input}
             hintText='Confirm password'
@@ -178,6 +184,7 @@ class RegisterForm extends Component {
         <div style={{ textAlign: 'center' }}>
           {errorMessage}
           <FlatButton
+            className='registerButton'
             backgroundColor={this.state.valid ? '#3f51b5' : '#bbb'}
             hoverColor='#a4c639'
             style={{ width: '100%', color: '#fff' }}

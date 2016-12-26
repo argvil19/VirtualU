@@ -53,7 +53,7 @@ app.use(auth);
 routesAPI(app);
 
 app.use((req, res, next) => {
-  const store = configureStore({}, req);
+  const store = configureStore();
 
   const state = store.getState();
 
