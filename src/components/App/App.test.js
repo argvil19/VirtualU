@@ -52,7 +52,7 @@ const store = configureStore({
   }
 });
 
-describe('components/User', () => {
+describe('components/App', () => {
 
   describe('<App />', () => {
     let wrapper;
