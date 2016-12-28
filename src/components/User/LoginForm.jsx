@@ -5,6 +5,8 @@ import {
   FlatButton,
   Paper
 }                                           from 'material-ui';
+import baseTheme                            from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 
 import {
   fetchLogin,
@@ -26,6 +28,10 @@ class LoginForm extends Component {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
   }
 
   handleLogin() {
@@ -59,7 +65,7 @@ class LoginForm extends Component {
       <div>
         <div>
           <TextField
-            id='inputUsername'
+            className='inputUsername'
             type='text'
             hintText='Username / Email'
             onChange={this.handleChange}
@@ -68,7 +74,7 @@ class LoginForm extends Component {
         </div>
         <div>
           <TextField
-            id='inputPassword'
+            className='inputPassword'
             style={{ width: '100%' }}
             type='password'
             hintText='Password'
@@ -79,7 +85,7 @@ class LoginForm extends Component {
         <div style={{ textAlign: 'center' }}>
           {errorMessage}
           <FlatButton
-            id='loginButton'
+            className='loginButton'
             backgroundColor='#3f51b5'
             hoverColor='#a4c639'
             style={{ width: '100%', color: '#fff' }}
@@ -95,6 +101,12 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = propTypes;
 LoginForm.defaultProps = defaultProps;
+LoginForm.contextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
+LoginForm.childContextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
 
 function mapStateToProps(state) {
   const user = state.user;

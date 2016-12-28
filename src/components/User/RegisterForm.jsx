@@ -5,6 +5,8 @@ import {
   FlatButton,
   Paper
 }                                           from 'material-ui';
+import baseTheme                            from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 
 import {
   fetchRegister,
@@ -35,6 +37,10 @@ class RegisterForm extends Component {
       passwordError: '',
       confirmationError: ''
     };
+  }
+
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
   }
 
   handleRegister() {
@@ -201,6 +207,13 @@ class RegisterForm extends Component {
 
 RegisterForm.propTypes = propTypes;
 RegisterForm.defaultProps = defaultProps;
+RegisterForm.contextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
+RegisterForm.childContextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
+
 
 function mapStateToProps(state) {
   const user = state.user;

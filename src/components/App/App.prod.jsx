@@ -29,11 +29,6 @@ import {
   doLogout,
   hideError
 }                                           from '../../redux/actions/userActions';
-import injectTapEventPlugin                 from 'react-tap-event-plugin';
-
-injectTapEventPlugin();
-
-import './App.css';
 
 const propTypes = {
   user: PropTypes.object,
@@ -60,7 +55,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token') && !this.props.user.logged) {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('token') && !this.props.user.logged) {
       this.props.dispatch(refreshToken());
     }
   }
@@ -224,6 +219,7 @@ class App extends Component {
           />
 
           <Drawer
+            id='drawer'
             docked={false}
             width={300}
             open={this.state.showDrawer}

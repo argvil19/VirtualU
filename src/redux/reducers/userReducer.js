@@ -17,6 +17,7 @@ import {
 }                                           from '../../redux/actions/userActions';
 
 const initialState = {
+  action: null,
   logged: false,
   name: '',
   username: '',
@@ -32,16 +33,18 @@ export default function (state = initialState, action) {
     case REQUEST_LOGIN_USER:
     case REQUEST_REGISTER_USER:
     case REQUEST_REFRESH_TOKEN:
-      return {
+      return Object.assign({}, state, {
+        action: action.type, // TODO: remove after testing
         error: '',
         loading: true,
         loaded: false
-      };
+      });
 
     case RECIEVE_LOGIN_USER:
     case RECIEVE_REGISTER_USER:
     case RECIEVE_REFRESH_TOKEN:
       return Object.assign({}, state, {
+        action: action.type, // TODO: remove after testing
         logged: true,
         token: action.token,
         error: '',
@@ -52,8 +55,8 @@ export default function (state = initialState, action) {
     case ERROR_LOGIN_USER:
     case ERROR_REGISTER_USER:
     case ERROR_REFRESH_TOKEN:
-      console.log(action);
       return Object.assign({}, state, {
+        action: action.type, // TODO: remove after testing
         logged: false,
         token: '',
         error: action.error,
@@ -63,6 +66,7 @@ export default function (state = initialState, action) {
 
     case DO_LOGOUT:
       return Object.assign({}, state, {
+        action: action.type, // TODO: remove after testing
         logged: false,
         token: '',
         loading: false,
@@ -71,6 +75,7 @@ export default function (state = initialState, action) {
 
     case HIDE_ERROR:
       return Object.assign({}, state, {
+        action: action.type, // TODO: remove after testing
         error: ''
       });
 

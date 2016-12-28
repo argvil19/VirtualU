@@ -106,6 +106,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+module.exports = app;
+
 app.listen(PORT, (err) => {
   if (err) {
     throw new Error(err.message);
@@ -113,8 +115,6 @@ app.listen(PORT, (err) => {
 
   return console.log(`Listening at port ${PORT}`); // eslint-disable-line no-console
 });
-
-module.exports = app;
 
 if (!module.parent) {
   // Fires if server.js isn't being required from outside. Starts the server.

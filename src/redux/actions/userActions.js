@@ -133,7 +133,7 @@ function shouldFetchLogin(state) {
 
 function fetchLoginDo(username, password) {
   return dispatch => {
-    dispatch(requestRegister());
+    dispatch(requestLogin());
     return fetch('/API/login', {
       method: 'post',
       credentials: 'same-origin',

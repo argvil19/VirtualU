@@ -1,7 +1,5 @@
 import React, { PropTypes, Component }    from 'react';
 
-import './Homepage.css';
-
 const propTypes = {
   title: PropTypes.string
 };
