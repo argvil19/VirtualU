@@ -13,5 +13,13 @@ staging:
   image: ruby:latest
   script:
    - gem install dpl
+   - dpl --provider=heroku --app=hvu-dev --api-key=$HEROKU_STAGING_API_KEY
+
+production:
+  image: ruby:latest
+  script:
+   - gem install dpl
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
+  only:
+   - master
 
