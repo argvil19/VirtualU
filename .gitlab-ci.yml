@@ -1,4 +1,4 @@
-image: node:4.2.2
+image: node:latest
 
 
 cache:
@@ -6,16 +6,21 @@ cache:
   - node_modules/
 
 services:
-  - mongo
+  - mongo:latest
   
+stages:
+  - test
+  - deploy
 
 staging:
+  stage: test
   image: ruby:latest
   script:
    - gem install dpl
    - dpl --provider=heroku --app=hvu-dev --api-key=$HEROKU_STAGING_API_KEY
 
 production:
+  stage: deploy
   image: ruby:latest
   script:
    - gem install dpl
