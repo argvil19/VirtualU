@@ -7,7 +7,7 @@ var keystone = require('keystone');
 var mongoose = require('mongoose');
 var Routes = require('./routes/index');
 
-mongoose.connect('mongodb://localhost:27017/hvu');
+mongoose.connect('mongodb://test:test@ds139448.mlab.com:39448/hvu');
 
 keystone.mongose = mongoose;
 
@@ -18,6 +18,7 @@ keystone.mongose = mongoose;
 keystone.init({
 	'name': 'hvu',
 	'brand': 'hvu',
+	'mongo': 'mongodb://test:test@ds139448.mlab.com:39448/hvu',
 
 	'sass': 'public',
 	'static': 'public',
