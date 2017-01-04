@@ -1,122 +1,58 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import logger from 'morgan';
-import http from 'http';
-import path from 'path';
-import routes from './routes';
-import routesAPI from './API/routes';
-import auth from './API/helpers/auth/jwt-middleware';
-import React from 'react';
-import ReactDom from 'react-dom/server';
-import {
-  match
-}
-from 'react-router';
-import {
-  Provider
-}
-from 'react-redux';
-import {
-  ReduxAsyncConnect,
-  loadOnServer
-}
-from 'redux-connect';
-import configureStore from './redux/configureStore';
-import favicon from 'serve-favicon';
-import renderHTML from './helpers/render_html';
+// Simulate config options from your production environment by
+// customising the .env file in your project's root folder.
+require('dotenv').config();
 
-require('./models/db'); // Setup db connection
+// Requires
+var keystone = require('keystone');
+var mongoose = require('mongoose');
+var Routes = require('./routes/index');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '';
+mongoose.connect('mongodb://localhost:27017/hvu');
 
-app.use(logger('dev'));
+keystone.mongose = mongoose;
 
-//app.use(favicon(path.join(__dirname, '../public/favicon.ico')));
-app.use(bodyParser.json({
-  limit: '50mb'
-}));
-app.use(bodyParser.urlencoded({
-  limit: '50mb',
-  extended: true
-}));
+// Initialise Keystone with your project's configuration.
+// See http://keystonejs.com/guide/config for available options
+// and documentation.
 
-// Serves static files
-app.use('/public', express.static(path.join(__dirname, '../public')));
-// TODO: remove static content files after the React implementation will done
+keystone.init({
+	'name': 'hvu',
+	'brand': 'hvu',
 
-// Authentication middleware
-app.use(auth);
+	'sass': 'public',
+	'static': 'public',
+	'favicon': 'public/favicon.ico',
+	'views': 'templates/views',
+	'view engine': 'jade',
 
-// Server middlewares
-routesAPI(app);
-
-app.use((req, res, next) => {
-  const store = configureStore();
-
-  const state = store.getState();
-
-  // This setting is required for material-ui server-side rendering
-  state.theme.userAgent = req.headers['user-agent'];
-
-  match({
-    routes,
-    location: req.url
-  }, (error, redirectLocation, renderProps) => {
-    if (redirectLocation) {
-      return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-    }
-
-    if (error) {
-      return next({
-        message: error.message,
-        status: 500,
-        success: false
-      });
-    }
-
-    if (!renderProps) {
-      return next({
-        message: 'Not found',
-        status: 404,
-        success: false
-      });
-    }
-
-    loadOnServer({...renderProps,
-      store
-    }).then(() => {
-      const componentHTML = ReactDom.renderToString(
-        <Provider store={store} key="provider">
-          <ReduxAsyncConnect {...renderProps} />
-        </Provider>
-      );
-      res.send(renderHTML(componentHTML, store.getState(), assetUrl));
-    });
-  });
+	'auto update': true,
+	'session': true,
+	'auth': true,
+	'user model': 'Admin',
 });
 
-// Error middleware
-app.use((err, req, res, next) => {
-  console.log(err);
-  return res.status(err.status).send({
-    error: err.message,
-    success: err.success
-  });
+// Load your project's Models
+keystone.import('models');
+
+// Setup common locals for your templates. The following are required for the
+// bundled templates and layouts. Any runtime locals (that should be set uniquely
+// for each request) should be added to ./routes/middleware.js
+keystone.set('locals', {
+	_: require('lodash'),
+	env: keystone.get('env'),
+	utils: keystone.utils,
+	editable: keystone.content.editable,
 });
 
-module.exports = app;
+// Load your project's Routes
+keystone.set('routes', Routes);
 
-app.listen(PORT, (err) => {
-  if (err) {
-    throw new Error(err.message);
-  }
-
-  return console.log(`Listening at port ${PORT}`); // eslint-disable-line no-console
+// Configure the navigation bar in Keystone's Admin UI
+keystone.set('nav', {
+	posts: ['posts', 'post-categories'],
+	admins: 'admins',
 });
 
-if (!module.parent) {
-  // Fires if server.js isn't being required from outside. Starts the server.
-  http.createServer(app);
-}
+// Start Keystone to connect to your database and initialise the web server
+
+keystone.start();
