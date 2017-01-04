@@ -11,7 +11,7 @@ mongoose.connect('mongodb://test:test@ds139448.mlab.com:39448/hvu');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
-// and documentation.
+// and documentation. 
 
 keystone.init({
 	'name': 'hvu',
