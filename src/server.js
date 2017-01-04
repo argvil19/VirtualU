@@ -9,8 +9,6 @@ var Routes = require('./routes/index');
 
 mongoose.connect('mongodb://test:test@ds139448.mlab.com:39448/hvu');
 
-keystone.mongose = mongoose;
-
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -18,7 +16,7 @@ keystone.mongose = mongoose;
 keystone.init({
 	'name': 'hvu',
 	'brand': 'hvu',
-	'mongo': 'mongodb://test:test@ds139448.mlab.com:39448/hvu',
+	'mongo': 'mongodb://test1:test1@ds139448.mlab.com:39448/hvu',
 
 	'sass': 'public',
 	'static': 'public',
