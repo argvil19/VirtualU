@@ -1,5 +1,5 @@
 const renderHTML = (componentHTML, initialState, assetUrl) => {
-    return `
+  return `
     <!DOCTYPE html>
       <html lang="ru-RU">
       <head>
@@ -8,14 +8,14 @@ const renderHTML = (componentHTML, initialState, assetUrl) => {
           <title>HVU</title>
           <link rel="icon" href="/favicon.ico">
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-          <link rel="stylesheet" href="${assetUrl}/public/assets/styles.css">
+          <link rel="stylesheet" href="${assetUrl}/assets/styles.css">
       </head>
       <body>
         <div id="react-view">${componentHTML}</div>
         <script type="application/javascript">
             window.REDUX_INITIAL_STATE = ${JSON.stringify(initialState)}
           </script>
-        <script type="application/javascript" src="${assetUrl}/public/assets/bundle.js"></script>
+        <script type="application/javascript" src="${assetUrl}/assets/bundle.js"></script>
       </body>
     </html>
   `;

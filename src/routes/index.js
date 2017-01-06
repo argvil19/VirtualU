@@ -21,16 +21,16 @@
 import React from 'react';
 import ReactDom from 'react-dom/server';
 import {
-	match
+  match
 }
 from 'react-router';
 import {
-	Provider
+  Provider
 }
 from 'react-redux';
 import {
-	ReduxAsyncConnect,
-	loadOnServer
+  ReduxAsyncConnect,
+  loadOnServer
 }
 from 'redux-connect';
 import configureStore from '../redux/configureStore';
@@ -42,7 +42,7 @@ var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 var hvuRoutes = require('./API/routes/index');
 
-const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '';
+const assetUrl = '';
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -51,72 +51,70 @@ keystone.pre('render', middleware.flashMessages);
 
 // Import Route Controllers
 var routes = {
-	views: importRoutes('./views'),
-	reduxRoutes: Routes,
+  views: importRoutes('./views'),
+  reduxRoutes: Routes,
 };
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
-	// Views
-	app.get('/', routes.views.index);
-	app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
 
-	hvuRoutes(app);
 
-	app.use((req, res, next) => {
-		const store = configureStore();
+  // Load API routes
+  hvuRoutes(app);
 
-		const state = store.getState();
+  app.use((req, res, next) => {
+    const store = configureStore();
 
-		// This setting is required for material-ui server-side rendering
-		state.theme.userAgent = req.headers['user-agent'];
+    const state = store.getState();
 
-		match({
-			routes: routes.reduxRoutes,
-			location: req.url
-		}, (error, redirectLocation, renderProps) => {
-			if (redirectLocation) {
-				return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-			}
+    // This setting is required for material-ui server-side rendering
+    state.theme.userAgent = req.headers['user-agent'];
 
-			if (error) {
-				return next({
-					message: error.message,
-					status: 500,
-					success: false
-				});
-			}
+    match({
+      routes: routes.reduxRoutes,
+      location: req.url
+    }, (error, redirectLocation, renderProps) => {
+      if (redirectLocation) {
+        return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
+      }
 
-			if (!renderProps) {
-				return next({
-					message: 'Not found',
-					status: 404,
-					success: false
-				});
-			}
+      if (error) {
+        return next({
+          message: error.message,
+          status: 500,
+          success: false
+        });
+      }
 
-			loadOnServer({...renderProps,
-				store
-			}).then(() => {
-				const componentHTML = ReactDom.renderToString(
-					<Provider store={store} key="provider">
-	          <ReduxAsyncConnect {...renderProps} />
-	        </Provider>
-				);
-				res.send(renderHTML(componentHTML, store.getState(), assetUrl));
-			});
-		});
-	});
+      if (!renderProps) {
+        return next({
+          message: 'Not found',
+          status: 404,
+          success: false
+        });
+      }
 
-	app.use(function(error, req, res, next) {
-		res.status(error.status).send({
-			message: error.message,
-			success: false,
-		});
-	});
+      loadOnServer({...renderProps,
+        store
+      }).then(() => {
+        const componentHTML = ReactDom.renderToString(
+          <Provider store={store} key="provider">
+            <ReduxAsyncConnect {...renderProps} />
+          </Provider>
+        );
+        res.send(renderHTML(componentHTML, store.getState(), assetUrl));
+      });
+    });
+  });
 
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
+  app.use(function(error, req, res, next) {
+    res.status(error.status).send({
+      message: error.message,
+      success: false,
+    });
+  });
+
+  // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
+  // app.get('/protected', middleware.requireUser, routes.views.protected);
 
 };
