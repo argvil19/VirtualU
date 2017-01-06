@@ -1,9 +1,1 @@
-.menu-link {
-    text-decoration: none;
-}
-.logo, .login-button {
-    text-decoration: none;
-    color: #fff;
-}
-
-/*# sourceMappingURL=styles.css.map*/
+.login-button,.logo,.menu-link{text-decoration:none}.login-button,.logo{color:#fff}
