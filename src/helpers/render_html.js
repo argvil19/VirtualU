@@ -6,7 +6,7 @@ const renderHTML = (componentHTML, initialState, assetUrl) => {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>HVU</title>
-          <link rel="icon" href="/favicon.ico">
+          <link rel="icon" href="/favicon.png">
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
           <link rel="stylesheet" href="${assetUrl}/assets/styles.css">
       </head>
