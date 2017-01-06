@@ -35,12 +35,12 @@ import {
 from 'redux-connect';
 import configureStore from '../redux/configureStore';
 import renderHTML from '../helpers/render_html';
+import Routes from '../routes.jsx';
 
 var keystone = require('keystone');
 var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 var hvuRoutes = require('./API/routes/index');
-var reduxRoutes = require('../routes.jsx')
 
 const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '';
 
@@ -52,10 +52,8 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	views: importRoutes('./views'),
+	reduxRoutes: Routes,
 };
-
-// TRYING TO MERGE
-routes = Object.assign({}, routes, reduxRoutes)
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
@@ -73,9 +71,9 @@ exports = module.exports = function(app) {
 
 		// This setting is required for material-ui server-side rendering
 		state.theme.userAgent = req.headers['user-agent'];
-		
+
 		match({
-			routes,
+			routes: routes.reduxRoutes,
 			location: req.url
 		}, (error, redirectLocation, renderProps) => {
 			if (redirectLocation) {
