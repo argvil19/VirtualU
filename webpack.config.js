@@ -21,7 +21,7 @@ var plugins = [
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(
-    new CleanWebpackPlugin(['public/assets/'], {
+    new CleanWebpackPlugin(['src/public/assets/'], {
       root: __dirname,
       verbose: true,
       dry: false
@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: plugins,
   output: {
-    path: __dirname + '/public/assets/',
+    path: __dirname + '/src/public/assets/',
     filename: jsName,
     publicPath: publicPath
   },

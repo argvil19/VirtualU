@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import AppProd from './App.prod.jsx';
-import DevTools from '../../DevTools';
+import DevTools from '../../../DevTools';
 
 const propTypes = {
   children: PropTypes.node
