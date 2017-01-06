@@ -14,7 +14,7 @@ class Homepage extends Component {
       <div>
         <h1>{this.props.title}</h1>
         <div>
-          <p>Content will coming here...</p>
+          <p>Content will coming here....</p>
         </div>
       </div>
     );
