@@ -3,11 +3,14 @@ image: node:6.5.0
 
 cache:
   paths:
-   - node_modules/
+  - node_modules/
+
+services:
+  - mongo:latest
   
-  stages:
-   - test
-   - deploy
+stages:
+  - test
+  - deploy
 
 staging:
   stage: test
@@ -23,4 +26,5 @@ production:
    - gem install dpl
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
   only:
-   - master 
+   - master
+
