@@ -42,7 +42,7 @@ var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 var hvuRoutes = require('./API/routes/index');
 
-const assetUrl = '';
+const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '';
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
