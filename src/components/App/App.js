@@ -3,12 +3,8 @@ import injectTapEventPlugin                 from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
-let App;
-
 if (process.env.NODE_ENV === 'production') {
-  App = require('./App.prod.jsx');
+	module.exports = require('./App.prod');
 } else {
-  App = require('./App.dev.jsx');
+	module.exports = require('./App.dev');
 }
-
-export default App;
