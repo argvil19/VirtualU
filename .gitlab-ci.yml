@@ -27,4 +27,3 @@ production:
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
   only:
    - master
-
