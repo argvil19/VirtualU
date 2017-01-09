@@ -1,11 +1,51 @@
-const mongoose = require('mongoose');
+var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
-const quizSchema = mongoose.Schema({
-  quiz: Array,
-  chapter: Number,
-  course: String,
+/**
+ * Quiz Model
+ * ==========
+ */
+
+var Quiz = new keystone.List('Quiz', {
+    label: 'Quizzes',
+    singular: 'Quiz',
+    plural: 'Quizzes',
+    map: {
+        name: 'title',
+        course: 'course',
+        chapter: 'chapter',
+        assignment: 'assignment',
+    },
+    autokey: {
+        path: 'slug',
+        from: 'title',
+        unique: true,
+    },
 });
 
-const Quiz = mongoose.model('quizzes', quizSchema);
+Quiz.add({
+    title: {
+        type: String,
+        required: true,
+    },
+    course: {
+        type: Types.Relationship,
+        ref: 'Course'
+    },
+    chapter: {
+        type: Types.Relationship,
+        ref: 'Chapter',
+        filters: {
+            course: ':course',
+        },
+    },
+    isAssignment: {
+        type: Types.Boolean,
+        default: false,
+        label: 'This quiz is an assignment',
+    },
+});
 
-module.exports = Quiz;
+Quiz.defaultColumns = 'title, course, chapter, isAssignment';
+
+Quiz.register();

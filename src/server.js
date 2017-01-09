@@ -24,6 +24,12 @@ keystone.init({
 	'views': 'templates/views',
 	'view engine': 'jade',
 
+	's3 config': {
+		bucket: 'hvu',
+		key: 'AKIAJ5CQKS2HHNRM24HQ',
+		secret: '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',
+	},
+
 	'auto update': true,
 	'session': true,
 	'auth': true,
@@ -50,6 +56,10 @@ keystone.set('routes', Routes);
 keystone.set('nav', {
 	posts: ['posts', 'post-categories'],
 	admins: 'admins',
+	courses: 'courses',
+	chapters: 'chapters',
+	quizzes: ['quizzes', 'questions'],
+	files: 'files',
 });
 
 // Start Keystone to connect to your database and initialise the web server
