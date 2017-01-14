@@ -1,4 +1,4 @@
-const User = require('../../../../models/User');
+const User = require('keystone').list('User').model;
 
 module.exports = (newProfile, userId, cb) => {
   const toUpdate = {};

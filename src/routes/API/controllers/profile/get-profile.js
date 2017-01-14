@@ -1,4 +1,4 @@
-const User = require('../../../../models/User');
+const User = require('keystone').list('User').model;
 const ObjectId = require('mongoose').mongo.ObjectId;
 
 module.exports = (userId, cb) => {

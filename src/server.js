@@ -4,10 +4,6 @@ require('dotenv').config();
 
 // Requires
 var keystone = require('keystone');
-var mongoose = require('mongoose');
-var Routes = require('./routes/index');
-
-mongoose.connect('mongodb://test:test@ds139448.mlab.com:39448/hvu');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -27,7 +23,7 @@ keystone.init({
 	's3 config': {
 		bucket: 'hvu',
 		key: 'AKIAJ5CQKS2HHNRM24HQ',
-		secret: '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',
+		secret: 'Ybmvqp2dD+ClV6CalZud72LOL9N2oyLJnfuwKQId'
 	},
 
 	'auto update': true,
@@ -39,6 +35,9 @@ keystone.init({
 // Load your project's Models
 keystone.import('models');
 
+// Load routes
+var Routes = require('./routes/index');
+
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
 // for each request) should be added to ./routes/middleware.js
@@ -49,13 +48,14 @@ keystone.set('locals', {
 	editable: keystone.content.editable,
 });
 
-// Load your project's Routes
+// Set routes
 keystone.set('routes', Routes);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	posts: ['posts', 'post-categories'],
 	admins: 'admins',
+	users: 'users',
 	courses: 'courses',
 	chapters: 'chapters',
 	quizzes: ['quizzes', 'questions'],

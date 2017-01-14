@@ -1,29 +1,48 @@
-const mongoose = require('mongoose');
+var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
-const userSchema = mongoose.Schema({
+/**
+ * User Model
+ * ==========
+ */
+var User = new keystone.List('User', {
+  unique: true,
+});
+
+User.add({
   name: {
-    type: String,
+    type: Types.Name,
     required: true,
+    index: true
   },
   username: {
-    type: String,
+    type: Types.Text,
     required: true,
+    initial: false,
     unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
+    dropDups: true,
   },
   email: {
-    type: String,
+    type: Types.Email,
+    initial: true,
     required: true,
+    unique: true,
+    dropDups: true,
+  },
+  password: {
+    type: Types.Password,
+    initial: true,
+    required: true
   },
   birthday: {
-    type: String,
-    required: false,
+    type: Types.Date
+  },
+  courses: {
+    type: Types.Relationship,
+    many: true,
+    ref: 'Course',
   },
 });
 
-const User = mongoose.model('user', userSchema);
-
-module.exports = User;
+User.defaultColumns = 'name, username, email';
+User.register();

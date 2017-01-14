@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
-const userModel = require('../../../models/User');
+const userModel = require('keystone').list('User').model;
+const Types = require('keystone').Field.Types;
 const jwt = require('../helpers/auth/jwt');
 const bcrypt = require('bcrypt-nodejs'); // bcrypt for password encryptation
 
@@ -18,29 +19,51 @@ module.exports.register = (newUser, cb) => {
     });
   }
 
-  return userModel.create({
-    username,
-    name,
-    email,
-    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // Encrypt password with bcrypt
+  userModel.findOne({
+    $or: [{
+      username,
+    }, {
+      email,
+    }],
   }, (err, user) => {
     if (err) {
       return cb({
-        message: 'User already exists',
+        message: 'Internal Server Error',
+        status: 500,
+      });
+    }
+
+    if (user) {
+      return cb({
+        message: 'Username or email already exists',
         status: 409
       });
     }
 
-    // Creates JWT.
+    return userModel.create({
+      username,
+      name,
+      email,
+      password,
+    }, (err, user) => {
+      if (err) {
+        return cb({
+          message: 'Internal Server Error',
+          status: 500,
+        });
+      }
 
-    const payload = {
-      id: user._id
-    };
-    const token = jwt.createJwtToken(payload);
+      // Creates JWT.
 
-    return cb(null, {
-      token,
-      message: 'User successfully created',
+      const payload = {
+        id: user._id
+      };
+      const token = jwt.createJwtToken(payload);
+
+      return cb(null, {
+        token,
+        message: 'User successfully created',
+      });
     });
   });
 };
