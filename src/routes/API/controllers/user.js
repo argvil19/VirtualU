@@ -9,8 +9,11 @@ module.exports.register = (newUser, cb) => {
   // Register a new user
   const username = newUser.username;
   const password = newUser.password;
-  const name = newUser.name;
   const email = newUser.email;
+  const name = {
+    first: newUser.name.split(' ')[0],
+    last: newUser.name.split(' ')[1],
+  };
 
   if (!(username && password && name && email)) {
     return cb({
