@@ -42,7 +42,7 @@ Quiz.add({
     isAssignment: {
         type: Types.Boolean,
         default: false,
-        label: 'This quiz is an assignment',
+        label: 'Is this quiz an assignment?',
     },
 });
 

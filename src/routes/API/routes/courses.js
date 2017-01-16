@@ -3,6 +3,7 @@ const subscribeToCourse = require('../controllers/courses/subscribe');
 
 module.exports = (app) => {
     app.put('/API/user/courses/', checkAuth, (req, res, next) => {
+        // Subscribe to course.
         subscribeToCourse({
             courseName: req.body.courseName,
         }, req.user, (err, success) => {
