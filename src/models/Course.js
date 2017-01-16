@@ -13,6 +13,12 @@ Course.add({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+    },
+    courseImage: {
+        type: Types.CloudinaryImage,
+    },
     published: {
         type: Types.Boolean,
     }
