@@ -19,7 +19,9 @@ module.exports = (query, userId, cb) => {
     }
 
     Course.model.findOne({
-        name: courseName,
+        name: {
+            $regex: new RegExp(courseName, 'i'),
+        },
     }, {
         _id: 1
     }, (err, courseData) => {
@@ -57,7 +59,12 @@ module.exports = (query, userId, cb) => {
                 });
             }
 
-            Chapter.model.findOne().where('course', courseData._id).where('name', chapter).exec((err, chapterData) => {
+            Chapter.model.findOne({
+                course: courseData._id,
+                name: {
+                    $regex: new RegExp(chapter, 'i'),
+                },
+            }, {}, (err, chapterData) => {
                 if (err) {
                     return cb({
                         message: 'Internal Server Error',
