@@ -31,7 +31,7 @@ class Homepage extends Component {
     console.log(this);
     const options = {
       host: window.location.hostname,
-      port: 3000,
+      port: window.location.port,
       method: 'GET',
       path: '/API/courses'
     };
