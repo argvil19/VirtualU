@@ -1,9 +1,9 @@
-var keystone = require('keystone');
-var Course = keystone.list('Course').model;
-var User = keystone.list('User').model;
+const keystone = require('keystone');
+const Course = keystone.list('Course');
+const User = keystone.list('User');
 
-module.exports = (course, userId, cb) => {
-    const courseName = course.courseName;
+module.exports = (query, userId, cb) => {
+    const courseName = query.courseName;
 
     if (!courseName) {
         return cb({
@@ -13,44 +13,50 @@ module.exports = (course, userId, cb) => {
         });
     }
 
-    Course.findOne({
+    Course.model.findOne({
         name: courseName,
         published: true,
-    }, (err, courseData) => {
+    }, {}, (err, courseData) => {
         if (err) {
             return cb({
                 message: 'Internal Server Error',
-                status: 400,
+                status: 500,
                 success: false,
             });
         }
-        else if (!courseData) {
+
+        if (!courseData) {
             return cb({
                 message: 'That course doesn\'t exist',
                 status: 404,
                 success: false,
-            })
+            });
         }
 
-        User.findOneAndUpdate({
+        User.model.findOne({
             _id: userId,
-        }, {
-            $push: {
-                courses: courseData._id,
-            },
-        }, (err, user) => {
+            courses: courseData._id,
+        }, {}, (err, userData) => {
             if (err) {
                 return cb({
                     message: 'Internal Server Error',
-                    status: 400,
+                    status: 500,
+                    success: false,
+                });
+            }
+
+            if (!userData) {
+                return cb({
+                    message: 'You are not subscribed to that course',
+                    status: 401,
                     success: false,
                 });
             }
 
             return cb(null, {
-                message: 'Successfuly subscribed to the ' + courseData.name + ' course',
-                success: true,
+                data: courseData.homeText,
                 status: 200,
+                success: true,
             });
         });
     });

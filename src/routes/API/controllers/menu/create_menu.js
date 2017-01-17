@@ -24,6 +24,7 @@ module.exports = (params, userId, cb) => {
 
     Course.model.findOne({
         name: course,
+        published: true,
     }, {}, (err, courseData) => {
         if (err) {
             return cb({
@@ -59,7 +60,7 @@ module.exports = (params, userId, cb) => {
                 });
             }
 
-            Chapter.model.find().where('course', courseData._id)
+            Chapter.model.find().where('course', courseData._id).where('published', true)
                 .exec((err, chaptersData) => {
                     if (err) {
                         return cb({

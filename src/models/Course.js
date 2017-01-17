@@ -19,9 +19,14 @@ Course.add({
     courseImage: {
         type: Types.CloudinaryImage,
     },
+    homeText: {
+        type: Types.Html,
+        wysiwyg: true,
+        height: 150
+    },
     published: {
         type: Types.Boolean,
-    }
+    },
 });
 
 Course.register();

@@ -2,7 +2,9 @@ const keystone = require('keystone');
 const Course = keystone.list('Course');
 
 module.exports = (cb) => {
-    Course.model.find({}, {
+    Course.model.find({
+        published: true,
+    }, {
         _id: 0,
         __v: 0
     }, (err, courses) => {
