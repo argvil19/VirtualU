@@ -209,3 +209,11 @@ export function hideError() {
   };
 }
 
+export const NEW_COURSES = 'NEW_COURSES';
+
+export function loadCourses(courses) {
+  return {
+    type: NEW_COURSES,
+    courses
+  };
+}
