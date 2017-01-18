@@ -18,7 +18,7 @@ const styles = {
     justifyContent: 'space-around'
   },
   gridList: {
-    width: 500,
+    // width: 500,
     height: 450,
     overflowY: 'auto'
   }
@@ -28,7 +28,6 @@ const defaultProps = { title: 'This is homepage of project HVU!' };
 
 class Homepage extends Component {
   componentDidMount() {
-    console.log(this);
     const options = {
       host: window.location.hostname,
       port: window.location.port,
@@ -37,11 +36,9 @@ class Homepage extends Component {
     };
     const req = http.request(options, res => {
       let str = '';
-      console.log('WHY?');
       res.on('data', chunk => {
         str += chunk;
       }).on('end', () => {
-        console.log({ str: JSON.parse(str) });
         this.props.dispatch(loadCourses(JSON.parse(str).data));
       });
     });
@@ -57,6 +54,7 @@ class Homepage extends Component {
         <h1>{this.props.title}</h1>
         <div style={styles.root} >
           <GridList
+            cols={4}
             cellHeight={180}
             style={styles.gridList}
           >
