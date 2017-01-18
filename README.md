@@ -1,26 +1,14 @@
 ## HVU-IMT
-This is a learning management platform that teaches MATLAB.
+This is a learning management platform that teaches multiple courses.
 
 ## getting started:
-* check contributing guidines:
-* install MEAN stack on your machine.
- * https://www.digitalocean.com/community/tutorials/how-to-install-a-mean-js-stack-on-an-ubuntu-14-04-server
-* run: npm start
+* check contributing guidelines (CONTRIBUTING.md).
+* install Node.js in your machine.
+ * https://nodejs.org
+* run: `npm install`
+ * Run in parallel `npm run dev` and `npm run wds`.
 * view app at: http://localhost:3000/
 
 
-
-## when contributing please follow these guidines: 
-#### styles:
- * we use airbnb styling guide to ensure consistency throughout our code. 
-  * https://github.com/airbnb/javascript 
-
-#### modular programming:
-*  write modular code - separate logic and interfaces. 
- *  this will reduce future headache and improve our experience as a team.
-
-#### linter: has been configured.
-* sublime ide: 
- * install eslint and sublimelinter package.
-* other ide:
- * https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=linter+eslint
+## NOTE: We use a remote mongoDB connection so it wont work if you're running offline.
+### Any change you make into the DB affects the way other instances of HVU work.
