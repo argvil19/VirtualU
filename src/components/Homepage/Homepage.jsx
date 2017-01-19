@@ -1,9 +1,10 @@
 import React, { PropTypes, Component }    from 'react';
-import http from 'http';
+// import http from 'http';
+
 import { connect }                          from 'react-redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 
-import { loadCourses } from '../../redux/actions/userActions';
+import { loadCoursesFromDB } from '../../redux/actions/userActions';
 
 const propTypes = {
   title: PropTypes.string,
@@ -28,24 +29,7 @@ const defaultProps = { title: 'This is homepage of project HVU!' };
 
 class Homepage extends Component {
   componentDidMount() {
-    const options = {
-      host: window.location.hostname,
-      port: window.location.port,
-      method: 'GET',
-      path: '/API/courses'
-    };
-    const req = http.request(options, res => {
-      let str = '';
-      res.on('data', chunk => {
-        str += chunk;
-      }).on('end', () => {
-        this.props.dispatch(loadCourses(JSON.parse(str).data));
-      });
-    });
-    req.end();
-    req.on('error', e => {
-      console.log(`error:${e.message}`);
-    });
+    this.props.dispatch(loadCoursesFromDB());
   }
 
   render() {

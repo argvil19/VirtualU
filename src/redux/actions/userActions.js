@@ -45,7 +45,7 @@ function shouldFetchRegister(state) {
 
   if (user.loading) {
     return false;
-  } else  if (!user.loaded || !user.login) {
+  } else if (!user.loaded || !user.login) {
     return true;
   }
 }
@@ -126,7 +126,7 @@ function shouldFetchLogin(state) {
 
   if (user.loading) {
     return false;
-  } else  if (!user.loaded || !user.login) {
+  } else if (!user.loaded || !user.login) {
     return true;
   }
 }
@@ -206,6 +206,21 @@ export function hideError() {
     return dispatch({
       type: HIDE_ERROR
     });
+  };
+}
+
+export function loadCoursesFromDB() {
+  return dispatch => {
+    return fetch('/API/courses', {
+      method: 'get',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(courses => dispatch(loadCourses(courses.data)));
   };
 }
 
