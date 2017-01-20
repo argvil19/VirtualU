@@ -46,7 +46,7 @@ review_apps:
   - master
 
 stop_review:
-  stage: review
+  stage: test
   variables:
     GIT_STRATEGY: none
   script:
