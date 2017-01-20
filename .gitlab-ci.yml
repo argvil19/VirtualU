@@ -54,6 +54,7 @@ review_apps:
 
 stop_review:
   stage: deploy
+  image: ruby:latest
   variables:
     GIT_STRATEGY: none
   script:
