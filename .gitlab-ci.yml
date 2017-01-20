@@ -33,6 +33,7 @@ review_apps:
   stage: test
   image: ruby:latest
   script:
+    - echo machine api.heroku.com\n  login blank\n  password $HEROKU_STAGING_API_KEY \nmachine git.heroku.com\n  login blank\n  password $HEROKU_STAGING_API_KEY > ~/.netrc
     - gem install dpl heroku
     - heroku create hvu-dev-$CI_BUILD_REF_SLUG
     - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
