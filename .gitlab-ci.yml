@@ -38,5 +38,7 @@ review_apps:
   script:
     - gem install dpl
     - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
-  only: branches
-  except: master
+  only:
+   -branches
+  except:
+  - master
