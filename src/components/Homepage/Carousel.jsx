@@ -36,10 +36,10 @@ export default class Carousel extends Component {
 			// slidesToScroll: 1,
 			autoPlay: true,
 			responsive: [ 
-				{ breakpoint: 768, settings: 'unslick' },
-				{ breakpoint: 992, settings: { slidesToShow: 2 } },
-				{ breakpoint: 1024, settings: { slidesToShow: 3 } }, 
-				{ breakpoint: 100000000, settings: { slidesToShow: 4 } } ]
+				{ breakpoint: 768, settings: 'unslick', slidesToScroll: 1 },
+				{ breakpoint: 992, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+				{ breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, 
+				{ breakpoint: 100000000, settings: { slidesToShow: 4, slidesToScroll: 4 } } ]
 		};
 		
     return (
@@ -48,8 +48,8 @@ export default class Carousel extends Component {
 				<div className='slider-container'>
 					<Slider {...settings}>
 						{courses.map((course, i) =>
-							<div key={i} style={{width: 300}}>
-								<Thumbnail style={{width: 300}} src={'https://res.cloudinary.com/keystone-demo/image/upload/v1484617645/q22rpaqi6ouofwxdj0cl.jpg' || course.courseImage.secure_url} alt="242x200">
+							<div key={i}>
+								<Thumbnail src={course.courseImage.secure_url} alt="242x200">
 									<h3>{course.name}</h3>
 									<p>{course.description || 'No description yet'}</p>
 									<p>
