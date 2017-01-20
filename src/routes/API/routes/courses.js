@@ -9,7 +9,7 @@ module.exports = (app) => {
                 next(err);
             }
 
-            return res.status(data.status).send(data);
+            return res.status(data.status).json(data);
         });
     });
 

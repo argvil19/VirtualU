@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { isBrowser } from '../utils/helpers';
+import RootPath from '../../../fetchPath';
 
 /**
  * Register actions
@@ -53,7 +54,7 @@ function shouldFetchRegister(state) {
 function fetchRegisterDo(name, username, email, password) {
   return dispatch => {
     dispatch(requestRegister());
-    return fetch('/API/user', {
+    return fetch(`${RootPath}/API/user`, {
       method: 'post',
       credentials: 'same-origin',
       headers: {
@@ -134,7 +135,7 @@ function shouldFetchLogin(state) {
 function fetchLoginDo(username, password) {
   return dispatch => {
     dispatch(requestLogin());
-    return fetch('/API/login', {
+    return fetch(`${RootPath}/API/login`, {
       method: 'post',
       credentials: 'same-origin',
       headers: {
@@ -206,14 +207,5 @@ export function hideError() {
     return dispatch({
       type: HIDE_ERROR
     });
-  };
-}
-
-export const NEW_COURSES = 'NEW_COURSES';
-
-export function loadCourses(courses) {
-  return {
-    type: NEW_COURSES,
-    courses
   };
 }

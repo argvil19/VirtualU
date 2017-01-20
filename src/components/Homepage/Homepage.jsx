@@ -1,74 +1,59 @@
 import React, { PropTypes, Component }    from 'react';
-import http from 'http';
-import { connect }                          from 'react-redux';
-import { GridList, GridTile } from 'material-ui/GridList';
+import { asyncConnect }                   from 'redux-connect';
+import {
+	Grid
+} 																				from 'react-bootstrap';
+import Carousel														from './Carousel';
 
-import { loadCourses } from '../../redux/actions/userActions';
+import { fetchCourses } 									from '../../redux/actions/coursesActions';
+import { isBrowser, isLoaded }          	from 'redux/utils/helpers';
 
 const propTypes = {
   title: PropTypes.string,
-  dispatch: PropTypes.func,
-  courses: PropTypes.array
+  courses: PropTypes.object, 
+	dispatch: PropTypes.func
 };
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around'
-  },
-  gridList: {
-    // width: 500,
-    height: 450,
-    overflowY: 'auto'
-  }
+const defaultProps = {
+	title: 'HVU - Heavy Vehicle Users club.',
+	courses: {
+		list: []
+	},
+	dispatch: () => {}
 };
-
-const defaultProps = { title: 'This is homepage of project HVU!' };
 
 class Homepage extends Component {
-  componentDidMount() {
-    const options = {
-      host: window.location.hostname,
-      port: window.location.port,
-      method: 'GET',
-      path: '/API/courses'
-    };
-    const req = http.request(options, res => {
-      let str = '';
-      res.on('data', chunk => {
-        str += chunk;
-      }).on('end', () => {
-        this.props.dispatch(loadCourses(JSON.parse(str).data));
-      });
-    });
-    req.end();
-    req.on('error', e => {
-      console.log(`error:${e.message}`);
-    });
-  }
-
   render() {
     return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <div style={styles.root} >
-          <GridList
-            cols={4}
-            cellHeight={180}
-            style={styles.gridList}
-          >
-            {this.props.courses.map((course) =>
-              <GridTile
-                key={course.name}
-                title={course.name}
-              >
-                <img src={course.courseImage.secure_url} />
-              </GridTile>
-            )}
-          </GridList>
-        </div>
-      </div>
+      <Grid fluid={false}>
+				<h1>{this.props.title}</h1>
+				
+				<Carousel courses={this.props.courses.courses} title='Top 20 popular courses' />
+				
+				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum omnis quos repellendus? Aspernatur deserunt,
+					esse quam rem sint soluta totam! Alias at dolores eveniet incidunt porro! Excepturi mollitia officia
+					voluptates.
+					<hr/>
+					<br/>
+				</div>
+				
+				<Carousel courses={this.props.courses.courses} title='Recent courses' />
+
+				<div>Ad, deleniti quis? Ab ea, magnam magni nemo nesciunt obcaecati officiis, quas repellendus saepe sint velit
+					veniam. Cumque, deleniti dicta esse sequi sint veritatis! Assumenda at ipsam molestias quibusdam repellat?
+					<hr/>
+					<br/>
+				</div>
+				
+				<Carousel courses={this.props.courses.courses} title='This week discounted courses' />
+
+				<div>Atque aut dolores exercitationem facere iure, magnam minus modi nemo nesciunt quae quaerat, quia reiciendis
+					saepe sapiente sit ullam voluptatem. A cumque neque officia porro quasi sequi sit, soluta voluptatem!
+					<hr/>
+					<br/>
+				</div>
+				
+      </Grid>
     );
   }
 }
@@ -76,10 +61,28 @@ class Homepage extends Component {
 Homepage.propTypes = propTypes;
 Homepage.defaultProps = defaultProps;
 
-function mapStateToProps(state) {
-  return {
-    courses: state.courses
-  };
-}
+const asyncPromises = [
+	{
+		key: 'courses',
+		promise: ({ store }) => {
+			if (!isBrowser()) {
+				const state = store.getState();
+				
+				if (!isLoaded(state, 'courses')) {
+					return store.dispatch(fetchCourses());
+				}
+			}
 
-export default connect(mapStateToProps)(Homepage);
+			return null;
+		}
+	}
+];
+
+function mapStateToProps(state) {
+	const courses = state.courses;
+  return {
+    courses
+  };
+};
+
+export default asyncConnect(asyncPromises, mapStateToProps)(Homepage);
