@@ -30,7 +30,7 @@ production:
 
 
 review_apps:
-  stage: test
+  stage: deploy
   image: ruby:latest
   script:
     - echo machine api.heroku.com > ~/.netrc
@@ -41,7 +41,7 @@ review_apps:
     - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
     - chmod 0600 ~/.netrc
     - gem install dpl heroku
-    - heroku create hvu-dev-$CI_BUILD_REF_SLUG || echo name is possibly taken. If found error then investigate here
+    - heroku create hvu-dev-$CI_BUILD_REF_SLUG || echo name is possibly taken. If found error then start investigating here by removin this second command.
     - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
   environment:
     name: review/$CI_BUILD_REF_NAME
@@ -53,10 +53,18 @@ review_apps:
   - master
 
 stop_review:
-  stage: test
+  stage: deploy
   variables:
     GIT_STRATEGY: none
   script:
+    - echo machine api.heroku.com > ~/.netrc
+    - echo   login blank >> ~/.netrc
+    - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
+    - echo machine git.heroku.com >> ~/.netrc
+    - echo   login blank >> ~/.netrc
+    - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
+    - chmod 0600 ~/.netrc
+    - gem install dpl heroku
     - heroku apps:destroy --app hvu-dev-$CI_BUILD_REF_SLUG --confirm hvu-dev-$CI_BUILD_REF_SLUG
   when: manual
   environment:
