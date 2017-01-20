@@ -41,7 +41,7 @@ review_apps:
     - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
     - chmod 0600 ~/.netrc
     - gem install dpl heroku
-    - heroku create hvu-dev-$CI_BUILD_REF_SLUG
+    - heroku create hvu-dev-$CI_BUILD_REF_SLUG || echo name is possibly taken. If found error then investigate here
     - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
   environment:
     name: review/$CI_BUILD_REF_NAME
