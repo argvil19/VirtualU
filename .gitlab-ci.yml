@@ -33,7 +33,12 @@ review_apps:
   stage: test
   image: ruby:latest
   script:
-    - echo machine api.heroku.com\n  login blank\n  password $HEROKU_STAGING_API_KEY \nmachine git.heroku.com\n  login blank\n  password $HEROKU_STAGING_API_KEY > ~/.netrc
+    - echo machine api.heroku.com > ~/.netrc
+    - echo   login blank >> ~/.netrc
+    - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
+    - echo machine git.heroku.com > ~/.netrc
+    - echo   login blank >> ~/.netrc
+    - echo   password $HEROKU_STAGING_API_KEY >> ~/.netrc
     - cat ~/.netrc
     - chmod 0600 ~/.netrc
     - gem install dpl heroku
