@@ -27,3 +27,16 @@ production:
    - dpl --provider=heroku --app=hvu --api-key=$HEROKU_STAGING_API_KEY
   only:
    - master
+
+
+review_apps:
+  stage: test
+  image: ruby:latest
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    url: hvu-dev-$CI_BUILD_REF_SLUG.herokuapp.com
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
+  only: branches
+  except: master
