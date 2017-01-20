@@ -34,11 +34,28 @@ review_apps:
   image: ruby:latest
   script:
     - gem install dpl
+    - heroku create hvu-dev-$CI_BUILD_REF_SLUG
     - dpl --provider=heroku --app=hvu-dev-$CI_BUILD_REF_SLUG --api-key=$HEROKU_STAGING_API_KEY
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: hvu-dev-$CI_BUILD_REF_SLUG.herokuapp.com
+    on_stop: stop_review
   only:
    - branches
   except:
   - master
+
+stop_review:
+  stage: review
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - heroku apps:destroy --app hvu-dev-$CI_BUILD_REF_SLUG --confirm hvu-dev-$CI_BUILD_REF_SLUG
+  when: manual
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
+  only:
+    - branches
+  except:
+    - master
