@@ -30,7 +30,7 @@ production:
 
 
 review_apps:
-  stage: deploy
+  stage: test
   image: ruby:latest
   script:
     - echo machine api.heroku.com > ~/.netrc
@@ -53,7 +53,7 @@ review_apps:
   - master
 
 stop_review:
-  stage: deploy
+  stage: test
   image: ruby:latest
   variables:
     GIT_STRATEGY: none
