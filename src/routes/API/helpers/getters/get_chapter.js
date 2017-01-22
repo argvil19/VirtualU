@@ -19,7 +19,7 @@ module.exports = (opts, cb) => {
         }
 
         Chapter.model.findOne({
-            name: chapterName,
+            name: new RegExp(chapterName, 'i'),
             course: courseData._id,
             published: true,
         }, {}, (err, chapterData) => {

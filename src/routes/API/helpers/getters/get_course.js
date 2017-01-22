@@ -9,7 +9,7 @@ module.exports = (courseName, cb) => {
     }
 
     Course.model.findOne({
-        name: courseName,
+        name: new RegExp(courseName, 'i'),
         published: true,
     }, {}, (err, courseData) => {
         if (err) {
