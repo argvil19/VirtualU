@@ -21,6 +21,7 @@ const initialState = {
   logged: false,
   name: '',
   username: '',
+	birthday: '',
   email: '',
   token: '',
   loading: false,
