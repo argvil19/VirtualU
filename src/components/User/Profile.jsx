@@ -1,6 +1,9 @@
 import React, { PropTypes, Component }    from 'react';
+import { connect }                        from 'react-redux';
 import {
-	FieldGroup
+	FormGroup,
+	ControlLabel,
+	FormControl
 }																					from 'react-bootstrap';
 
 const propTypes = {
@@ -20,24 +23,38 @@ class Profile extends Component {
 		return (
 			<div>
 				<h1>Profile</h1>
-				<FieldGroup
-					id="formControlsEmail"
-					type="text"
-					label="Text"
-					placeholder="Enter email"
-				/>
-				<FieldGroup
-					id="formControlsName"
-					type="text"
-					label="Text"
-					placeholder="Enter name"
-				/>
-				<FieldGroup
-					id="formControlsDate"
-					type="text"
-					label="Text"
-					placeholder="Enter date"
-				/>
+				<form action="/">
+					<FormGroup>
+						<ControlLabel>Email</ControlLabel>
+						<FormControl
+							type="text"
+							value={this.props.user.email}
+							placeholder="Enter email"
+						/>
+						<FormControl.Feedback />
+					</FormGroup>
+
+					<FormGroup>
+						<ControlLabel>Name</ControlLabel>
+						<FormControl
+							type="text"
+							value={this.props.user.name}
+							placeholder="Enter name"
+						/>
+						<FormControl.Feedback />
+					</FormGroup>
+
+					<FormGroup>
+						<ControlLabel>Birthday</ControlLabel>
+						<FormControl
+							type="text"
+							value={this.props.user.birthday}
+							placeholder="Enter birthday"
+						/>
+						<FormControl.Feedback />
+					</FormGroup>
+				</form>
+				
 			</div>
 		);
 	}
@@ -46,4 +63,11 @@ class Profile extends Component {
 Profile.propTypes = propTypes;
 Profile.defaultProps = defaultProps;
 
-export default Profile;
+function mapStateToProps(state) {
+	const user = state.user;
+	return {
+		user
+	};
+};
+
+export default connect(mapStateToProps)(Profile);
