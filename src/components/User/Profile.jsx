@@ -1,18 +1,18 @@
 import React, { PropTypes, Component }    from 'react';
 import {
-
+	FieldGroup
 }																					from 'react-bootstrap';
 
 const propTypes = {
 	email: PropTypes.string,
 	name: PropTypes.string,
-	birthday: PropTypes.datetime
+	birthday: PropTypes.number
 };
 
 const defaultProps = {
 	email: '',
 	name: '',
-	birthday: new Date()
+	birthday: 0
 };
 
 class Profile extends Component {

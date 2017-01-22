@@ -122,6 +122,10 @@ class App extends Component {
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <MenuItem primaryText='Help' />
+					<MenuItem 
+						primaryText='Profile'
+						containerElement={<Link to="/profile" />}
+					/>
           <MenuItem primaryText='Sign out' onTouchTap={this.handleLogout} />
         </IconMenu>
       );
