@@ -1,21 +1,36 @@
-import React, { PropTypes, Component }    from 'react';
-import { asyncConnect }                   from 'redux-connect';
+import React, {
+	PropTypes,
+	Component
+}
+from 'react';
+import {
+	asyncConnect
+}
+from 'redux-connect';
 import {
 	Grid
-} 																				from 'react-bootstrap';
-import Carousel														from './Carousel';
+}
+from 'react-bootstrap';
+import Carousel from './Carousel';
 
-import { fetchCourses } 									from '../../redux/actions/coursesActions';
-import { isBrowser, isLoaded }          	from 'redux/utils/helpers';
+import {
+	fetchCourses
+}
+from '../../redux/actions/coursesActions';
+import {
+	isBrowser,
+	isLoaded
+}
+from 'redux/utils/helpers';
 
 const propTypes = {
-  title: PropTypes.string,
-  courses: PropTypes.object, 
+	title: PropTypes.string,
+	courses: PropTypes.object,
 	dispatch: PropTypes.func
 };
 
 const defaultProps = {
-	title: 'HVU - Heavy Vehicle Users club.',
+	title: 'HVU - Hanshaw Virtual University',
 	courses: {
 		list: []
 	},
@@ -23,9 +38,9 @@ const defaultProps = {
 };
 
 class Homepage extends Component {
-  render() {
-    return (
-      <Grid fluid={false}>
+	render() {
+		return (
+			<Grid fluid={false}>
 				<h1>{this.props.title}</h1>
 				
 				<Carousel courses={this.props.courses.courses} title='Top 20 popular courses' />
@@ -54,35 +69,35 @@ class Homepage extends Component {
 				</div>
 				
       </Grid>
-    );
-  }
+		);
+	}
 }
 
 Homepage.propTypes = propTypes;
 Homepage.defaultProps = defaultProps;
 
-const asyncPromises = [
-	{
-		key: 'courses',
-		promise: ({ store }) => {
-			if (!isBrowser()) {
-				const state = store.getState();
-				
-				if (!isLoaded(state, 'courses')) {
-					return store.dispatch(fetchCourses());
-				}
-			}
+const asyncPromises = [{
+	key: 'courses',
+	promise: ({
+		store
+	}) => {
+		if (!isBrowser()) {
+			const state = store.getState();
 
-			return null;
+			if (!isLoaded(state, 'courses')) {
+				return store.dispatch(fetchCourses());
+			}
 		}
+
+		return null;
 	}
-];
+}];
 
 function mapStateToProps(state) {
 	const courses = state.courses;
-  return {
-    courses
-  };
+	return {
+		courses
+	};
 };
 
 export default asyncConnect(asyncPromises, mapStateToProps)(Homepage);
