@@ -19,6 +19,7 @@ const Routes = (
 			
       <Route path='/quizes' />
       <Route path='/quize/:id' />
+			<Route path='/course/:name' />
     </Route>
   </Router>
 );

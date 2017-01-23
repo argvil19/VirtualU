@@ -1,34 +1,53 @@
 import React, { PropTypes, Component }    from 'react';
+import { connect }                          from 'react-redux';
 import {
 	Thumbnail,
-	Button
+	Button,
+	Row,
+	Col
 } 																				from 'react-bootstrap';
+import { Link }                           from 'react-router';
 import Slider 														from 'react-slick';
+
+import { fetchSubscribe }									from '../../redux/actions/coursesActions';
 
 import './Carousel.css';
 
 const propTypes = {
 	title: PropTypes.string,
-  courses: PropTypes.array
+	coursesList: PropTypes.array,
+	dispatch: PropTypes.func
 };
 
 const defaultProps = {
 	title: '',
-	courses: []
+	coursesList: [],
+	dispatch: () => {}
 };
 
-export default class Carousel extends Component {
+class Carousel extends Component {
+	constructor(props) {
+		super(props);
+		
+		this.handleSubscribe = this.handleSubscribe.bind(this);
+	}
+	
+	handleSubscribe(course) {
+		console.log('Subscribe: ', course);
+		this.props.dispatch(fetchSubscribe(course));
+	}
+	
   render() {
 		
-		let courses = [];
+    let courses = [];
+    
+    // TODO: Remove! This block only for demo
+    courses = courses.concat(this.props.coursesList);
+    courses = courses.concat(this.props.coursesList);
+    courses = courses.concat(this.props.coursesList);
+    courses = courses.concat(this.props.coursesList);
 		
-		// TODO: Remove! This block only for demo
-		courses = courses.concat(this.props.courses);
-		courses = courses.concat(this.props.courses);
-		courses = courses.concat(this.props.courses);
-		courses = courses.concat(this.props.courses);
-		
-		var settings = {
+    var settings = {
 			dots: true,
 			infinite: true,
 			speed: 500,
@@ -40,23 +59,32 @@ export default class Carousel extends Component {
 				{ breakpoint: 992, settings: { slidesToShow: 2, slidesToScroll: 2 } },
 				{ breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, 
 				{ breakpoint: 100000000, settings: { slidesToShow: 4, slidesToScroll: 4 } } ]
-		};
-		
+    };
+    
     return (
 			<section >
 				<h2>{this.props.title}</h2>
 				<div className='slider-container'>
 					<Slider {...settings}>
-						{courses.map((course, i) =>
-							<div key={i}>
-								<Thumbnail src={course.courseImage.secure_url} alt="242x200">
-									<h3>{course.name}</h3>
-									<p>{course.description || 'No description yet'}</p>
-									<p>
-										<Button bsStyle="primary">Details</Button>
-									</p>
-								</Thumbnail>
-							</div>
+						{courses.map((course, i) => {
+							return(
+								<div key={i}>
+									<Thumbnail src={course.courseImage.secure_url} alt="242x200">
+										<h3>{course.name}</h3>
+										<p>{course.description || 'No description yet'}</p>
+										<Row>
+											<Col xs={6}>
+												<Link to={`/course/${course.name}`}>
+													<Button bsStyle="primary" block>Details</Button>
+												</Link>
+											</Col>
+											<Col xs={6}>
+												<Button bsStyle="success" block onClick={() => {this.handleSubscribe(course.name)}}>Subscribe</Button>
+											</Col>
+										</Row>
+									</Thumbnail>
+								</div>
+							)}
 						)}
 					</Slider>
 				</div>
@@ -67,3 +95,11 @@ export default class Carousel extends Component {
 
 Carousel.propTypes = propTypes;
 Carousel.defaultProps = defaultProps;
+
+function mapStateToProps(state) {
+	return { 
+		
+	};
+}
+
+export default connect(mapStateToProps)(Carousel);

@@ -38,12 +38,24 @@ const defaultProps = {
 };
 
 class Homepage extends Component {
+	constructor(props) {
+		super(props);	
+	}
+	
+	componentDidMount() {
+		this.props.dispatch(fetchCourses());
+	}
+	
 	render() {
+		const popular = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
+		const recent = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
+		const discounted = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
+		
 		return (
 			<Grid fluid={false}>
 				<h1>{this.props.title}</h1>
 				
-				<Carousel courses={this.props.courses.courses} title='Top 20 popular courses' />
+				{popular}
 				
 				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum omnis quos repellendus? Aspernatur deserunt,
 					esse quam rem sint soluta totam! Alias at dolores eveniet incidunt porro! Excepturi mollitia officia
@@ -52,7 +64,7 @@ class Homepage extends Component {
 					<br/>
 				</div>
 				
-				<Carousel courses={this.props.courses.courses} title='Recent courses' />
+				{recent}
 
 				<div>Ad, deleniti quis? Ab ea, magnam magni nemo nesciunt obcaecati officiis, quas repellendus saepe sint velit
 					veniam. Cumque, deleniti dicta esse sequi sint veritatis! Assumenda at ipsam molestias quibusdam repellat?
@@ -60,7 +72,7 @@ class Homepage extends Component {
 					<br/>
 				</div>
 				
-				<Carousel courses={this.props.courses.courses} title='This week discounted courses' />
+				{discounted}
 
 				<div>Atque aut dolores exercitationem facere iure, magnam minus modi nemo nesciunt quae quaerat, quia reiciendis
 					saepe sapiente sit ullam voluptatem. A cumque neque officia porro quasi sequi sit, soluta voluptatem!
@@ -95,8 +107,9 @@ const asyncPromises = [{
 
 function mapStateToProps(state) {
 	const courses = state.courses;
+	
 	return {
-		courses
+		// courses
 	};
 };
 

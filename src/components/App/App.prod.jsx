@@ -4,6 +4,7 @@ import { Link }                             from 'react-router';
 import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider                     from 'material-ui/styles/MuiThemeProvider';
 import MoreVertIcon                         from 'material-ui/svg-icons/navigation/more-vert';
+import ArrowDropRight 											from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {
   indigo100,
   indigo500,
@@ -29,6 +30,9 @@ import {
   doLogout,
   hideError
 }                                           from '../../redux/actions/userActions';
+import {
+	fetchMenu
+}																						from '../../redux/actions/menuActions';
 
 const propTypes = {
   user: PropTypes.object,
@@ -46,11 +50,13 @@ class App extends Component {
     this.handleRegisterModal = this.handleRegisterModal.bind(this);
     this.handleCloseModals = this.handleCloseModals.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-
+		this.handleChangeLocation = this.handleChangeLocation.bind(this);
+		
     this.state = {
       showDrawer: false,
       showLoginModal: false,
-      showRegisterModal: false
+      showRegisterModal: false,
+			courseName: ''
     };
   }
 
@@ -58,7 +64,26 @@ class App extends Component {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('token') && !this.props.user.logged) {
       this.props.dispatch(refreshToken());
     }
+		window.onhashchange = this.handleChangeLocation;
+		this.handleChangeLocation();
   }
+
+	componentWillReceiveProps() {
+		this.handleChangeLocation();
+	}
+
+	handleChangeLocation() {
+		const title = window.location.pathname.match(/\/course\/([^\/]+)/);
+
+		console.log('Change location', title);
+
+		if(title) {
+			this.props.dispatch(fetchMenu(title[1]));
+			this.setState({courseName: title[1]});
+		} else {
+			this.setState({courseName: ''});
+		}
+	}
 
   handleToggleDrawer() {
     this.setState({
@@ -213,6 +238,58 @@ class App extends Component {
 
     const imgUrl = 'https://goo.gl/KzEDSx';
 
+		let menu = '';
+		let submenu = [];
+		
+		if(this.state.courseName === '') {
+			menu = (
+				<Link className='menu-link' to={'/home'}>
+					<MenuItem
+						primaryText='Home'
+						leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
+						onTouchTap={this.handleToggleDrawer}
+						value='/home'
+					/>
+				</Link>
+			)
+		} else {
+			menu = this.props.menu.map((item, i) => {
+				
+				if (item.label == 'Home') {
+					return;
+				}
+				
+				console.log(item);
+
+				// if (typeof this.props.currentCourse.elements[item.label] === 'undefined' ||
+				// 	!this.props.currentCourse.elements[item.label].length) {
+				// 	return '';
+				// }
+
+				this.props.currentCourse.chapters.map((chapter, i) => {
+					submenu.push(
+						<Link key={i} className='menu-link' to='#'>
+							<MenuItem
+								primaryText={chapter}
+								onTouchTap={this.handleToggleDrawer}
+								value='#'
+							/>
+						</Link>
+					);
+				});
+				
+				return (
+					<MenuItem
+						primaryText={item.label}
+						leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
+						rightIcon={<ArrowDropRight />}
+						value={item.url}
+						menuItems={submenu}
+					/>
+				);
+			})
+		}
+		
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.root}>
@@ -221,7 +298,7 @@ class App extends Component {
             onLeftIconButtonTouchTap={this.handleToggleDrawer}
             iconElementRight={rightButton}
           />
-
+					
           <Drawer
             id='drawer'
             docked={false}
@@ -233,18 +310,9 @@ class App extends Component {
               title='HVU Menu'
               iconElementLeft={<img src={imgUrl}/>}
             />
-            {this.props.menu.map((item, i) => {
-              return (
-                <Link key={i} className='menu-link' to={item.url}>
-                  <MenuItem
-                    primaryText={item.label}
-                    leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
-                    onTouchTap={this.handleToggleDrawer}
-                    value={item.url}
-                  />
-                </Link>
-              );
-            })}
+
+						{menu}
+						
           </Drawer>
 
           <div>
@@ -264,11 +332,13 @@ function mapStateToProps(state) {
   const user = state.user;
   const userAgent = state.theme.userAgent;
   const menu = state.menu.items;
+	const currentCourse = state.menu.currentCourse;
 
   return {
     user,
     userAgent,
-    menu
+    menu,
+		currentCourse
   };
 }
 
