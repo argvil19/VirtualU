@@ -21,7 +21,7 @@ import {
 	isBrowser,
 	isLoaded
 }
-from 'redux/utils/helpers';
+from '../../redux/utils/helpers';
 
 const propTypes = {
 	title: PropTypes.string,

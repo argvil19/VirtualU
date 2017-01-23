@@ -10,6 +10,7 @@ import App                          from './components/App';
 import Homepage                     from './components/Homepage';
 // import Courses											from './components/Courses';
 import { Profile }									from './components/User';
+import Course                       from './components/Course'
 
 const Routes = (
   <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={browserHistory}>
@@ -19,7 +20,7 @@ const Routes = (
 			
       <Route path='/quizes' />
       <Route path='/quize/:id' />
-			<Route path='/course/:name' />
+			<Route path='/course/:name' component={Course.CourseHomepage}/>
     </Route>
   </Router>
 );

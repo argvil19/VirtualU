@@ -1,14 +1,19 @@
 import {
 	REQUEST_COURSES,
 	RECIEVE_COURSES,
-	ERROR_COURSES
+	ERROR_COURSES,
+	
+	REQUEST_COURSE_OVERVIEW,
+	RECEIVE_COURSE_OVERVIEW,
+	ERROR_COURSE_OVERVIEW,
 }                                           from '../../redux/actions/coursesActions';
 
 const initialState = {
 	list: [],
 	loading: false,
 	loaded: false,
-	error: ''
+	error: '',
+	overviewContent: '',
 };
 
 export default function (state = initialState, action) {
@@ -33,6 +38,31 @@ export default function (state = initialState, action) {
 				loading: false,
 				loaded: false
 			});
+
+		case REQUEST_COURSE_OVERVIEW:
+			return {
+				...state,
+				loading: true,
+			};
+			break;
+						
+		case RECEIVE_COURSE_OVERVIEW:
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				overviewContent: action.payload,
+			};
+			break;
+				
+		case ERROR_COURSE_OVERVIEW:
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				error: action.payload,
+			};
+			break;
 
 		default:
 			return state;

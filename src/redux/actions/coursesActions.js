@@ -88,3 +88,45 @@ export function fetchCourses() {
 		}
 	};
 }
+
+
+export const REQUEST_COURSE_OVERVIEW = 'REQUEST_COURSE_OVERVIEW';
+export const RECEIVE_COURSE_OVERVIEW = 'RECEIVE_COURSE_OVERVIEW';
+export const ERROR_COURSE_OVERVIEW = 'ERROR_COURSE_OVERVIEW';
+
+function requestCourseOverview() {
+    return {
+        type: REQUEST_COURSE_OVERVIEW,
+    };
+}
+
+function receiveCourseOverview(json) {
+    return {
+        type: RECEIVE_COURSE_OVERVIEW,
+        payload: json.data,
+    };
+}
+
+function errorCourseOverview(err) {
+    return {
+        type: ERROR_COURSE_OVERVIEW,
+        payload: err.message,
+    };
+}
+
+export function fetchCourseOverview(courseName) {
+    return (dispatch, getState) => {
+        dispatch(requestCourseOverview());
+
+        return fetch('/API/courses/overview/get?courseName=' + courseName, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'jwt': localStorage.getItem('token'),
+                },
+            }).then(res => res.json())
+              .then(res => dispatch(receiveCourseOverview(res)));
+    }
+};
