@@ -20,6 +20,7 @@ const Routes = (
       <Route path='/course/:name/:chapter/quizzes' component={Course.Quiz}/>
       <Route path='/course/:name/:chapter/assignments' component={Course.Assignment} />
       <Route path='/course/:name' component={Course.CourseHomepage}/>
+      <Route path='/course/:name/:chapter/materials' component={Course.Material}/>
     </Route>
   </Router>
 );

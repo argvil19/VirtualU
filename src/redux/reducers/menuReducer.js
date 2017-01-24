@@ -31,9 +31,20 @@ const initialState = {
       replacer: /:course|:chapter/i
     },
     {
+      label: 'Quizzes',
+      url: '/course/:course/:chapter/quizzes',
+      icon: 'help',
+      replacer: /:course|:chapter/i
+    },
+    {
       label: 'Course Materials',
-      url: '/materials',
+      url: '/course/:course/:chapter/materials',
       icon: 'picture_as_pdf'
+    },
+    {
+      label: 'Videos',
+      url: '/course/:course/:chapter/videos',
+      icon: 'video_library'
     },
     {
       label: 'Tutorials',
@@ -41,20 +52,9 @@ const initialState = {
       icon: 'assignment_ind'
     },
     {
-      label: 'Videos',
-      url: '/videos',
-      icon: 'video_library'
-    },
-    {
       label: 'Grades',
       url: '/grades',
       icon: 'stars'
-    },
-    {
-      label: 'Quizzes',
-      url: '/course/:course/:chapter/quizzes',
-      icon: 'help',
-      replacer: /:course|:chapter/i
     }
   ]
 };

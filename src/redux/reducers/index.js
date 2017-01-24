@@ -5,6 +5,7 @@ import themeReducer                         from './themeReducer';
 import menuReducer                          from './menuReducer';
 import couresReducer 												from './coursesReducer';
 import quizReducer                          from './quizReducer';
+import materialReducer                      from './materialReducer';
 
 export default combineReducers({
   reduxAsyncConnect,
@@ -12,5 +13,6 @@ export default combineReducers({
   theme: themeReducer,
   menu: menuReducer,
   courses: couresReducer,
-  quizzes: quizReducer
+  quizzes: quizReducer,
+  materials: materialReducer
 });

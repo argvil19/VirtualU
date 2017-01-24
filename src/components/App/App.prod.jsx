@@ -244,12 +244,12 @@ class App extends Component {
 
     if (this.state.courseName === '') {
       menu = (
-        <Link className='menu-link' to={'/home'}>
+        <Link className='menu-link' to={'/'}>
           <MenuItem
             primaryText='Home'
             leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
             onTouchTap={this.handleToggleDrawer}
-            value='/home'
+            value='/'
           />
         </Link>
       );
@@ -259,12 +259,14 @@ class App extends Component {
 
         if (item.label == 'Home') {
           return (
-            <MenuItem
-              primaryText={item.label}
-              leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
-              rightIcon={<ArrowDropRight />}
-              value={'#'}
-            />
+            <Link clasName='menu-link' to={'/'}>
+              <MenuItem
+                primaryText={item.label}
+                leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
+                onTouchTap={component.handleToggleDrawer}
+                value='/'
+              />
+            </Link>
           );
         }
 
@@ -274,7 +276,6 @@ class App extends Component {
         // }
 
         this.props.currentCourse.chapters.forEach((chapter, i) => {
-          console.log(component.props);
           submenu.push(
             <Link key={i} className='menu-link' to={item.url.replace(/:course/g, component.props.currentCourse.name).replace(/:chapter/g, chapter)}>
               <MenuItem
