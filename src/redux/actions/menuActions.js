@@ -14,48 +14,49 @@ function requestMenu() {
 }
 
 function recieveMenu(json, course) {
-	console.log(json);
-	
+  console.log(json);
+  
   if (json.error) {
     return errorMenu(json.error);
   }
-	
-	if(json.data.chapters) {
-		json.data.chapters.map(item => {
-			fetchMenuQuizDo(course, item);
-			fetchMenuVideosDo(course, item);
-			fetchMenuPdfDo(course, item);
-		});
-	}
-	
+  
+  if(json.data.chapters) {
+    json.data.chapters.map(item => {
+      fetchMenuQuizDo(course, item);
+      fetchMenuVideosDo(course, item);
+      fetchMenuPdfDo(course, item);
+    });
+  }
+  
   return {
     type: RECIEVE_MENU_ITEMS,
-		chapters: json.data.chapters
+    chapters: json.data.chapters,
+    currentCourse: course
   };
 }
 
 function recieveMenuQuiz(json) {
-	console.log('Quiz:', json);
+  console.log('Quiz:', json);
 
-	if (json.error) {
-		return errorMenu(json.error);
-	}
+  if (json.error) {
+    return errorMenu(json.error);
+  }
 }
 
 function recieveMenuPdf(json) {
-	console.log('Pdf:', json);
+  console.log('Pdf:', json);
 
-	if (json.error) {
-		return errorMenu(json.error);
-	}
+  if (json.error) {
+    return errorMenu(json.error);
+  }
 }
 
 function recieveMenuVideos(json) {
-	console.log('Videos:', json);
+  console.log('Videos:', json);
 
-	if (json.error) {
-		return errorMenu(json.error);
-	}
+  if (json.error) {
+    return errorMenu(json.error);
+  }
 }
 
 function errorMenu(error) {
@@ -79,44 +80,44 @@ function fetchMenuDo(course) {
   return dispatch => {
     dispatch(requestMenu());
     return fetch(`/API/nav/get?courseName=${course}`, {
-			headers: { 'jwt': localStorage.getItem('token') }
-		})
+      headers: { 'jwt': localStorage.getItem('token') }
+    })
       .then(response => response.json())
       .then(json => dispatch(recieveMenu(json, course)));
   };
 }
 
 function fetchMenuQuizDo(course, chapter) {
-	console.log('fetchMenuQuizDo', course, chapter);
-	return dispatch => {
-		return fetch(`/API/course/quiz?courseName=${course}&chapterName=${chapter}`, {
-			headers: { 'jwt': localStorage.getItem('token') }
-		})
-			.then(response => response.json())
-			.then(json => dispatch(recieveMenuQuiz(json)));
-	};
+  console.log('fetchMenuQuizDo', course, chapter);
+  return dispatch => {
+    return fetch(`/API/course/quiz?courseName=${course}&chapterName=${chapter}`, {
+      headers: { 'jwt': localStorage.getItem('token') }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(recieveMenuQuiz(json)));
+  };
 }
 
 function fetchMenuVideosDo(course, chapter) {
-	console.log('fetchMenuVideosDo', course, chapter);
-	return dispatch => {
-		return fetch(`/API/course/chapter/media/get?courseName=${course}&chapterName=${chapter}&fileType=Video`, {
-			headers: { 'jwt': localStorage.getItem('token') }
-		})
-			.then(response => response.json())
-			.then(json => dispatch(recieveMenuVideos(json)));
-	};
+  console.log('fetchMenuVideosDo', course, chapter);
+  return dispatch => {
+    return fetch(`/API/course/chapter/media/get?courseName=${course}&chapterName=${chapter}&fileType=Video`, {
+      headers: { 'jwt': localStorage.getItem('token') }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(recieveMenuVideos(json)));
+  };
 }
 
 function fetchMenuPdfDo(course, chapter) {
-	console.log('fetchMenuPdfDo', course, chapter);
-	return dispatch => {
-		return fetch(`/API/course/chapter/media/get?courseName=${course}&chapterName=${chapter}&fileType=PDF`, {
-			headers: { 'jwt': localStorage.getItem('token') }
-		})
-			.then(response => response.json())
-			.then(json => dispatch(recieveMenuPdf(json)));
-	};
+  console.log('fetchMenuPdfDo', course, chapter);
+  return dispatch => {
+    return fetch(`/API/course/chapter/media/get?courseName=${course}&chapterName=${chapter}&fileType=PDF`, {
+      headers: { 'jwt': localStorage.getItem('token') }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(recieveMenuPdf(json)));
+  };
 }
 
 export function fetchMenu(course) {

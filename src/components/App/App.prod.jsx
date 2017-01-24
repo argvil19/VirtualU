@@ -4,7 +4,7 @@ import { Link }                             from 'react-router';
 import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider                     from 'material-ui/styles/MuiThemeProvider';
 import MoreVertIcon                         from 'material-ui/svg-icons/navigation/more-vert';
-import ArrowDropRight 											from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ArrowDropRight                       from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {
   indigo100,
   indigo500,
@@ -31,8 +31,8 @@ import {
   hideError
 }                                           from '../../redux/actions/userActions';
 import {
-	fetchMenu
-}																						from '../../redux/actions/menuActions';
+  fetchMenu
+}                                           from '../../redux/actions/menuActions';
 
 const propTypes = {
   user: PropTypes.object,
@@ -50,13 +50,13 @@ class App extends Component {
     this.handleRegisterModal = this.handleRegisterModal.bind(this);
     this.handleCloseModals = this.handleCloseModals.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-		this.handleChangeLocation = this.handleChangeLocation.bind(this);
-		
+    this.handleChangeLocation = this.handleChangeLocation.bind(this);
+    
     this.state = {
       showDrawer: false,
       showLoginModal: false,
       showRegisterModal: false,
-			courseName: ''
+      courseName: ''
     };
   }
 
@@ -64,26 +64,26 @@ class App extends Component {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('token') && !this.props.user.logged) {
       this.props.dispatch(refreshToken());
     }
-		window.onhashchange = this.handleChangeLocation;
-		this.handleChangeLocation();
+    window.onhashchange = this.handleChangeLocation;
+    this.handleChangeLocation();
   }
 
-	componentWillReceiveProps() {
-		this.handleChangeLocation();
-	}
+  componentWillReceiveProps() {
+    this.handleChangeLocation();
+  }
 
-	handleChangeLocation() {
-		const title = window.location.pathname.match(/\/course\/([^\/]+)/);
+  handleChangeLocation() {
+    const title = window.location.pathname.match(/\/course\/([^\/]+)/);
 
-		console.log('Change location', title);
+    console.log('Change location', title);
 
-		if(title) {
-			this.props.dispatch(fetchMenu(title[1]));
-			this.setState({courseName: title[1]});
-		} else {
-			this.setState({courseName: ''});
-		}
-	}
+    if(title) {
+      this.props.dispatch(fetchMenu(title[1]));
+      this.setState({courseName: title[1]});
+    } else {
+      this.setState({courseName: ''});
+    }
+  }
 
   handleToggleDrawer() {
     this.setState({
@@ -124,6 +124,8 @@ class App extends Component {
     let loginDialog = '';
     let rightButton = '';
 
+    const component = this;
+
     const muiTheme = getMuiTheme({
       palette: {
         primary1Color: indigo500,
@@ -147,10 +149,10 @@ class App extends Component {
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <MenuItem primaryText='Help' />
-					<MenuItem 
-						primaryText='Profile'
-						containerElement={<Link to="/profile" />}
-					/>
+          <MenuItem 
+            primaryText='Profile'
+            containerElement={<Link to="/profile" />}
+          />
           <MenuItem primaryText='Sign out' onTouchTap={this.handleLogout} />
         </IconMenu>
       );
@@ -238,58 +240,64 @@ class App extends Component {
 
     const imgUrl = 'https://goo.gl/KzEDSx';
 
-		let menu = '';
-		let submenu = [];
-		
-		if(this.state.courseName === '') {
-			menu = (
-				<Link className='menu-link' to={'/home'}>
-					<MenuItem
-						primaryText='Home'
-						leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
-						onTouchTap={this.handleToggleDrawer}
-						value='/home'
-					/>
-				</Link>
-			)
-		} else {
-			menu = this.props.menu.map((item, i) => {
-				
-				if (item.label == 'Home') {
-					return;
-				}
-				
-				console.log(item);
+    let menu = '';
 
-				// if (typeof this.props.currentCourse.elements[item.label] === 'undefined' ||
-				// 	!this.props.currentCourse.elements[item.label].length) {
-				// 	return '';
-				// }
+    if (this.state.courseName === '') {
+      menu = (
+        <Link className='menu-link' to={'/home'}>
+          <MenuItem
+            primaryText='Home'
+            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
+            onTouchTap={this.handleToggleDrawer}
+            value='/home'
+          />
+        </Link>
+      );
+    } else {
+      menu = this.props.menu.map((item, i) => {
+        const submenu = [];
 
-				this.props.currentCourse.chapters.map((chapter, i) => {
-					submenu.push(
-						<Link key={i} className='menu-link' to='#'>
-							<MenuItem
-								primaryText={chapter}
-								onTouchTap={this.handleToggleDrawer}
-								value='#'
-							/>
-						</Link>
-					);
-				});
-				
-				return (
-					<MenuItem
-						primaryText={item.label}
-						leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
-						rightIcon={<ArrowDropRight />}
-						value={item.url}
-						menuItems={submenu}
-					/>
-				);
-			})
-		}
-		
+        if (item.label == 'Home') {
+          return (
+            <MenuItem
+              primaryText={item.label}
+              leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
+              rightIcon={<ArrowDropRight />}
+              value={'#'}
+            />
+          );
+        }
+
+        // if (typeof this.props.currentCourse.elements[item.label] === 'undefined' ||
+        //  !this.props.currentCourse.elements[item.label].length) {
+        //  return '';
+        // }
+
+        this.props.currentCourse.chapters.forEach((chapter, i) => {
+          console.log(component.props);
+          submenu.push(
+            <Link key={i} className='menu-link' to={item.url.replace(/:course/g, component.props.currentCourse.name).replace(/:chapter/g, chapter)}>
+              <MenuItem
+                primaryText={chapter}
+                onTouchTap={this.handleToggleDrawer}
+                value='#'
+              />
+            </Link>
+          );
+        });
+
+        return (
+          <MenuItem
+            primaryText={item.label}
+            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
+            rightIcon={<ArrowDropRight />}
+            value={'#'}
+            menuItems={submenu}
+          />
+        );
+      });
+    }
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.root}>
@@ -298,7 +306,7 @@ class App extends Component {
             onLeftIconButtonTouchTap={this.handleToggleDrawer}
             iconElementRight={rightButton}
           />
-					
+
           <Drawer
             id='drawer'
             docked={false}
@@ -311,8 +319,8 @@ class App extends Component {
               iconElementLeft={<img src={imgUrl}/>}
             />
 
-						{menu}
-						
+            {menu}
+
           </Drawer>
 
           <div>
@@ -332,13 +340,13 @@ function mapStateToProps(state) {
   const user = state.user;
   const userAgent = state.theme.userAgent;
   const menu = state.menu.items;
-	const currentCourse = state.menu.currentCourse;
+  const currentCourse = state.menu.currentCourse;
 
   return {
     user,
     userAgent,
     menu,
-		currentCourse
+    currentCourse
   };
 }
 

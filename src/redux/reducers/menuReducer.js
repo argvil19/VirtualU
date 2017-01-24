@@ -1,23 +1,23 @@
 import {
-	REQUEST_MENU_ITEMS,
-	RECIEVE_MENU_ITEMS
+  REQUEST_MENU_ITEMS,
+  RECIEVE_MENU_ITEMS
 } from '../actions/menuActions';
 
 const initialState = {
-	currentCourse: {
-		name: '',
-		chapters: [],
-		elements: {
-			"Assignments": [],
-			"Course Materials": [],
-			"Tutorials": [],
-			"Videos": [],
-			"Grades": [],
-			"Quizzes": [],
-			loading: false,
-			loaded: false
-		}
-	},
+  currentCourse: {
+    name: '',
+    chapters: [],
+    elements: {
+      "Assignments": [],
+      "Course Materials": [],
+      "Tutorials": [],
+      "Videos": [],
+      "Grades": [],
+      "Quizzes": [],
+      loading: false,
+      loaded: false
+    }
+  },
   items: [
     {
       label: 'Home',
@@ -26,8 +26,9 @@ const initialState = {
     },
     {
       label: 'Assignments',
-      url: '/lessons',
-      icon: 'library_books'
+      url: '/course/:course/:chapter/assignments',
+      icon: 'library_books',
+      replacer: /:course|:chapter/i
     },
     {
       label: 'Course Materials',
@@ -51,24 +52,25 @@ const initialState = {
     },
     {
       label: 'Quizzes',
-      url: '/quizes',
-      icon: 'help'
+      url: '/course/:course/:chapter/quizzes',
+      icon: 'help',
+      replacer: /:course|:chapter/i
     }
   ]
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-		case REQUEST_MENU_ITEMS:
-			return Object.assign(state, {}, {
-				
-			});
-		case RECIEVE_MENU_ITEMS:
-			return Object.assign(state, {}, {
-				currentCourse: Object.assign(state.currentCourse, {}, {
-					chapters: action.chapters
-				})
-			});
+    case REQUEST_MENU_ITEMS:
+      return Object.assign({}, state, {
+      });
+    case RECIEVE_MENU_ITEMS:
+      return Object.assign({}, state, {
+        currentCourse: Object.assign(state.currentCourse, {}, {
+          chapters: action.chapters,
+          name: action.currentCourse
+        })
+      });
     default:
       return state;
   }

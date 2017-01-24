@@ -4,11 +4,13 @@ import userReducer                          from './userReducer';
 import themeReducer                         from './themeReducer';
 import menuReducer                          from './menuReducer';
 import couresReducer 												from './coursesReducer';
+import quizReducer                          from './quizReducer';
 
 export default combineReducers({
   reduxAsyncConnect,
   user: userReducer,
   theme: themeReducer,
   menu: menuReducer,
-  courses: couresReducer
+  courses: couresReducer,
+  quizzes: quizReducer
 });
