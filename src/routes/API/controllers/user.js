@@ -89,7 +89,7 @@ module.exports.login = (userLogin, cb) => {
     }, {
       email: username,
     }],
-  }, (err, user) => {
+  }).populate('courses', 'name').exec((err, user) => {
     if (err || !user) {
       return cb({
         message: 'Username doesn\'t exist',
@@ -103,9 +103,16 @@ module.exports.login = (userLogin, cb) => {
         id: user._id
       };
       const token = jwt.createJwtToken(payload);
+      
+      user = Object.assign({}, user._doc, {
+        password: undefined,
+        _id: undefined,
+        __v: undefined,
+      });
 
       return cb(null, {
         token,
+        data: user,
         message: 'Sucessful login',
       });
     }
@@ -128,12 +135,24 @@ module.exports.refreshToken = (oldToken, cb) => {
     }
 
     const newToken = jwt.createJwtToken(decoded);
-
-    return cb(null, {
-      message: 'Token refresh was succesful',
-      status: 201,
-      success: true,
-      token: newToken
+    
+    userModel.findOne({
+      _id: decoded.data.id,
+    }, { _id: 0, __v: 0, password: 0 }).populate('courses', 'name').exec((err, user) => {
+      if (err) {
+        return res.status(500).send({
+          message: 'Internal Server Error',
+          success: false,
+        });
+      }
+      
+      return cb(null, {
+        message: 'Token refresh was succesful',
+        status: 201,
+        success: true,
+        token: newToken,
+        data: user,
+      });
     });
   });
 };

@@ -4,6 +4,7 @@ const userRoutes = require('./users');
 const courseRoutes = require('./courses');
 const navigationRoutes = require('./navigation');
 const quizRoutes = require('./quizzes');
+const contentRoutes = require('./content');
 
 module.exports = (app) => {
   octaverRoutes(app);
@@ -12,4 +13,5 @@ module.exports = (app) => {
   courseRoutes(app);
   navigationRoutes(app);
   quizRoutes(app);
+  contentRoutes(app);
 };

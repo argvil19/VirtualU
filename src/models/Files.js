@@ -24,6 +24,9 @@ File.add({
             course: ':course',
         },
     },
+    description: {
+        type: String
+    },
     type: {
         type: Types.Select,
         options: 'Video, PDF'
