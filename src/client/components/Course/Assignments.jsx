@@ -1,5 +1,5 @@
 import React, { PropTypes, Component }    from 'react';
-import { fetchCourseQuiz }                from '../../redux/actions/quizActions';
+import { fetchCourseQuiz }                from '../../../server/redux/actions/quizActions';
 import { connect }                        from 'react-redux';
 import TextField                          from 'material-ui/TextField';
 import SelectField                        from 'material-ui/SelectField';
@@ -8,7 +8,7 @@ import Divider                            from 'material-ui/Divider';
 import Checkbox                           from 'material-ui/Checkbox';
 import { List, ListItem }                 from 'material-ui/List';
 import CodeMirror                         from 'react-codemirror';
-import CodeMirrorCSS                      from '../../../node_modules/codemirror/lib/codemirror.css';
+import CodeMirrorCSS                      from '../../../../node_modules/codemirror/lib/codemirror.css';
 import RaisedButton                       from 'material-ui/RaisedButton';
 
 const propTypes = {

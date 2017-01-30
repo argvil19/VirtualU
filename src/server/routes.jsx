@@ -6,11 +6,11 @@ import {
   browserHistory
 }                                   from 'react-router';
 import { ReduxAsyncConnect }        from 'redux-connect';
-import App                          from './components/App';
-import Homepage                     from './components/Homepage';
-// import Courses                     from './components/Courses';
-import { Profile }                  from './components/User';
-import Course                       from './components/Course';
+import App                          from './../client/components/App';
+import Homepage                     from './../client/components/Homepage';
+import Courses                       from './../client/components/Courses';
+import { Profile }                  from './../client/components/User';
+import Course                       from './../client/components/Course';
 
 const Routes = (
   <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={browserHistory}>

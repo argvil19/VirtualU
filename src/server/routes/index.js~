@@ -34,7 +34,7 @@ import {
 }
 from 'redux-connect';
 import configureStore from '../redux/configureStore';
-import renderHTML from '../helpers/render_html';
+import renderHTML from '../../helpers/render_html';
 import Routes from '../routes.jsx';
 
 var keystone = require('keystone');

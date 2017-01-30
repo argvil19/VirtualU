@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
-import { isBrowser } from '../utils/helpers';
-import RootPath from '../../../fetchPath';
+import { isBrowser } from '../../utils/helpers';
+import RootPath from '../../../../fetchPath';
 
 /**
  * Register actions

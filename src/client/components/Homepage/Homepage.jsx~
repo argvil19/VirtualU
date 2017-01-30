@@ -16,7 +16,7 @@ import Carousel from './Carousel';
 import {
 	fetchCourses
 }
-from '../../redux/actions/coursesActions';
+from '../../../server/redux/actions/coursesActions';
 import {
 	isBrowser,
 	isLoaded
