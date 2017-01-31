@@ -33,7 +33,16 @@ File.add({
     },
     file: {
         type: Types.S3File,
+        dependsOn: {
+            type: 'PDF'
+        }
     },
+    youtubeLink: {
+        type: Types.Url,
+        dependsOn: {
+            type: 'Video'
+        }
+    }
 });
 
 File.defaultColumns = 'name, course, chapter, type';
