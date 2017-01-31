@@ -3,10 +3,7 @@ import React, {
 	Component
 }
 from 'react';
-import {
-	asyncConnect
-}
-from 'redux-connect';
+import { connect }                          from 'react-redux';
 import {
 	Grid
 }
@@ -34,8 +31,7 @@ const defaultProps = {
 	title: 'HVU - Hanshaw Virtual University',
 	courses: {
 		list: []
-	},
-	dispatch: () => {}
+	}
 };
 
 class Homepage extends Component {
@@ -48,9 +44,9 @@ class Homepage extends Component {
 	}
 
 	render() {
-		const popular = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
-		const recent = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
-		const discounted = this.props.courses.courses ? (<Carousel coursesList={this.props.courses.courses} title='Top 20 popular courses' />) : '';
+		const popular = this.props.courses.list.length > 0 ? (<Carousel coursesList={this.props.courses.list} title='Top 20 popular courses' />) : '';
+		const recent = this.props.courses.list.length > 0 ? (<Carousel coursesList={this.props.courses.list} title='Top 20 popular courses' />) : '';
+		const discounted = this.props.courses.list.length > 0 ? (<Carousel coursesList={this.props.courses.list} title='Top 20 popular courses' />) : '';
 
 		return (
 			<Grid fluid={false}>
@@ -58,8 +54,7 @@ class Homepage extends Component {
 
 				{popular}
 
-				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum omnis quos repellendus? Aspernatur deserunt,
-					esse quam rem sint soluta totam! Alias at dolores eveniet incidunt porro! Excepturi mollitia officia
+				<div>Lorem ipsum dzssoluta totam! Alias at dolores eveniet incidunt porro! Excepturi mollitia officia
 					voluptates.
 					<hr/>
 					<br/>
@@ -74,8 +69,7 @@ class Homepage extends Component {
 
 				{discounted}
 
-				<div>Atqs exercitationem facere iure, magnam minus modi nemo nesciunt quae quaerat, quia reiciendis
-					saepe sapiente sit ullam voluptatem. A cumque neque officia porro quasi sequi sit, soluta voluptatem!
+				<div>Atqs exercitaullam voluptatem. A cumque neque officia porro quasi sequi sit, soluta voluptatem!
 					<hr/>
 					<br/>
 				</div>
@@ -85,7 +79,14 @@ class Homepage extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+  const courses = state.courses;
+  return {
+    courses
+  };
+};
+
 Homepage.propTypes = propTypes;
 Homepage.defaultProps = defaultProps;
 
-export default Homepage;
+export default connect(mapStateToProps)(Homepage);
