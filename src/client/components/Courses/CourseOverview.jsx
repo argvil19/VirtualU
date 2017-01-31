@@ -11,7 +11,7 @@ import getMuiTheme                          from 'material-ui/styles/getMuiTheme
 import {
   fetchLogin,
   hideError
-}                                           from '../../../server/redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 
 const propTypes = {
   user: PropTypes.object,

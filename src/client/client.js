@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM   from 'react-dom';
 import { browserHistory, Router } from 'react-router';
-import routes from '../server/routes';
+import routes from './routes';
 import { Provider } from 'react-redux';
-import configureStore from '../server/redux/configureStore';
+import configureStore from './redux/configureStore';
 
 const store = configureStore();
 

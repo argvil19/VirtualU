@@ -29,10 +29,10 @@ import {
   refreshToken,
   doLogout,
   hideError
-}                                           from '../../../server/redux/actions/userActions';
+}                                           from '../../redux/actions/userActions';
 import {
   fetchMenu
-}                                           from '../../../server/redux/actions/menuActions';
+}                                           from '../../redux/actions/menuActions';
 
 const propTypes = {
   user: PropTypes.object,

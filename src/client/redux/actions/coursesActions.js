@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import RootPath from '../../../../fetchPath';
 
 export const RECIEVE_SUBSCRIBE = 'RECIEVE_SUBSCRIBE';
 
@@ -13,12 +12,12 @@ function recieveSubscribe(json) {
 function fetchSubscribeDo(course) {
 	return dispatch => {
 		dispatch(requestCourses());
-		return fetch(`${RootPath}/API/user/courses`, {
+		return fetch('/API/user/courses', {
 			method: 'PUT',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'jwt': localStorage.getItem('token') 
+				'jwt': localStorage.getItem('token')
 			},
 			body: JSON.stringify({
 				courseName: course
@@ -73,7 +72,7 @@ function fetchCoursesDo(username, password) {
 	console.log('fetchCoursesDo');
 	return dispatch => {
 		dispatch(requestCourses());
-		return fetch(`${RootPath}/API/courses`)
+		return fetch('/API/courses')
 			.then(response => response.json())
 			.then(json => dispatch(recieveCourses(json)));
 	};
