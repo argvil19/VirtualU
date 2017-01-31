@@ -7,7 +7,7 @@ var keystone = require('keystone');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
-// and documentation. 
+// and documentation.
 
 keystone.init({
 	'name': 'hvu',
@@ -15,8 +15,8 @@ keystone.init({
 	'mongo': 'mongodb://test1:test1@ds139448.mlab.com:39448/hvu',
 
 	'sass': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.png',
+	'static': '../../build',
+	'favicon': 'public/assets/favicon.png',
 	'views': 'templates/views',
 	'view engine': 'jade',
 

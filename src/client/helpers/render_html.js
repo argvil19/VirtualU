@@ -1,4 +1,4 @@
-const renderHTML = (componentHTML, initialState, assetUrl) => {
+const renderHTML = (assetUrl) => {
   return `
     <!DOCTYPE html>
       <html lang="ru-RU">
@@ -14,10 +14,7 @@ const renderHTML = (componentHTML, initialState, assetUrl) => {
 					<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
       </head>
       <body>
-        <div id="react-view">${componentHTML}</div>
-        <script type="application/javascript">
-            window.REDUX_INITIAL_STATE = ${JSON.stringify(initialState)}
-          </script>
+        <div id="react-view"></div>
         <script type="application/javascript" src="${assetUrl}/assets/bundle.js"></script>
       </body>
     </html>

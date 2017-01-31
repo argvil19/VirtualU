@@ -58,53 +58,11 @@ var routes = {
 // Setup Route Bindings
 exports = module.exports = function(app) {
 
-
   // Load API routes
   hvuRoutes(app);
 
   app.use((req, res, next) => {
-    const store = configureStore();
-
-    const state = store.getState();
-
-    // This setting is required for material-ui server-side rendering
-    state.theme.userAgent = req.headers['user-agent'];
-
-    match({
-      routes: routes.reduxRoutes,
-      location: req.url
-    }, (error, redirectLocation, renderProps) => {
-      if (redirectLocation) {
-        return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-      }
-
-      if (error) {
-        return next({
-          message: error.message,
-          status: 500,
-          success: false
-        });
-      }
-
-      if (!renderProps) {
-        return next({
-          message: 'Not found',
-          status: 404,
-          success: false
-        });
-      }
-
-      loadOnServer({...renderProps,
-        store
-      }).then(() => {
-        const componentHTML = ReactDom.renderToString(
-          <Provider store={store} key="provider">
-            <ReduxAsyncConnect {...renderProps} />
-          </Provider>
-        );
-        res.send(renderHTML(componentHTML, store.getState(), assetUrl));
-      });
-    });
+    res.send(renderHTML(assetUrl));
   });
 
   app.use(function(error, req, res, next) {
