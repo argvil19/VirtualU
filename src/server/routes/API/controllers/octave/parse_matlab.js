@@ -22,7 +22,7 @@ module.exports = (params, cb) => {
     if (result === 'Success'){
       // console.log('directory = ' + r);
       // MAC OS PATH:   /usr/local/octave/3.8.0/bin/octave-3.8.0
-      exec('octave  -q ' +  process.cwd() + '/src/OCTAVE/pizza.m')
+      exec('octave  -q ' +  process.cwd() + '/src/server/OCTAVE/pizza.m')
         .then((result) => {
           const stdout = result.stdout;
           const stderr = result.stderr;

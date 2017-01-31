@@ -21,7 +21,7 @@ var plugins = [
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(
-    new CleanWebpackPlugin([ 'src/public/assets/' ], {
+    new CleanWebpackPlugin([ 'src/server/public/assets/' ], {
       root: __dirname,
       verbose: true,
       dry: false
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/client.js'],
+  entry: ['babel-polyfill', './src/server/client.js'],
   debug: process.env.NODE_ENV !== 'production',
   resolve: {
     root: path.join(__dirname, 'src'),
@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: plugins,
   output: {
-    path: __dirname + '/src/client/public/assets/',
+    path: __dirname + '/src/server/public/assets/',
     filename: jsName,
     publicPath: publicPath
   },
