@@ -5,7 +5,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-var publicPath = '/assets';
+var publicPath = 'http://localhost:8050/';
 var cssName = process.env.NODE_ENV === 'production' ? 'styles.css' : 'styles.css';
 var jsName = process.env.NODE_ENV === 'production' ? 'bundle.js' : 'bundle.js';
 
@@ -21,7 +21,7 @@ var plugins = [
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(
-    new CleanWebpackPlugin([ 'src/server/public/assets/' ], {
+    new CleanWebpackPlugin([ 'build' ], {
       root: __dirname,
       verbose: true,
       dry: false
@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: plugins,
   output: {
-    path: path.join(__dirname, 'build/assets'),
+    path: path.join(__dirname, 'build'),
     filename: jsName,
     publicPath: publicPath,
   },
