@@ -16,7 +16,7 @@ var plugins = [
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
     }
   }),
-  new ExtractTextPlugin(cssName)
+  new ExtractTextPlugin(cssName),
 ];
 
 if (process.env.NODE_ENV === 'production') {
@@ -41,9 +41,9 @@ module.exports = {
   },
   plugins: plugins,
   output: {
-    path: __dirname + '/src/server/public/assets/',
+    path: path.join(__dirname, 'build/assets'),
     filename: jsName,
-    publicPath: publicPath
+    publicPath: publicPath,
   },
   module: {
     loaders: [{

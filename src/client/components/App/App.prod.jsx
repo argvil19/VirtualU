@@ -51,7 +51,7 @@ class App extends Component {
     this.handleCloseModals = this.handleCloseModals.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
-    
+
     this.state = {
       showDrawer: false,
       showLoginModal: false,
@@ -149,7 +149,7 @@ class App extends Component {
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <MenuItem primaryText='Help' />
-          <MenuItem 
+          <MenuItem
             primaryText='Profile'
             containerElement={<Link to="/profile" />}
           />
