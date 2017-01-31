@@ -109,7 +109,7 @@
   },
   "scripts": {
     "build": "NODE_ENV='production' webpack -p",
-    "wds": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base build --port 8050 --host 0.0.0.0",
+    "wds": "webpack-dev-server --debug  --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base build --port 8050 --host 0.0.0.0",
     "dev": "NODE_PATH=./src nodemon server",
     "start": "npm run build; NODE_ENV='production' NODE_PATH=./src node server.js",
     "test": "mocha ./test --recursive",
