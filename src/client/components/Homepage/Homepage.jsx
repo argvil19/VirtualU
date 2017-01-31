@@ -13,13 +13,12 @@ import Carousel from './Carousel';
 import {
 	fetchCourses
 }
-from '../../../server/redux/actions/coursesActions';
+from '../../redux/actions/coursesActions';
 import {
 	isBrowser,
 	isLoaded
 }
-from '../../../server/redux/utils/helpers';
-import { Link } from 'react-router';
+from '../../redux/utils/helpers';
 
 const propTypes = {
 	title: PropTypes.string,

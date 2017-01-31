@@ -7,7 +7,7 @@ import {
 }                                           from 'enzyme';
 import getMuiTheme                          from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider                     from 'material-ui/styles/MuiThemeProvider';
-import configureStore                       from '../../../server/redux/configureStore';
+import configureStore                       from '../../redux/configureStore';
 import injectTapEventPlugin                 from 'react-tap-event-plugin';
 
 if (!process.eventTapCalled) {

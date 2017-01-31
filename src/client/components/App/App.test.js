@@ -7,7 +7,6 @@ import {
 }                                           from 'enzyme';
 import configureStore                       from '../../redux/configureStore';
 import injectTapEventPlugin                 from 'react-tap-event-plugin';
-import renderHtml                           from '../../helpers/render_html';
 
 if (!process.eventTapCalled) {
   injectTapEventPlugin();

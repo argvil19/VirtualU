@@ -9,7 +9,7 @@ import {
 import { Link }                           from 'react-router';
 import Slider 														from 'react-slick';
 
-import { fetchSubscribe }									from '../../../server/redux/actions/coursesActions';
+import { fetchSubscribe }									from '../../redux/actions/coursesActions';
 
 import './Carousel.css';
 
@@ -28,25 +28,25 @@ const defaultProps = {
 class Carousel extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.handleSubscribe = this.handleSubscribe.bind(this);
 	}
-	
+
 	handleSubscribe(course) {
 		console.log('Subscribe: ', course);
 		this.props.dispatch(fetchSubscribe(course));
 	}
-	
+
   render() {
-		
+
     let courses = [];
-    
+
     // TODO: Remove! This block only for demo
     courses = courses.concat(this.props.coursesList);
     courses = courses.concat(this.props.coursesList);
     courses = courses.concat(this.props.coursesList);
     courses = courses.concat(this.props.coursesList);
-		
+
     var settings = {
 			dots: true,
 			infinite: true,
@@ -54,13 +54,13 @@ class Carousel extends Component {
 			// slidesToShow: 3,
 			// slidesToScroll: 1,
 			autoPlay: true,
-			responsive: [ 
+			responsive: [
 				{ breakpoint: 768, settings: 'unslick', slidesToScroll: 1 },
 				{ breakpoint: 992, settings: { slidesToShow: 2, slidesToScroll: 2 } },
-				{ breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } }, 
+				{ breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
 				{ breakpoint: 100000000, settings: { slidesToShow: 4, slidesToScroll: 4 } } ]
     };
-    
+
     return (
 			<section >
 				<h2>{this.props.title}</h2>
@@ -97,8 +97,8 @@ Carousel.propTypes = propTypes;
 Carousel.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
-	return { 
-		
+	return {
+
 	};
 }
 

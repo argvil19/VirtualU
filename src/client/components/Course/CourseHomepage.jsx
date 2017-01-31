@@ -1,5 +1,5 @@
 import React, { PropTypes, Component }    from 'react';
-import { fetchCourseOverview }            from '../../../server/redux/actions/coursesActions';
+import { fetchCourseOverview }            from '../../redux/actions/coursesActions';
 import { connect }                        from 'react-redux';
 
 const propTypes = {

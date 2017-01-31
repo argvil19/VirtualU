@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { fetchCourseMaterial } from '../../../server/redux/actions/mediaActions';
+import { fetchCourseMaterial } from '../../redux/actions/mediaActions';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
 import { List, ListItem } from 'material-ui/List';

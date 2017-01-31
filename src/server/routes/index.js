@@ -18,24 +18,7 @@
  * http://expressjs.com/api.html#app.VERB
  */
 
-import React from 'react';
-import ReactDom from 'react-dom/server';
-import {
-  match
-}
-from 'react-router';
-import {
-  Provider
-}
-from 'react-redux';
-import {
-  ReduxAsyncConnect,
-  loadOnServer
-}
-from 'redux-connect';
-import configureStore from '../redux/configureStore';
-import renderHTML from '../../client/helpers/render_html';
-import Routes from '../routes.jsx';
+import renderHTML from '../helpers/render_html';
 
 var keystone = require('keystone');
 var middleware = require('./middleware');
@@ -48,12 +31,6 @@ const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050'
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('routes', middleware.jwtMiddleware);
 keystone.pre('render', middleware.flashMessages);
-
-// Import Route Controllers
-var routes = {
-  views: importRoutes('./views'),
-  reduxRoutes: Routes,
-};
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
