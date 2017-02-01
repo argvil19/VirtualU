@@ -12,6 +12,7 @@ import { List, ListItem }                 from 'material-ui/List';
 import CodeMirror                         from 'react-codemirror';
 import CodeMirrorCSS                      from '../../../../node_modules/codemirror/lib/codemirror.css';
 import RaisedButton                       from 'material-ui/RaisedButton';
+import Upload                              from 'material-ui-upload/Upload';
 
 const propTypes = {
   dispatch: PropTypes.func
@@ -167,7 +168,7 @@ class Assignment extends Component {
         <div style={{ textAlign: 'center' }}>
           {item.isRandom? item.expectedResult : ''}
         </div>
-        <CodeMirror options={{ lineNumbers: true, }} onChange={(val) => {
+        <CodeMirror value={component.state[item._id]? component.state[item._id].answer : ''} options={{ lineNumbers: true, }} onChange={(val) => {
           const toState = {};
           
           toState[item._id] = {
@@ -178,6 +179,29 @@ class Assignment extends Component {
           
           component.setState(toState);
         }}/>
+        <Upload onChange={(e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const toState = {};
+                
+            toState[item._id] = {
+              questionId: item._id,
+              questionType: item.questionType,
+              answer: e.target.result
+            };
+                
+            component.setState(toState);
+          }
+            
+          reader.readAsText(file);
+          }}
+          fileTypeRegex={/.m/}
+          title="Upload a Matlab file"
+          label="Add"
+          primary={true}
+        />
+        
         {this.renderDivider()}
         {this.renderSendButton(item)}
       </div>
