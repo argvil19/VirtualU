@@ -102,8 +102,12 @@ export function postSendQuiz(params) {
         }
 
         res.data = getState().quizzes.assignments.map(item => {
-          if (item._id === params.questionId) {
-            return res.data[0]
+          if (item._id === params.questionId && item.questionType === 'coding') {
+            return res.data[0];
+          } else if (item._id === params.questionId && item.questionType === 'multiple select') {
+            item.isCorrect = res.data[0].isCorrect;
+          } else if (item._id === params.questionId) {
+            return res.data[0];
           }
           return item;
         });

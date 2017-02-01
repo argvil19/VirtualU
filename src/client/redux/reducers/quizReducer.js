@@ -36,6 +36,8 @@ export default function (state = initialState, action) {
               item.isRandom = true;
             }
             item.expectedResult = item.expectedResult[0];
+          } else if (item.questionType === 'multiple select') {
+            item.questionOptionsSelect = item.questionOptionsSelect.sort(function(a, b){return 0.5 - Math.random()});
           }
           
           return item;
