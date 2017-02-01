@@ -23,11 +23,7 @@ module.exports = (questions, cb) => {
             $in: questionsId
         }
     }, {
-        _id: 1,
-        correctAnswerSelect: 1,
-        correctAnswerChoice: 1,
-        questionAnswer: 1,
-        expectedResult: 1
+        __v: 0
     }, (err, result) => {
         if (err) {
             return cb(err);
@@ -88,11 +84,13 @@ module.exports = (questions, cb) => {
                             doneAnswer(error);
                             break;
                         case 'coding':
+                            console.log(question.answer);
                             analyzeCodeAnswer({
                                 input: question.answer,
                                 answer: answer.expectedResult
                             }, (err, result) => {
                                 if (err) {
+                                    console.log(err);
                                     error = err;
                                 }
                                 if (result) {
@@ -104,6 +102,7 @@ module.exports = (questions, cb) => {
                             });
                             break;
                     }
+                    answers[index] = Object.assign({}, answer._doc, answers[index]);
                 } else {
                     doneAnswer();
                 }
@@ -120,7 +119,7 @@ module.exports = (questions, cb) => {
             }
             
             return cb(null, {
-                answers,
+                data: answers,
                 status: 200,
                 success: true
             });

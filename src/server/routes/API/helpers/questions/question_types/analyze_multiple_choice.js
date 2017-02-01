@@ -13,7 +13,7 @@ module.exports = (params) => {
         });
     });
 
-    if (correct === params.answer.length) {
+    if (correct === params.answer.length && correct === params.input.length) {
         return true;
     }
 

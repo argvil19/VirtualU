@@ -103,7 +103,6 @@ module.exports = (query, userId, cb) => {
                     Question.model.find({
                         quiz: quizData._id,
                     }, {
-                        _id: 0,
                         __v: 0,
                         course: 0,
                         chapter: 0,
