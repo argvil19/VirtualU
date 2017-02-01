@@ -1,7 +1,11 @@
 import {
   REQUEST_COURSE_QUIZ,
   RECEIVE_COURSE_QUIZ,
-  ERROR_COURSE_QUIZ
+  ERROR_COURSE_QUIZ,
+  
+  SEND_QUIZ,
+  RECEIVE_QUIZ_RESULT,
+  ERROR_QUIZ_RESULT
 }                                           from '../actions/quizActions';
 
 const initialState = {
@@ -14,6 +18,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SEND_QUIZ:
     case REQUEST_COURSE_QUIZ:
       return {
         ...state,
@@ -44,6 +49,16 @@ export default function (state = initialState, action) {
         loaded: false,
         error: action.payload
       };
+      
+    case RECEIVE_QUIZ_RESULT:
+      return {
+        ...state,
+        assignments: action.payload,
+        loading: false,
+        loaded: true
+      };
+      break;
+    
 
     default:
       return state;

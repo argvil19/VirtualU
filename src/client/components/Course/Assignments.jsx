@@ -1,5 +1,8 @@
 import React, { PropTypes, Component }    from 'react';
-import { fetchCourseQuiz }                from '../../redux/actions/quizActions';
+import { 
+  fetchCourseQuiz,
+  postSendQuiz
+}                                         from '../../redux/actions/quizActions';
 import { connect }                        from 'react-redux';
 import TextField                          from 'material-ui/TextField';
 import SelectField                        from 'material-ui/SelectField';
@@ -16,6 +19,14 @@ const propTypes = {
 };
 
 class Assignment extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      questions: []
+    };
+  }
+  
   componentWillMount() {
     this.props.dispatch(fetchCourseQuiz({
       courseName: this.props.routeParams.name,
@@ -50,25 +61,47 @@ class Assignment extends Component {
   }
 
   renderShortAnswer(item) {
+    const component = this;
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
         <div>
-          <TextField hintText='Type your answer here' />
+          <TextField hintText='Type your answer here' onChange={(e, val) => {
+            const toState = {}
+            
+            toState[item._id] = {
+              questionId: item._id,
+              questionType: item.questionType,
+              answer: val
+            };
+            
+            component.setState(toState);
+          }}/>
         </div>
-        {this.renderSendButton()}
+        {this.renderSendButton(item)}
         {this.renderDivider()}
       </div>
     );
   }
 
   renderMultipleSelect(item) {
+    const component = this;
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
         <div>
           <SelectField
             floatingLabelText='Answer'
+            onChange={(e, i, val) => {
+              const toState = {};
+              toState[item._id] = {
+                questionId: item._id,
+                questionType: item.questionType,
+                answer: val
+              };
+              component.setState(toState);
+            }}
+            value={this.state[item._id]? this.state[item._id].answer : undefined}
           >
             {item.questionOptionsSelect.map((selectOption) => {
               return (
@@ -80,13 +113,15 @@ class Assignment extends Component {
             )}
           </SelectField>
         </div>
-        {this.renderSendButton()}
+        {this.renderSendButton(item)}
         {this.renderDivider()}
       </div>
     );
   }
 
   renderMultipleChoice(item) {
+    const component = this;
+    
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
@@ -95,26 +130,54 @@ class Assignment extends Component {
             {item.questionOptionsChoice.map((choiceOption) => {
               return (
                 <ListItem
-                  leftCheckbox={<Checkbox />}
+                  leftCheckbox={<Checkbox onCheck={(e, isChecked) => {
+                    const checkedList = component.state[item._id]? component.state[item._id].answer : [];
+                    const toState = {};
+                    
+                    if (isChecked) {
+                      checkedList.push(choiceOption);
+                    } else {
+                      checkedList.splice(checkedList.indexOf(choiceOption), 1);
+                    }
+                    
+                    toState[item._id] = {
+                      questionId: item._id,
+                      questionType: item.questionType,
+                      answer: checkedList
+                    };
+                    
+                    component.setState(toState);
+                  }}/>}
                   primaryText={choiceOption}
                 />
               );
             })}
           </List>
         </div>
-        {this.renderSendButton()}
+        {this.renderSendButton(item)}
         {this.renderDivider()}
       </div>
     );
   }
 
   renderCodeQuestion(item) {
+    const component = this;
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
-        <CodeMirror options={{ lineNumbers: true, }}/>
+        <CodeMirror options={{ lineNumbers: true, }} onChange={(val) => {
+          const toState = {};
+          
+          toState[item._id] = {
+            questionId: item._id,
+            questionType: item.questionType,
+            answer: val
+          };
+          
+          component.setState(toState);
+        }}/>
         {this.renderDivider()}
-        {this.renderSendButton()}
+        {this.renderSendButton(item)}
       </div>
     );
   }
@@ -122,9 +185,20 @@ class Assignment extends Component {
   renderSendButton(sendInfo) {
     return (
       <div style={{ textAlign:'right' }}>
+        <div>
+          <p>{typeof sendInfo.isCorrect === 'boolean'? (sendInfo.isCorrect? 'Correct!' : 'Wrong!') : ''}</p>
+        </div>
         <RaisedButton
           primary={true}
           label='Send'
+          onClick={() => {
+            this.props.dispatch(postSendQuiz({
+              questionId: sendInfo._id,
+              questionType: sendInfo.questionType,
+              answer: this.state[sendInfo._id]? this.state[sendInfo._id].answer : '',
+              isAssignment: true
+            }));
+          }}
         />
       </div>
 
@@ -134,6 +208,7 @@ class Assignment extends Component {
   renderDivider() {
     return <Divider style={{ marginTop: '50px', marginBottom: '50px' }} />;
   }
+  
 
   render() {
     return (
