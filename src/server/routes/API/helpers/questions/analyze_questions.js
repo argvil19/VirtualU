@@ -84,13 +84,12 @@ module.exports = (questions, cb) => {
                             doneAnswer(error);
                             break;
                         case 'coding':
-                            console.log(question.answer);
                             analyzeCodeAnswer({
                                 input: question.answer,
-                                answer: answer.expectedResult
+                                answer: answer.expectedResult[0],
+                                answerFromClient: question.answerFromClient
                             }, (err, result) => {
                                 if (err) {
-                                    console.log(err);
                                     error = err;
                                 }
                                 if (result) {
@@ -98,6 +97,7 @@ module.exports = (questions, cb) => {
                                 } else {
                                     answers[index].isCorrect = false;
                                 }
+                                answers[index].lastAnswer = question.answerFromClient;
                                 return doneAnswer(error);
                             });
                             break;

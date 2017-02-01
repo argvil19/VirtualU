@@ -16,7 +16,6 @@ function requestCourseQuiz() {
 }
 
 function receiveCourseQuiz(json) {
-  console.log(json);
   return {
     type: RECEIVE_COURSE_QUIZ,
     payload: json.data
@@ -46,6 +45,7 @@ export function fetchCourseQuiz(params) {
         if (params.isAssignment) {
           res.data.isAssignment = true;
         }
+        console.log(res.data);
         dispatch(receiveCourseQuiz(res));
       });
   };

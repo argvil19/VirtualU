@@ -1,6 +1,7 @@
-# Created by Octave 4.0.2, Wed Feb 01 06:45:49 2017 UTC <ubuntu@argvil19-devtest-app-4346707>
+# Created by Octave 4.0.2, Wed Feb 01 10:07:30 2017 UTC <ubuntu@argvil19-devtest-app-4346707>
 # name: A
-# type: scalar
-12
+# type: range
+# base, limit, increment
+4 4.8 0.2
 
 
