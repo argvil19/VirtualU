@@ -110,7 +110,7 @@ Question.add({
     //// Coding
 
     expectedResult: {
-        type: String,
+        type: Types.TextArray,
         dependsOn: {
             questionType: 'coding',
         },

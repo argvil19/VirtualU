@@ -106,10 +106,15 @@ class Quiz extends Component {
   }
 
   renderCodeQuestion(item) {
+    console.log('aquí');
+    console.log(item);
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
-        <CodeMirror options={{ lineNumbers: true, }}/>
+        <div style={{ textAlign: 'center' }}>
+          {item.isRandom? item.expectedResult : ''}
+        </div>
+        <CodeMirror options={{ lineNumbers: true }}/>
         {this.renderDivider()}
       </div>
     );

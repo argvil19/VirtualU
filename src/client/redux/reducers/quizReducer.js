@@ -1,3 +1,5 @@
+'use strict';
+
 import {
   REQUEST_COURSE_QUIZ,
   RECEIVE_COURSE_QUIZ,
@@ -27,6 +29,18 @@ export default function (state = initialState, action) {
 
     case RECEIVE_COURSE_QUIZ:
       if (action.payload.isAssignment) {
+        action.payload = action.payload.map(item => {
+          if (item.questionType === 'coding') {
+            if (item.expectedResult.length > 1 && Array.isArray(item.expectedResult)) {
+              item.expectedResult = item.expectedResult.sort(function(a, b){return 0.5 - Math.random()});
+              item.isRandom = true;
+            }
+            item.expectedResult = item.expectedResult[0];
+          }
+          
+          return item;
+        });
+        
         return {
           ...state,
           loading: false,
@@ -51,6 +65,18 @@ export default function (state = initialState, action) {
       };
       
     case RECEIVE_QUIZ_RESULT:
+      // Sorts expected result on coding questions. Pick one random answer
+      action.payload = action.payload.map(item => {
+        if (item.questionType === 'coding') {
+          if (item.lastAnswer) {
+            item.expectedResult = item.lastAnswer;
+            item.isRandom = true;
+          }
+        }
+        
+        return item;
+      });
+      
       return {
         ...state,
         assignments: action.payload,

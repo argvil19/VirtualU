@@ -75,8 +75,6 @@ class App extends Component {
   handleChangeLocation() {
     const title = window.location.pathname.match(/\/course\/([^\/]+)/);
 
-    console.log('Change location', title);
-
     if(title) {
       this.props.dispatch(fetchMenu(title[1]));
       this.setState({courseName: title[1]});
@@ -248,7 +246,6 @@ class App extends Component {
           <MenuItem
             primaryText='Home'
             leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
-            onTouchTap={this.handleToggleDrawer}
             value='/'
           />
         </Link>
@@ -314,6 +311,7 @@ class App extends Component {
             width={300}
             open={this.state.showDrawer}
             onRequestChange={(showDrawer) => this.setState({ showDrawer })}
+            zDepth={1}
           >
             <AppBar
               title='HVU Menu'

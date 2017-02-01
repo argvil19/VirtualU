@@ -5,8 +5,7 @@ import {
 }                                         from '../../redux/actions/quizActions';
 import { connect }                        from 'react-redux';
 import TextField                          from 'material-ui/TextField';
-import SelectField                        from 'material-ui/SelectField';
-import MenuItem                           from 'material-ui/MenuItem';
+import { RadioButton, RadioButtonGroup }  from 'material-ui/RadioButton';
 import Divider                            from 'material-ui/Divider';
 import Checkbox                           from 'material-ui/Checkbox';
 import { List, ListItem }                 from 'material-ui/List';
@@ -90,9 +89,9 @@ class Assignment extends Component {
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
         <div>
-          <SelectField
-            floatingLabelText='Answer'
-            onChange={(e, i, val) => {
+          {component.renderSpace(20)}
+          <RadioButtonGroup
+            onChange={(e, val) => {
               const toState = {};
               toState[item._id] = {
                 questionId: item._id,
@@ -101,17 +100,16 @@ class Assignment extends Component {
               };
               component.setState(toState);
             }}
-            value={this.state[item._id]? this.state[item._id].answer : undefined}
           >
             {item.questionOptionsSelect.map((selectOption) => {
               return (
-                <MenuItem
+                <RadioButton
                   value={selectOption}
-                  primaryText={selectOption}
+                  label={selectOption}
                 />
               )}
             )}
-          </SelectField>
+          </RadioButtonGroup>
         </div>
         {this.renderSendButton(item)}
         {this.renderDivider()}
@@ -162,9 +160,13 @@ class Assignment extends Component {
 
   renderCodeQuestion(item) {
     const component = this;
+
     return (
       <div>
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
+        <div style={{ textAlign: 'center' }}>
+          {item.isRandom? item.expectedResult : ''}
+        </div>
         <CodeMirror options={{ lineNumbers: true, }} onChange={(val) => {
           const toState = {};
           
@@ -186,7 +188,7 @@ class Assignment extends Component {
     return (
       <div style={{ textAlign:'right' }}>
         <div>
-          <p>{typeof sendInfo.isCorrect === 'boolean'? (sendInfo.isCorrect? 'Correct!' : 'Wrong!') : ''}</p>
+          <p>{typeof sendInfo.isCorrect === 'boolean'? (sendInfo.isCorrect? 'Correct answer!' : 'Wrong answer!') : ''}</p>
         </div>
         <RaisedButton
           primary={true}
@@ -196,7 +198,8 @@ class Assignment extends Component {
               questionId: sendInfo._id,
               questionType: sendInfo.questionType,
               answer: this.state[sendInfo._id]? this.state[sendInfo._id].answer : '',
-              isAssignment: true
+              isAssignment: true,
+              answerFromClient: sendInfo.expectedResult
             }));
           }}
         />
@@ -207,6 +210,10 @@ class Assignment extends Component {
 
   renderDivider() {
     return <Divider style={{ marginTop: '50px', marginBottom: '50px' }} />;
+  }
+  
+  renderSpace(px) {
+    return <div style={{ marginBottom: px + 'px' }}></div>;
   }
   
 
