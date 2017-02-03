@@ -2,7 +2,7 @@ import {
   REQUEST_COURSE_MATERIAL,
   RECEIVE_COURSE_MATERIAL,
   ERROR_COURSE_MATERIAL
-}                                           from '../actions/mediaActions';
+} from '../actions/mediaActions';
 
 const initialState = {
   materials: [],
@@ -21,23 +21,20 @@ export default function (state = initialState, action) {
       };
 
     case RECEIVE_COURSE_MATERIAL:
-      switch (action.mediaType) {
-        case 'PDF':
-          return {
-            ...state,
-            loading: false,
-            loaded: true,
-            materials: action.payload
-          };
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        materials: action.mediaType === 'PDF' ? action.payload : state.materials.materials,
+        videos: action.mediaType === 'Video' ? action.payload : state.materials.videos
+      };
 
-        case 'Video':
-          return {
-            ...state,
-            loading: false,
-            loaded: true,
-            videos: action.payload
-          };
-      }
+    case ERROR_COURSE_MATERIAL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
 
     default:
       return state;

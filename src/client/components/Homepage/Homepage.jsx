@@ -22,6 +22,7 @@ import {
 	isLoaded
 }
 from '../../../server/redux/utils/helpers';
+import { Link } from 'react-router';
 
 const propTypes = {
 	title: PropTypes.string,
@@ -54,6 +55,8 @@ class Homepage extends Component {
 		return (
 			<Grid fluid={false}>
 				<h1>{this.props.title}</h1>
+
+				<Link to={'/course/MatLab/Chapter 1/videos'}>adasdsad</Link>
 				
 				{popular}
 				
