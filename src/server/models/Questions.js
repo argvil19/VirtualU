@@ -53,33 +53,33 @@ Question.add({
 
     // QUESTION TYPES
 
-    //// Multiple select
-
-    questionOptionsSelect: {
-        type: Types.TextArray,
-        dependsOn: {
-            questionType: 'multiple select',
-        }
-    },
-    correctAnswerSelect: {
-        type: String,
-        dependsOn: {
-            questionType: 'multiple select',
-        }
-    },
-
     //// Multiple choice
 
     questionOptionsChoice: {
         type: Types.TextArray,
         dependsOn: {
-            questionType: 'multiple choice'
+            questionType: 'multiple choice',
         }
     },
     correctAnswerChoice: {
+        type: String,
+        dependsOn: {
+            questionType: 'multiple choice',
+        }
+    },
+
+    //// Multiple select
+
+    questionOptionsSelect: {
         type: Types.TextArray,
         dependsOn: {
-            questionType: 'multiple choice'
+            questionType: 'multiple select'
+        }
+    },
+    correctAnswerSelect: {
+        type: Types.TextArray,
+        dependsOn: {
+            questionType: 'multiple select'
         }
     },
 

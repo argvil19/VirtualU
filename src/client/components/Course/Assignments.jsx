@@ -14,6 +14,8 @@ import CodeMirrorCSS                      from '../../../../node_modules/codemir
 import RaisedButton                       from 'material-ui/RaisedButton';
 import Upload                              from 'material-ui-upload/Upload';
 
+import 'codemirror/mode/octave/octave';
+
 const propTypes = {
   dispatch: PropTypes.func
 };
@@ -84,7 +86,7 @@ class Assignment extends Component {
     );
   }
 
-  renderMultipleSelect(item) {
+  renderMultipleChoice(item) {
     const component = this;
     return (
       <div>
@@ -102,11 +104,11 @@ class Assignment extends Component {
               component.setState(toState);
             }}
           >
-            {item.questionOptionsSelect.map((selectOption) => {
+            {item.questionOptionsChoice.map((choiceOption) => {
               return (
                 <RadioButton
-                  value={selectOption}
-                  label={selectOption}
+                  value={choiceOption}
+                  label={choiceOption}
                 />
               )}
             )}
@@ -118,7 +120,7 @@ class Assignment extends Component {
     );
   }
 
-  renderMultipleChoice(item) {
+  renderMultipleSelect(item) {
     const component = this;
     
     return (
@@ -126,7 +128,7 @@ class Assignment extends Component {
         <h3 dangerouslySetInnerHTML={{ __html: item.questionTitle }} />
         <div>
           <List>
-            {item.questionOptionsChoice.map((choiceOption) => {
+            {item.questionOptionsSelect.map((selectOption) => {
               return (
                 <ListItem
                   leftCheckbox={<Checkbox onCheck={(e, isChecked) => {
@@ -134,9 +136,9 @@ class Assignment extends Component {
                     const toState = {};
                     
                     if (isChecked) {
-                      checkedList.push(choiceOption);
+                      checkedList.push(selectOption);
                     } else {
-                      checkedList.splice(checkedList.indexOf(choiceOption), 1);
+                      checkedList.splice(checkedList.indexOf(selectOption), 1);
                     }
                     
                     toState[item._id] = {
@@ -147,7 +149,7 @@ class Assignment extends Component {
                     
                     component.setState(toState);
                   }}/>}
-                  primaryText={choiceOption}
+                  primaryText={selectOption}
                 />
               );
             })}
@@ -168,7 +170,7 @@ class Assignment extends Component {
         <div style={{ textAlign: 'center' }}>
           {item.isRandom? item.expectedResult : ''}
         </div>
-        <CodeMirror value={component.state[item._id]? component.state[item._id].answer : ''} options={{ lineNumbers: true, }} onChange={(val) => {
+        <CodeMirror value={component.state[item._id]? component.state[item._id].answer : ''} options={{ lineNumbers: true, mode: 'octave' }} onChange={(val) => {
           const toState = {};
           
           toState[item._id] = {
@@ -202,8 +204,8 @@ class Assignment extends Component {
           primary={true}
         />
         
-        {this.renderDivider()}
         {this.renderSendButton(item)}
+        {this.renderDivider()}
       </div>
     );
   }

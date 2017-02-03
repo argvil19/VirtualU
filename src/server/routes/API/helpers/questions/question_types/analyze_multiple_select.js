@@ -1,3 +1,19 @@
 module.exports = (params) => {
-    return params.input === params.answer;
-}
+    if (!(Array.isArray(params.input) && Array.isArray(params.answer))) {
+        return false;
+    }
+
+    let correct = 0;
+
+    params.input.forEach((inputItem) => {
+        params.answer.forEach((answerItem) => {
+            inputItem === answerItem? correct++ : false;
+        });
+    });
+
+    if (correct === params.answer.length && correct === params.input.length) {
+        return true;
+    }
+
+    return false;
+};
