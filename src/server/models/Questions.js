@@ -22,17 +22,6 @@ Question.add({
         type: String,
         required: true
     },
-    course: {
-        type: Types.Relationship,
-        ref: 'Course',
-    },
-    chapter: {
-        type: Types.Relationship,
-        ref: 'Chapter',
-        filters: {
-            course: ':course',
-        },
-    },
     quiz: {
         type: Types.Relationship,
         ref: 'Quiz',
