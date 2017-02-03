@@ -33,6 +33,7 @@ import {
 import {
   fetchMenu
 }                                           from '../../redux/actions/menuActions';
+import {List, ListItem}                     from 'material-ui/List';
 
 const propTypes = {
   user: PropTypes.object,
@@ -273,7 +274,7 @@ class App extends Component {
         this.props.currentCourse.chapters.forEach((chapter, i) => {
           submenu.push(
             <Link key={i} className='menu-link' to={item.url.replace(/:course/g, component.props.currentCourse.name).replace(/:chapter/g, chapter)}>
-              <MenuItem
+              <ListItem
                 primaryText={chapter}
                 onTouchTap={this.handleToggleDrawer}
                 value='#'
@@ -283,12 +284,14 @@ class App extends Component {
         });
 
         return (
-          <MenuItem
-            primaryText={item.label}
-            rightIcon={<ArrowDropRight />}
-            value={'#'}
-            menuItems={submenu}
-          />
+          <List>
+            <ListItem
+              primaryText={item.label}
+              value={'#'}
+              primaryTogglesNestedList={true}
+              nestedItems={submenu}
+            />
+          </List>
         );
       });
     }
