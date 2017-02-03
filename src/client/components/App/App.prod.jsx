@@ -33,6 +33,7 @@ import {
 import {
   fetchMenu
 }                                           from '../../redux/actions/menuActions';
+import {List, ListItem}                     from 'material-ui/List';
 
 const propTypes = {
   user: PropTypes.object,
@@ -245,7 +246,6 @@ class App extends Component {
         <Link className='menu-link' to={'/'}>
           <MenuItem
             primaryText='Home'
-            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
             value='/'
           />
         </Link>
@@ -259,7 +259,6 @@ class App extends Component {
             <Link clasName='menu-link' to={'/'}>
               <MenuItem
                 primaryText={item.label}
-                leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
                 onTouchTap={component.handleToggleDrawer}
                 value='/'
               />
@@ -275,7 +274,7 @@ class App extends Component {
         this.props.currentCourse.chapters.forEach((chapter, i) => {
           submenu.push(
             <Link key={i} className='menu-link' to={item.url.replace(/:course/g, component.props.currentCourse.name).replace(/:chapter/g, chapter)}>
-              <MenuItem
+              <ListItem
                 primaryText={chapter}
                 onTouchTap={this.handleToggleDrawer}
                 value='#'
@@ -285,13 +284,14 @@ class App extends Component {
         });
 
         return (
-          <MenuItem
-            primaryText={item.label}
-            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
-            rightIcon={<ArrowDropRight />}
-            value={'#'}
-            menuItems={submenu}
-          />
+          <List>
+            <ListItem
+              primaryText={item.label}
+              value={'#'}
+              primaryTogglesNestedList={true}
+              nestedItems={submenu}
+            />
+          </List>
         );
       });
     }
@@ -314,8 +314,7 @@ class App extends Component {
             zDepth={1}
           >
             <AppBar
-              title='HVU Menu'
-              iconElementLeft={<img src={imgUrl}/>}
+              title='HVU'
             />
 
             {menu}
