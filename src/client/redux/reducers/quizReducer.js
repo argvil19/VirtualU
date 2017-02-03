@@ -38,6 +38,8 @@ export default function (state = initialState, action) {
             item.expectedResult = item.expectedResult[0];
           } else if (item.questionType === 'multiple select') {
             item.questionOptionsSelect = item.questionOptionsSelect.sort(function(a, b){return 0.5 - Math.random()});
+          } else if (item.questionType === 'multiple choice') {
+            item.questionOptionsChoice = item.questionOptionsChoice.sort(function(a, b){return 0.5 - Math.random()});
           }
           
           return item;
