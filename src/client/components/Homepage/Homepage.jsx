@@ -50,7 +50,6 @@ class Homepage extends Component {
 		return (
 			<Grid fluid={false}>
 				<h1>{this.props.title}</h1>
-
 				{popular}
 
 				<div>Lorem ipsum dzssoluta totam! Alias at dolores eveniet incidunt porro! Excepturi mollitia officia
