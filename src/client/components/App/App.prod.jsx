@@ -245,7 +245,6 @@ class App extends Component {
         <Link className='menu-link' to={'/'}>
           <MenuItem
             primaryText='Home'
-            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >home</FontIcon>}
             value='/'
           />
         </Link>
@@ -259,7 +258,6 @@ class App extends Component {
             <Link clasName='menu-link' to={'/'}>
               <MenuItem
                 primaryText={item.label}
-                leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
                 onTouchTap={component.handleToggleDrawer}
                 value='/'
               />
@@ -287,7 +285,6 @@ class App extends Component {
         return (
           <MenuItem
             primaryText={item.label}
-            leftIcon={<FontIcon className='material-icons'  style={{ color: '#364B9F' }} >{item.icon}</FontIcon>}
             rightIcon={<ArrowDropRight />}
             value={'#'}
             menuItems={submenu}
@@ -314,8 +311,7 @@ class App extends Component {
             zDepth={1}
           >
             <AppBar
-              title='HVU Menu'
-              iconElementLeft={<img src={imgUrl}/>}
+              title='HVU'
             />
 
             {menu}
