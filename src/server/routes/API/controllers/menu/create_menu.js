@@ -60,7 +60,7 @@ module.exports = (params, userId, cb) => {
                 });
             }
 
-            Chapter.model.find().where('course', courseData._id).where('published', true)
+            Chapter.model.find().sort({ name: 1 }).where('course', courseData._id).where('published', true)
                 .exec((err, chaptersData) => {
                     if (err) {
                         return cb({
