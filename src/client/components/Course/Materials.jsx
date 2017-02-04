@@ -6,6 +6,7 @@ import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import { FontIcon } from 'material-ui';
 import YouTube from 'react-youtube';
+import './Materials.css';
 // import MenuItem from 'material-ui/MenuItem';
 // import RaisedButton from 'material-ui/RaisedButton';
 
@@ -18,15 +19,8 @@ const propTypes = {
 function extractYouTubeID(url) {
   const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = url.match(regExp);
-  let toReturn;
 
-  if (match && match[2].length === 11) {
-    toReturn = match[2];
-  } else {
-    toReturn = null;
-  }
-
-  return toReturn;
+  return (match && match[2].length === 11) ? match[2] : null;
 }
 
 class Material extends Component {
@@ -68,7 +62,7 @@ class Material extends Component {
                 />
                 <p>{item.description}</p>
               </ListItem>
-              {!last && <Divider/>}
+              {!last && <div className='videoDivider'><Divider /></div>}
             </div>
           );
         });
