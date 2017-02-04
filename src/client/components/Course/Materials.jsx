@@ -95,7 +95,12 @@ class Material extends Component {
         <h1>Course {title}</h1>
         <Divider/>
         <List>
-          {this.renderFiles()}
+          {this.props.courses.loading &&
+            'Loading...'
+          }
+          {this.props.courses.loaded &&
+            this.renderFiles()
+          }
         </List>
       </div>
     );
