@@ -2,7 +2,6 @@
 This is a learning management platform that teaches multiple courses.
 
 ## getting started:
-* check contributing guidelines (CONTRIBUTING.md).
 * install Node.js in your machine.
  * https://nodejs.org
 * run: `npm install`
